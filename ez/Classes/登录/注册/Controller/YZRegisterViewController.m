@@ -35,9 +35,9 @@
     self.title = @"用户注册";
     
     [self setupChilds];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldEditChanged:)
-                                                name:@"UITextFieldTextDidChangeNotification"
-                                              object:self.accountTextField];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldEditChanged:)
+//                                                name:@"UITextFieldTextDidChangeNotification"
+//                                              object:self.accountTextField];
 }
 - (void)setupChilds
 {
@@ -144,17 +144,19 @@
 #pragma  mark - 获取验证码按钮点击
 - (void)getCodeBtnPressed
 {
+    [self.view endEditing:YES];
+    
     if (![YZValidateTool validateMobile:self.accountTextField.text])//不是手机号码
     {
         [MBProgressHUD showError:@"您输入的手机号格式不对"];
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(12001),
-                           @"phone":self.accountTextField.text
+                           @"phone": self.accountTextField.text,
+                           @"storeCode": @"1",
                            };
     self.codeBtn.enabled = NO;
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/sendSmsVerifyCodeWithNoRegist" params:dict success:^(id json) {
         if(SUCCESS)
         {
             //倒计时
@@ -243,12 +245,13 @@
     }
     [MBProgressHUD showMessage:@"正在注册,客官请稍后" toView:self.view];
     NSDictionary *dict = @{
-                           @"cmd":@(10610),
                            @"phone":self.accountTextField.text,
                            @"passwd":self.pwdTextField.text,
-                           @"verifyCode":self.verificationCodeTextField.text
+                           @"verifyCode":self.verificationCodeTextField.text,
+                           @"storeCode": @"1",
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/regist" params:dict success:^(id json)
+     {
         YZLog(@"json = %@",json);
         [MBProgressHUD hideHUDForView:self.view];
         //检查账号密码返回数据
@@ -262,8 +265,7 @@
 {
     if(SUCCESS)
     {
-        //存储userId
-        [YZUserDefaultTool saveObject:json[@"userId"] forKey:@"userId"];
+        [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
         
         //存储账户密码
         [YZUserDefaultTool saveObject:self.accountTextField.text forKey:@"userName"];

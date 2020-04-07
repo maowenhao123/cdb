@@ -50,7 +50,6 @@
 {
     [super viewWillAppear:animated];
     [self loadUserInfo];
-    [self getAvatarData];
 }
 
 - (void)viewDidLoad
@@ -63,23 +62,6 @@
 }
 
 #pragma mark - 请求数据
-- (void)getAvatarData
-{
-    NSDictionary *dict = @{
-                           @"currentUserId": UserId,
-                           @"targetUserId": UserId,
-                           };
-    [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/getUserInfo") params:dict success:^(id json) {
-        YZLog(@"getUserInfo:%@",json);
-        if (SUCCESS){
-            [self setAvatarWithavAtarUrlString:json[@"userInfo"][@"headPortraitUrl"]];
-        }
-    }failure:^(NSError *error)
-     {
-         YZLog(@"error = %@",error);
-     }];
-}
-
 //断网状态下，此方法必须实现
 - (void)noNetReloadRequest
 {
@@ -88,18 +70,16 @@
 
 - (void)loadUserInfo
 {
-    if (!UserId)
+    if (!Token)
     {
         [MBProgressHUD hideHUDForView:self.view];
         [self.header endRefreshing];
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(8006),
-                           @"userId":UserId
+                           @"token" : Token
                            };
-    //1612201120220100000026446
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         YZLog(@"%@",json);
         [MBProgressHUD hideHUDForView:self.view];
         [self.header endRefreshing];
@@ -122,6 +102,10 @@
 
 - (void)getMessageCount
 {
+    if (!UserId)
+    {
+        return;
+    }
     NSDictionary *dict = @{
                            @"userId":UserId
                            };
@@ -342,7 +326,7 @@
     
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, guideView.width, guideView.height)];
     //小圆
-    CGPoint center = self.avatarImageView.center;
+    CGPoint center = CGPointMake(self.avatarImageView.centerX, statusBarH + navBarH + self.avatarImageView.centerY);
     UIBezierPath *circlePath = [UIBezierPath bezierPath];
     [circlePath moveToPoint:center];
     [circlePath addArcWithCenter:center radius:self.avatarImageView.width / 2 startAngle:0 endAngle:2 * M_PI clockwise:YES];
@@ -394,7 +378,7 @@
         self.nickNameLabel.text = thirdPartyStatus.name;
     }
     
-    if (_user.userInfo.realname) {
+    if (_user.user.realname) {
         self.nameCertificationLabel.text = @"已认证";
     }else
     {
@@ -408,17 +392,17 @@
     }
     
     //赋值彩金、奖金、积分
-    NSString *balance = [NSString stringWithFormat:@"%.2f元",[_user.balance intValue] / 100.0];
-    if ([_user.balance intValue] == 0)
+    NSString *balance = [NSString stringWithFormat:@"%.2f元",[_user.account.balance intValue] / 100.0];
+    if ([_user.account.balance intValue] == 0)
     {
         balance = @"0元";
     }
-    NSString *bonus = [NSString stringWithFormat:@"%.2f元",[_user.bonus intValue] / 100.0];
-    if ([_user.bonus intValue] == 0)
+    NSString *bonus = [NSString stringWithFormat:@"%.2f元",[_user.account.bonus intValue] / 100.0];
+    if ([_user.account.bonus intValue] == 0)
     {
         bonus = @"0元";
     }
-    NSString *grade = [NSString stringWithFormat:@"%d",[_user.grade intValue]];
+    NSString *grade = [NSString stringWithFormat:@"%d",[_user.account.grade intValue]];
     [self setMoneyButtonTitleByBalance:balance bonus:bonus grade:grade];
     
     //frame
@@ -433,6 +417,8 @@
     
     CGSize mobilePhoneSize = [self.phoneBindingLabel.text sizeWithLabelFont:self.phoneBindingLabel.font];
     self.phoneBindingLabel.frame = CGRectMake(CGRectGetMaxX(self.line1.frame) + 5, self.nameCertificationLabel.y, mobilePhoneSize.width, self.nameCertificationLabel.height);
+    
+    [self setAvatarWithavAtarUrlString:_user.user.headUrl];
 }
 
 - (void)setAvatarWithavAtarUrlString:(NSString *)avatarUrlString
@@ -494,17 +480,17 @@
 - (void)walletButtonDidClick:(UIButton *)button
 {
     if (button.tag == 1) {//提款
-        if (!_user.userInfo.realname || !_user.mobilePhone) {
+        if (!_user.user.realname || !_user.mobilePhone) {
             UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"完善实名信息后才能提款哦" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction * alertAction1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
             UIAlertAction * alertAction2 = [UIAlertAction actionWithTitle:@"去完善" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                if (!_user.userInfo.realname && !_user.mobilePhone) {
+                if (!_user.user.realname && !_user.mobilePhone) {
                     YZNamePhoneBindingViewController * namePhoneBindingVC = [[YZNamePhoneBindingViewController alloc]init];
                     [self.navigationController pushViewController:namePhoneBindingVC animated:YES];
-                }else if (!_user.userInfo.realname  && _user.mobilePhone) {//没有实名认证
+                }else if (!_user.user.realname  && _user.mobilePhone) {//没有实名认证
                     YZRealNameViewController * realNameVC = [[YZRealNameViewController alloc]init];
                     [self.navigationController pushViewController:realNameVC animated:YES];
-                }else if (!_user.mobilePhone && _user.userInfo.realname) {
+                }else if (!_user.mobilePhone && _user.user.realname) {
                     YZPhoneBindingViewController * PhoneBindingVC = [[YZPhoneBindingViewController alloc]init];
                     [self.navigationController pushViewController:PhoneBindingVC animated:YES];
                 }

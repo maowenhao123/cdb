@@ -8,6 +8,18 @@
 
 #import "YZUser.h"
 
+@implementation YZAccount
+
+MJCodingImplementation
+
+@end
+
+@implementation YZUserInfo
+
+MJCodingImplementation
+
+@end
+
 @implementation YZUser
 
 MJCodingImplementation

@@ -364,8 +364,8 @@ static NSDictionary * bankDicInfo;
 + (BOOL)hasEnoughMoneyWithAmountMoney:(float)amountMoney
 {
     YZUser *user = [YZUserDefaultTool user];
-    float balance = [user.balance floatValue] / 100;
-    float bonus = [user.bonus floatValue] / 100;
+    float balance = [user.account.balance floatValue] / 100;
+    float bonus = [user.account.bonus floatValue] / 100;
     BOOL b = (balance + bonus) >= amountMoney;
     return b;
 }
@@ -373,8 +373,8 @@ static NSDictionary * bankDicInfo;
 + (NSString *)getAlertViewTextWithAmountMoney:(float)amountMoney
 {
     YZUser *user = [YZUserDefaultTool user];
-    float balance = [user.balance floatValue] / 100;//彩金
-    float bonus = [user.bonus floatValue] / 100;//奖金
+    float balance = [user.account.balance floatValue] / 100;//彩金
+    float bonus = [user.account.bonus floatValue] / 100;//奖金
     
     NSString *alertViewText = nil;
     

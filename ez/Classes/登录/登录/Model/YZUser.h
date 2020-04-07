@@ -7,20 +7,42 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YZUserInfo.h"
 #import "YZWeixin.h"
-@interface YZUser : NSObject
+
+@interface YZAccount : NSObject
 
 @property (nonatomic, strong) NSNumber *balance;//彩金
 @property (nonatomic, strong) NSNumber *bonus;//奖金
 @property (nonatomic, strong) NSNumber *grade;//积分
+@property (nonatomic, strong) NSNumber *deposit;
+@property (nonatomic, strong) NSNumber *total;
+
+@end
+
+@interface YZUserInfo : NSObject
+
+@property (nonatomic, copy) NSString *age;
+@property (nonatomic, copy) NSString *cardno;//身份证号码
+@property (nonatomic, copy) NSString *email;
+@property (nonatomic, copy) NSString *mobile;
+@property (nonatomic, copy) NSString *nickName;
+@property (nonatomic, copy) NSString *realname;//真实姓名
+@property (nonatomic, copy) NSString *sex;
+@property (nonatomic, copy) NSString *headUrl;//头像url
+
+@end
+
+@interface YZUser : NSObject
+
+@property (nonatomic, strong) YZAccount *account;
 @property (nonatomic, copy) NSString *mobilePhone;//手机号码
 @property (nonatomic, copy) NSString *nickName;//昵称
 @property (nonatomic, copy) NSString *userId;//用户id
 @property (nonatomic, copy) NSString *userName;//用户名
 @property (nonatomic, strong) NSArray *banks;//银行信息
 @property (nonatomic, assign) BOOL modifyPwd;//是否已经设置密码
-@property (nonatomic, strong) YZUserInfo *userInfo;//用户信息
+@property (nonatomic, strong) YZUserInfo *user;//用户信息
 @property (nonatomic, strong) YZWeixin *weixin;
+
 @end
 

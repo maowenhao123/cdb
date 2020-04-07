@@ -151,6 +151,7 @@
 #endif
 
 #define UserId [YZUserDefaultTool getObjectForKey:@"userId"]
+#define Token [YZUserDefaultTool getObjectForKey:@"token"]
 
 //动画时间
 #define animateDuration 0.2f

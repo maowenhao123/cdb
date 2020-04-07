@@ -224,7 +224,6 @@
 		AA32910D1FFE21D400CA77DA /* YZWeixin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3290ED1FFE21D400CA77DA /* YZWeixin.m */; };
 		AA32910F1FFE21D400CA77DA /* YZUser.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3290EE1FFE21D400CA77DA /* YZUser.m */; };
 		AA3291111FFE21D400CA77DA /* YZWeixinStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3290F01FFE21D400CA77DA /* YZWeixinStatus.m */; };
-		AA3291131FFE21D400CA77DA /* YZUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3290F21FFE21D400CA77DA /* YZUserInfo.m */; };
 		AA3291151FFE21D400CA77DA /* YZLoginAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3290F61FFE21D400CA77DA /* YZLoginAccountTableViewCell.m */; };
 		AA3291171FFE21D400CA77DA /* YZLeftViewTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3290F71FFE21D400CA77DA /* YZLeftViewTextField.m */; };
 		AA3291191FFE21D400CA77DA /* YZSecretChangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3290FC1FFE21D400CA77DA /* YZSecretChangeViewController.m */; };
@@ -1249,10 +1248,8 @@
 		AA3290EB1FFE21D400CA77DA /* YZLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZLoginViewController.h; sourceTree = "<group>"; };
 		AA3290ED1FFE21D400CA77DA /* YZWeixin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZWeixin.m; sourceTree = "<group>"; };
 		AA3290EE1FFE21D400CA77DA /* YZUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZUser.m; sourceTree = "<group>"; };
-		AA3290EF1FFE21D400CA77DA /* YZUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZUserInfo.h; sourceTree = "<group>"; };
 		AA3290F01FFE21D400CA77DA /* YZWeixinStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZWeixinStatus.m; sourceTree = "<group>"; };
 		AA3290F11FFE21D400CA77DA /* YZWeixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZWeixin.h; sourceTree = "<group>"; };
-		AA3290F21FFE21D400CA77DA /* YZUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZUserInfo.m; sourceTree = "<group>"; };
 		AA3290F31FFE21D400CA77DA /* YZUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZUser.h; sourceTree = "<group>"; };
 		AA3290F41FFE21D400CA77DA /* YZWeixinStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZWeixinStatus.h; sourceTree = "<group>"; };
 		AA3290F61FFE21D400CA77DA /* YZLoginAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZLoginAccountTableViewCell.m; sourceTree = "<group>"; };
@@ -4336,8 +4333,6 @@
 			children = (
 				AA3290F31FFE21D400CA77DA /* YZUser.h */,
 				AA3290EE1FFE21D400CA77DA /* YZUser.m */,
-				AA3290EF1FFE21D400CA77DA /* YZUserInfo.h */,
-				AA3290F21FFE21D400CA77DA /* YZUserInfo.m */,
 				AA3290F41FFE21D400CA77DA /* YZWeixinStatus.h */,
 				AA3290F01FFE21D400CA77DA /* YZWeixinStatus.m */,
 				AA3290F11FFE21D400CA77DA /* YZWeixin.h */,
@@ -5247,8 +5242,8 @@
 		AA74E7641FFE17DD003B53AF /* NSString+YZ */ = {
 			isa = PBXGroup;
 			children = (
-				AA74E7651FFE17DD003B53AF /* NSString+YZ.m */,
 				AA74E7661FFE17DD003B53AF /* NSString+YZ.h */,
+				AA74E7651FFE17DD003B53AF /* NSString+YZ.m */,
 			);
 			path = "NSString+YZ";
 			sourceTree = "<group>";
@@ -7388,7 +7383,6 @@
 				1D2E3341237162F300E8C9AC /* YZKy481ChongView.m in Sources */,
 				AA32939E1FFE27B700CA77DA /* YZFBMatchDetailStandingsStatus.m in Sources */,
 				AA74EBA21FFE17E0003B53AF /* AFHTTPSessionManager.m in Sources */,
-				AA3291131FFE21D400CA77DA /* YZUserInfo.m in Sources */,
 				AA74EBA81FFE17E0003B53AF /* AFNetworkReachabilityManager.m in Sources */,
 				AA3291191FFE21D400CA77DA /* YZSecretChangeViewController.m in Sources */,
 				AA74ECD81FFE1AD6003B53AF /* YZMessageStstus.m in Sources */,

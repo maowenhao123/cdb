@@ -230,6 +230,7 @@
             [MBProgressHUD showSuccess:@"修改密码成功"];
             //存储账户到数据库
             [YZUserDefaultTool saveObject:json[@"userId"] forKey:@"userId"];
+            [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
             [YZUserDefaultTool saveObject:self.passWordTF.text forKey:@"userPwd"];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [YZUserDefaultTool saveObject:@"accountLogin" forKey:@"loginWay"];
@@ -250,15 +251,14 @@
 
 - (void)loadUserInfo
 {
-    if (!UserId)
+    if (!Token)
     {
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(8006),
-                           @"userId":UserId
+                           @"token" : Token
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         YZLog(@"%@",json);
         if (SUCCESS) {
             //存储用户信息

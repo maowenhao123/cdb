@@ -6,26 +6,35 @@
 //  Copyright (c) 2014年 9ge. All rights reserved.
 //
 
+#import <CommonCrypto/CommonDigest.h>
 #import "NSString+YZ.h"
 
 @implementation NSString (YZ)
+
+- (NSString *)md5HexDigest
+{
+    const char *original_str = [self UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(original_str, (CC_LONG)strlen(original_str), result);
+    NSMutableString *hash = [NSMutableString string];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+    {
+        [hash appendFormat:@"%02X", result[i]];
+    }
+    NSString *mdfiveString = [hash lowercaseString];
+    return mdfiveString;
+}
+
 - (NSString *)URLEncodedString
 {
     NSString *result = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                           (CFStringRef)self,
-                                                                           NULL,
-                                                                           CFSTR("!*'();:@&=+$,%#[]/"),
-                                                                           kCFStringEncodingUTF8));
+                                                                                             (CFStringRef)self,
+                                                                                             NULL,
+                                                                                             CFSTR("!*'();:@&=+$,%#[]/"),
+                                                                                             kCFStringEncodingUTF8));
     return result;
 }
-- (NSString*)URLDecodedString
-{
-    NSString *result = (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
-                                                                                           (CFStringRef)self,
-                                                                                           CFSTR(""),
-                                                                                           kCFStringEncodingUTF8));
-    return result;
-}
+
 - (NSMutableAttributedString *)attributedString:(NSDictionary *)attrs WithRange:(NSRange)range
 {
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:self];
@@ -35,6 +44,7 @@
     }
     return attStr;
 }
+
 - (NSMutableAttributedString *)attributedStringWithAttributs:(NSDictionary *)attrs firstString:(NSString *)firstString secondString:(NSString *)secondString
 {
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:self];
@@ -43,32 +53,16 @@
     [attStr addAttributes:attrs range:NSMakeRange(range1.location + 1, range2.location - range1.location - 1)];
     return attStr;
 }
-- (NSUInteger)numbersOfCharacters
-{
-    NSUInteger len = self.length;
-    // 汉字字符集
-    NSString * pattern  = @"[\u4e00-\u9fa5]";
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
-    // 计算中文字符的个数
-    NSInteger numMatch = [regex numberOfMatchesInString:self options:NSMatchingReportProgress range:NSMakeRange(0, len)];
-    
-    return len + numMatch;
-}
-- (NSString *)stringByReversed
-{
-    NSMutableString *s = [NSMutableString string];
-    for (NSUInteger i=self.length; i>0; i--) {
-        [s appendString:[self substringWithRange:NSMakeRange(i-1, 1)]];
-    }
-    return s;
-}
+
 - (CGSize)sizeWithLabelFont:(UIFont *)font
 {
     return [self sizeWithFont:font maxSize:CGSizeMake(screenWidth, screenHeight)];
 }
+
 - (CGSize)sizeWithFont:(UIFont *)font maxSize:(CGSize)maxSize
 {
     CGSize size = [self boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : font} context:nil].size;
     return size;
 }
+
 @end

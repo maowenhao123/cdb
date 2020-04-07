@@ -657,12 +657,11 @@
 }
 - (void)loadUserInfo
 {
-    if (!UserId) return;
+    if (!Token) return;
     NSDictionary *dict = @{
-                           @"cmd":@(8006),
-                           @"userId":UserId
+                           @"token" : Token
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         YZLog(@"%@",json);
         if (SUCCESS) {
             //存储用户信息
@@ -841,7 +840,7 @@
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:descr thumImage:image];
     YZUser *user = [YZUserDefaultTool user];
     NSString * nickName = user.nickName;
-    shareObject.webpageUrl = [NSString stringWithFormat:@"%@/unionbuydetail?unionBuyPlanId=%@&userName=%@", shareBaseUrl, _unionBuyPlanId, nickName];
+    shareObject.webpageUrl = [NSString stringWithFormat:@"%@/unionbuydetail?unionBuyPlanId=%@&userName=%@", @"shareBaseUrl", _unionBuyPlanId, nickName];
     messageObject.shareObject = shareObject;//调用分享接口
     [WXApi registerApp:WXAppIdOld withDescription:@"中彩啦"];
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {

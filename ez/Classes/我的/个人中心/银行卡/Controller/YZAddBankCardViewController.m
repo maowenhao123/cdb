@@ -95,10 +95,10 @@
         {
             self.nameTF = textField;
             YZUser *user = [YZUserDefaultTool user];
-            NSString * realname = user.userInfo.realname;
+            NSString * realname = user.user.realname;
             if (realname.length > 1) {//实名认证后就自动读取实名认证的姓名
                 textField.userInteractionEnabled = NO;
-                for (int j = 0; j < user.userInfo.realname.length - 1; j++) {
+                for (int j = 0; j < user.user.realname.length - 1; j++) {
                     realname = [realname stringByReplacingCharactersInRange:NSMakeRange(1 + j, 1) withString:@"*"];
                 }
                 textField.text = realname;
@@ -173,7 +173,7 @@
     NSString * accountName = self.nameTF.text;
     if (!self.nameTF.userInteractionEnabled) {
         YZUser *user = [YZUserDefaultTool user];
-        accountName = user.userInfo.realname;
+        accountName = user.user.realname;
     }
     NSDictionary *dict = @{
                            @"cmd":@(10721),

@@ -383,11 +383,10 @@
     }
     
     NSDictionary *dict = @{
-                           @"cmd":@(8006),
-                           @"userId":UserId
+                           @"token" : Token
                            };
     [MBProgressHUD showMessage:@"客官请稍后" toView:self.viewController.tabBarController.view];
-    [[YZHttpTool shareInstance] requestTarget:self.viewController PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
         if (SUCCESS) {
             //存储用户信息

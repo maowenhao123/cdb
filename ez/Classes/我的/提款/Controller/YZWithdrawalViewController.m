@@ -33,21 +33,20 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!UserId)
+    if (!Token)
     {
         [MBProgressHUD hideHUDForView:self.view];
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(8006),
-                           @"userId":UserId
+                           @"token" : Token
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         if (SUCCESS) {
             //存储用户信息
             YZUser *user = [YZUser objectWithKeyValues:json];
             [YZUserDefaultTool saveUser:user];
-            self.balanceLabel.text = [NSString stringWithFormat:@"%.2f元",[user.bonus floatValue] / 100.0];
+            self.balanceLabel.text = [NSString stringWithFormat:@"%.2f元",[user.account.bonus floatValue] / 100.0];
         }else
         {
             ShowErrorView;

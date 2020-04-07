@@ -157,6 +157,7 @@
         if(SUCCESS)
         {
             [YZUserDefaultTool saveObject:json[@"userId"] forKey:@"userId"];
+            [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
             //用于绑定Alias的
             [YZTool setAlias];
             //第三方的信息

@@ -9,26 +9,19 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (YZ)
+
+/**
+ * md5加密
+ */
+- (NSString *)md5HexDigest;
 /**
  * url编码
  */
 - (NSString *)URLEncodedString;
 /**
- * url解码
- */
-- (NSString*)URLDecodedString;
-/**
  * 获取attributedString
  */
 - (NSMutableAttributedString *)attributedString:(NSDictionary *)attrs WithRange:(NSRange)range;
-/**
- * 字符串的字符数统计
- */
-- (NSUInteger)numbersOfCharacters;
-/**
- * 字符串的反转
- */
-- (NSString *)stringByReversed;
 /**
  * 给字符串俩字间加属性
  */
@@ -48,4 +41,5 @@
  *  @return 返回文字所占用的label宽高
  */
 - (CGSize)sizeWithFont:(UIFont *)font maxSize:(CGSize)maxSize;
+
 @end

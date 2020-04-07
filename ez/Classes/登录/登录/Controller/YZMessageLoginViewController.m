@@ -134,6 +134,7 @@
         self.timer = nil;
     }];
 }
+
 - (void)countDown
 {
     [self.view endEditing:YES];
@@ -203,12 +204,13 @@
         [YZUserDefaultTool saveUser:user];
         //存储userId和userName
         [YZUserDefaultTool saveObject:json[@"userId"] forKey:@"userId"];
+        [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
         [YZUserDefaultTool saveObject:self.phoneTextField.text forKey:@"userName"];//userAccount
         //发送登录成功通知
         [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNote object:nil];
         [self loadUserInfo];
         [YZTool setAlias];
-        [self back];
+        [self backAction];
     }else
     {
         ShowErrorView
@@ -218,15 +220,14 @@
 
 - (void)loadUserInfo
 {
-    if (!UserId)
+    if (!Token)
     {
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(8006),
-                           @"userId":UserId
+                           @"token" : Token
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         YZLog(@"%@",json);
         if (SUCCESS) {
             //存储用户信息
@@ -238,7 +239,7 @@
     }];
 }
     
-- (void)back
+- (void)backAction
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -49,12 +49,11 @@ NSString * const CustomCountCellId = @"YZIntegralCustomCountCollectionViewCellId
 #pragma mark - 请求数据
 - (void)loadUserInfo
 {
-    if (!UserId) return;
+    if (!Token) return;
     NSDictionary *dict = @{
-                           @"cmd":@(8006),
-                           @"userId":UserId
+                           @"token" : Token
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         YZLog(@"%@",json);
         if (SUCCESS) {
             //存储用户信息
@@ -172,7 +171,7 @@ NSString * const CustomCountCellId = @"YZIntegralCustomCountCollectionViewCellId
 
 - (void)setUserInfo
 {
-    self.currentIntegralLabel.text = [NSString stringWithFormat:@"当前积分%@", _user.grade];
+    self.currentIntegralLabel.text = [NSString stringWithFormat:@"当前积分%@", _user.account.grade];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

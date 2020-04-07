@@ -92,10 +92,10 @@
         }
     }
 //    YZUser *user = [YZUserDefaultTool user];
-//    if(user.userInfo.realname && user.userInfo.cardno)//如果已经实名，就显示出来
+//    if(user.user.realname && user.user.cardno)//如果已经实名，就显示出来
 //    {
-//        self.nameTF.text = user.userInfo.realname;
-//        self.cardNoTF.text = user.userInfo.cardno;
+//        self.nameTF.text = user.user.realname;
+//        self.cardNoTF.text = user.user.cardno;
 //    }
     
     //立即充值按钮

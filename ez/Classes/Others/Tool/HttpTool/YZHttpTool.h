@@ -30,7 +30,7 @@ typedef enum : NSUInteger {
 } ChooseNumberType;
 
 #define Jump  [json[@"status"] isEqualToNumber:@(1)]  //1跳0不跳
-#define mainChannel @"zhongcai"
+#define mainChannel @"store"
 
 #define jumpURLStr @"http://html5.51mcp.com/ios/confirm.jsp"
 
@@ -41,10 +41,9 @@ typedef enum : NSUInteger {
 //#define childChannel @"zc_taylor"
 
 //正式环境
-#define baseUrl @"http://www1.51mcp.com"
+#define baseUrl @"http://admin.jifengo.online/gateway"
 #define shareBaseUrl @"https://cp.ez1898.com"
-#define mcpUrl [NSString stringWithFormat:@"%@/portal/gateway",baseUrl]
-#define childChannel @"zc_ios_0001"
+#define childChannel @"store_0001"
 
 ////测试环境
 //#define baseUrl @"http://c.ez1898.com"
@@ -106,5 +105,7 @@ typedef enum : NSUInteger {
 - (void)getUnionBuyStatusWithUserName:(NSString *)userName gameId:(NSString *)gameId sortType:(SortType)sortType fieldType:(FieldType)fieldType  index:(NSInteger)index getSuccess:(void(^)(NSArray *unionBuys))getSuccess getFailure:(void(^)())getFailure;
 #pragma mark - 图片上传
 - (void)uploadWithImage:(UIImage *)image currentIndex:(NSInteger)currentIndex totalCount:(NSInteger)totalCount aliOssToken:(NSDictionary *)aliOssToken Success:(void (^)(NSString * picUrl))success Failure:(void (^)(NSError * error))failure Progress:(void(^)(float percent))percent;
+#pragma mark - 获取设备当前网络IP地址
+- (NSString *)getIPAddress:(BOOL)preferIPv4;
 
 @end

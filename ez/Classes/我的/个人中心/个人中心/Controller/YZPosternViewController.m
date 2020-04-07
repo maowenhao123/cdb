@@ -42,7 +42,7 @@
             textField.placeholder = @"请输入接口地址";
             NSString *posternBaseUrl = [YZUserDefaultTool getObjectForKey:@"PosternBaseUrl"];
             if (YZStringIsEmpty(posternBaseUrl)) {
-                posternBaseUrl = mcpUrl;
+                posternBaseUrl = @"";
             }
             textField.text = posternBaseUrl;
         }else if (i == 1)

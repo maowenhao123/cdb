@@ -7,10 +7,20 @@
 //
 #define requestTimeoutInterval 25
 
+#define IOS_CELLULAR    @"pdp_ip0"
+#define IOS_WIFI        @"en0"
+#define IOS_VPN         @"utun0"
+#define IP_ADDR_IPv4    @"ipv4"
+#define IP_ADDR_IPv6    @"ipv6"
+
 #import <AliyunOSSiOS/OSSService.h>
+#import <ifaddrs.h>
+#import <arpa/inet.h>
+#import <net/if.h>
 #import "YZHttpTool.h"
 #import "AFHTTPSessionManager.h"
 #import "UIViewController+YZNoNetController.h"
+#import "YZDateTool.h"
 
 @implementation YZHttpTool
 + (YZHttpTool *)shareInstance
@@ -35,6 +45,7 @@
         [MBProgressHUD hideHUDForView:target.view animated:YES];
     }
 }
+
 - (void)requestTarget:(UIViewController*)target PostWithParams:(NSDictionary *)params success:(void (^)(id))success failure:(void (^)(NSError *))failure
 {
     if ([self checkNetState]) {//有网的时候去请求数据
@@ -67,7 +78,7 @@
     NSString * posternMainChannel = [YZUserDefaultTool getObjectForKey:@"PosternMainChannel"];
     NSString * posternChildChannel = [YZUserDefaultTool getObjectForKey:@"PosternChildChannel"];
     if (YZStringIsEmpty(posternBaseUrl)) {
-        posternBaseUrl = mcpUrl;
+        posternBaseUrl = baseUrl;
     }
     if (YZStringIsEmpty(posternMainChannel)) {
         posternMainChannel = mainChannel;
@@ -77,59 +88,50 @@
     }
     //发送请求
     NSDictionary *dict = @{
-                           @"id":nowDateStr,
-                           @"channel":posternMainChannel,
-                           @"childChannel":posternChildChannel,
-                           @"clientVersion":[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],
-                           };
+        @"id":nowDateStr,
+        @"channel":posternMainChannel,
+        @"childChannel":posternChildChannel,
+        @"clientVersion":[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],
+    };
     NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:dict];
     [tempDict addEntriesFromDictionary:params];//拼接参数
     [mgr POST:posternBaseUrl
    parameters:tempDict
      progress:^(NSProgress * _Nonnull uploadProgress) {
-         
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-         if (success) {
-             success(responseObject);
-         }
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         if (failure) {
-             
-             failure(error);
-             NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-             NSInteger statusCode = response.statusCode;
-             YZLog(@"error:%ld",statusCode);
-             
-             YZLog(@"系统繁忙 - YZHttpTool：%@",[NSString stringWithFormat:@"cmd=%@,error=%@",params[@"cmd"],error]);
-             
-             NSNumber *cmd = tempDict[@"cmd"];
-             NSNumber *cmd1 = @(8026);//普通投注获取当期期次
-             NSNumber *cmd2 = @(8027);//获取所有彩种信息
-             NSNumber *cmd3 = @(8028);//竞彩足球投注获取当期期次
-             if(!([cmd isEqualToNumber:cmd1] || [cmd isEqualToNumber:cmd2] || [cmd isEqualToNumber:cmd3]))//这俩个接口，获取不到数据会每秒提醒一次，故不提醒
-             {
-                 if ([self checkNetState]) {
-                     [MBProgressHUD showError:@"加载失败，请稍后再试"];
-                 }else
-                 {
-                     [MBProgressHUD showError:@"亲~~~网络不给力..."];
-                 }
-             }
-         }
-     }];
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) {
+            
+            failure(error);
+            NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
+            NSInteger statusCode = response.statusCode;
+            YZLog(@"error:%ld",statusCode);
+            
+            YZLog(@"系统繁忙 - YZHttpTool：%@",[NSString stringWithFormat:@"cmd=%@,error=%@",params[@"cmd"],error]);
+            
+            NSNumber *cmd = tempDict[@"cmd"];
+            NSNumber *cmd1 = @(8026);//普通投注获取当期期次
+            NSNumber *cmd2 = @(8027);//获取所有彩种信息
+            NSNumber *cmd3 = @(8028);//竞彩足球投注获取当期期次
+            if(!([cmd isEqualToNumber:cmd1] || [cmd isEqualToNumber:cmd2] || [cmd isEqualToNumber:cmd3]))//这俩个接口，获取不到数据会每秒提醒一次，故不提醒
+            {
+                if ([self checkNetState]) {
+                    [MBProgressHUD showError:@"加载失败，请稍后再试"];
+                }else
+                {
+                    [MBProgressHUD showError:@"亲~~~网络不给力..."];
+                }
+            }
+        }
+    }];
 }
 
 - (void)postWithURL:(NSString *)url params:(NSDictionary *)params success:(void (^)(id))success failure:(void (^)(NSError *))failure
 {
-    // 创建请求管理对象
-    AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
-    // 设置请求格式
-    mgr.requestSerializer = [AFJSONRequestSerializer serializer];
-    // 设置请求时间
-    mgr.requestSerializer.timeoutInterval = requestTimeoutInterval;
-    // 设置返回格式
-    mgr.responseSerializer = [AFJSONResponseSerializer serializer];
-
     NSString * posternMainChannel = [YZUserDefaultTool getObjectForKey:@"PosternMainChannel"];
     NSString * posternChildChannel = [YZUserDefaultTool getObjectForKey:@"PosternChildChannel"];
     if (YZStringIsEmpty(posternMainChannel)) {
@@ -139,17 +141,23 @@
         posternChildChannel = childChannel;
     }
     
-    //发送请求
+    NSString * IP = [self getIPAddress:NO];
+    if ([IP isEqualToString:@"0.0.0.0"]) {
+        IP = [self getIPAddress:YES];
+    }
     NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
-    [formatter setDateFormat:@"YYYYMMddhhmmssSSS"];
+    formatter.dateFormat = @"YYYY-MM-dd HH:mm:ss";
     NSString *nowDateStr = [formatter stringFromDate:[NSDate date]];
+    NSString * imei = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     NSDictionary *dict = @{
-                           @"id":nowDateStr,
-                           @"channel":posternMainChannel,
-                           @"childChannel":posternChildChannel,
-                           @"clientVersion":[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],
-                           @"sequence":[YZTool uuidString],
-                           };
+        @"ip": IP,
+        @"timestamp": nowDateStr,
+        @"channel": posternMainChannel,
+        @"childChannel": posternChildChannel,
+        @"clientVersion": [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],
+        @"id": [YZTool uuidString],
+        @"deviceNumber": imei,
+    };
     NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:dict];
     if (![tempDict.allKeys containsObject:@"version"]) {
         [tempDict setValue:@"0.0.1" forKey:@"version"];
@@ -159,40 +167,69 @@
         [tempDict setValue:KUserId forKey:@"userId"];
     }
     [tempDict addEntriesFromDictionary:params];//拼接参数
-    // 发送请求
-    [mgr POST:url
-   parameters:tempDict
-     progress:^(NSProgress * _Nonnull uploadProgress) {
-         
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-         if (success) {
-             success(responseObject);
-         }
-     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         if (failure) {
-             failure(error);
-             NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-             NSInteger statusCode = response.statusCode;
-             YZLog(@"error:%ld",statusCode);
-             if ([self checkNetState]) {
-                 [MBProgressHUD showError:@"加载失败，请稍后再试"];
-             }else
-             {
-                 [MBProgressHUD showError:@"亲~~~网络不给力..."];
-             }
-         }
-     }];
+    NSString * jsonDict = [self toJSONString:tempDict];
+    NSString * sign = [NSString stringWithFormat:@"%@123456", jsonDict];
+    NSString * signMd5 = [sign md5HexDigest];
+    NSString * tempUrl = [NSString stringWithFormat:@"%@%@?sign=%@", baseUrl, url, signMd5];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:tempUrl]];
+    request.HTTPMethod = @"POST";
+    NSDictionary *headers = @{
+      @"Content-Type": @"application/json;charset=UTF-8"
+    };
+    request.allHTTPHeaderFields = headers;
+    NSData *postData = [[NSData alloc] initWithData:[jsonDict dataUsingEncoding:NSUTF8StringEncoding]];
+    request.HTTPBody = postData;
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    //建立任务
+    NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(),^{//主线程
+            if (!error) {
+                //解析
+                NSMutableDictionary *mDict = [NSMutableDictionary dictionary];
+                NSError * jsonError;
+                mDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+                success(mDict);
+            }else
+            {
+                failure(error);
+            }
+        });
+    }];
+    //启动任务
+    [task resume];
+    //    // 发送请求
+    //    [manager POST:tempUrl
+    //       parameters:tempDict
+    //         progress:^(NSProgress * _Nonnull uploadProgress) {
+    //
+    //    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    //        if (success) {
+    //            success(responseObject);
+    //        }
+    //    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    //        if (failure) {
+    //            failure(error);
+    //            YZLog(@"error:%@", error);
+    //            if ([self checkNetState]) {
+    //                [MBProgressHUD showError:@"加载失败，请稍后再试"];
+    //            }else
+    //            {
+    //                [MBProgressHUD showError:@"亲~~~网络不给力..."];
+    //            }
+    //        }
+    //    }];
 }
 #pragma mark - 获取合买数据
 - (void)getUnionBuyStatusWithUserName:(NSString *)userName gameId:(NSString *)gameId sortType:(SortType)sortType fieldType:(FieldType)fieldType  index:(NSInteger)index getSuccess:(void(^)(NSArray *unionBuys))getSuccess getFailure:(void(^)())getFailure
 {
     NSMutableDictionary *dict = [@{
-                                   @"cmd":@(8120),
-                                   @"sort":@(1),//1：升序、2：降序
-                                   @"field":@(1),//1：金额排序、2：进度排序、3：战绩排序
-                                   @"pageIndex":@(index),
-                                   @"pageSize":@(10),
-                                   } mutableCopy];
+        @"cmd":@(8120),
+        @"sort":@(1),//1：升序、2：降序
+        @"field":@(1),//1：金额排序、2：进度排序、3：战绩排序
+        @"pageIndex":@(index),
+        @"pageSize":@(10),
+    } mutableCopy];
     
     if(userName) [dict setValue:userName forKey:@"userName"];
     if(gameId) [dict setValue:gameId forKey:@"gameId"];
@@ -215,6 +252,7 @@
         getFailure();
     }];
 }
+
 //上传图片
 - (void)uploadWithImage:(UIImage *)image currentIndex:(NSInteger)currentIndex totalCount:(NSInteger)totalCount aliOssToken:(NSDictionary *)aliOssToken Success:(void (^)(NSString * picUrl))success Failure:(void (^)(NSError * error))failure Progress:(void(^)(float percent))percent
 {
@@ -265,7 +303,7 @@
     OSSTask * putTask = [client putObject:put];
     [putTask continueWithBlock:^id(OSSTask *task) {
         task = [client presignPublicURLWithBucketName:aliOssToken[@"bucket"]
-                                            withObjectKey:fileName];
+                                        withObjectKey:fileName];
         if (!task.error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [HUD hideAnimated:YES];
@@ -298,6 +336,96 @@
      AFNetworkReachabilityStatusReachableViaWiFi = 2,
      */
     return [AFNetworkReachabilityManager sharedManager].isReachable;
+}
+
+#pragma mark - 获取设备当前网络IP地址
+- (NSString *)getIPAddress:(BOOL)preferIPv4
+{
+    NSArray *searchArray = preferIPv4 ?
+    @[ IOS_VPN @"/" IP_ADDR_IPv4, IOS_VPN @"/" IP_ADDR_IPv6, IOS_WIFI @"/" IP_ADDR_IPv4, IOS_WIFI @"/" IP_ADDR_IPv6, IOS_CELLULAR @"/" IP_ADDR_IPv4, IOS_CELLULAR @"/" IP_ADDR_IPv6 ] :
+    @[ IOS_VPN @"/" IP_ADDR_IPv6, IOS_VPN @"/" IP_ADDR_IPv4, IOS_WIFI @"/" IP_ADDR_IPv6, IOS_WIFI @"/" IP_ADDR_IPv4, IOS_CELLULAR @"/" IP_ADDR_IPv6, IOS_CELLULAR @"/" IP_ADDR_IPv4 ] ;
+    NSDictionary *addresses = [self getIPAddresses];
+    __block NSString *address;
+    [searchArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop)
+     {
+        address = addresses[key];
+        //筛选出IP地址格式
+        if([self isValidatIP:address]) *stop = YES;
+    } ];
+    return address ? address : @"0.0.0.0";
+}
+
+- (BOOL)isValidatIP:(NSString *)ipAddress {
+    if (ipAddress.length == 0) {
+        return NO;
+    }
+    NSString *urlRegEx = @"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:urlRegEx options:0 error:&error];
+    if (regex != nil) {
+        NSTextCheckingResult *firstMatch=[regex firstMatchInString:ipAddress options:0 range:NSMakeRange(0, [ipAddress length])];
+        
+        if (firstMatch) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (NSDictionary *)getIPAddresses
+{
+    NSMutableDictionary *addresses = [NSMutableDictionary dictionaryWithCapacity:8];
+    // retrieve the current interfaces - returns 0 on success
+    struct ifaddrs *interfaces;
+    if(!getifaddrs(&interfaces)) {
+        // Loop through linked list of interfaces
+        struct ifaddrs *interface;
+        for(interface=interfaces; interface; interface=interface->ifa_next) {
+            if(!(interface->ifa_flags & IFF_UP) /* || (interface->ifa_flags & IFF_LOOPBACK) */ ) {
+                continue; // deeply nested code harder to read
+            }
+            const struct sockaddr_in *addr = (const struct sockaddr_in*)interface->ifa_addr;
+            char addrBuf[ MAX(INET_ADDRSTRLEN, INET6_ADDRSTRLEN) ];
+            if(addr && (addr->sin_family==AF_INET || addr->sin_family==AF_INET6)) {
+                NSString *name = [NSString stringWithUTF8String:interface->ifa_name];
+                NSString *type;
+                if(addr->sin_family == AF_INET) {
+                    if(inet_ntop(AF_INET, &addr->sin_addr, addrBuf, INET_ADDRSTRLEN)) {
+                        type = IP_ADDR_IPv4;
+                    }
+                } else {
+                    const struct sockaddr_in6 *addr6 = (const struct sockaddr_in6*)interface->ifa_addr;
+                    if(inet_ntop(AF_INET6, &addr6->sin6_addr, addrBuf, INET6_ADDRSTRLEN)) {
+                        type = IP_ADDR_IPv6;
+                    }
+                }
+                if(type) {
+                    NSString *key = [NSString stringWithFormat:@"%@/%@", name, type];
+                    addresses[key] = [NSString stringWithUTF8String:addrBuf];
+                }
+            }
+        }
+        // Free memory
+        freeifaddrs(interfaces);
+    }
+    return [addresses count] ? addresses : nil;
+}
+
+- (NSString *)toJSONString:(NSDictionary *)dic {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dic
+                                                   options:NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments
+                                                     error:nil];
+    
+    if (data == nil) {
+        return nil;
+    }
+    
+    NSString *string = [[NSString alloc] initWithData:data
+                                             encoding:NSUTF8StringEncoding];
+    return string;
 }
 
 @end

@@ -210,7 +210,7 @@
         self.nickNameLabel.text = _user.nickName;
     }
     
-    if (_user.userInfo.realname) {
+    if (_user.user.realname) {
         self.nameCertificationLabel.text = @"已认证";
     }else
     {
@@ -223,17 +223,17 @@
         self.phoneBindingLabel.text = @"未绑定手机";
     }
     //赋值彩金、奖金、积分
-    NSString *balance = [NSString stringWithFormat:@"%.2f元",[_user.balance intValue] / 100.0];
-    if ([_user.balance intValue] == 0)
+    NSString *balance = [NSString stringWithFormat:@"%.2f元",[_user.account.balance intValue] / 100.0];
+    if ([_user.account.balance intValue] == 0)
     {
         balance = @"0元";
     }
-    NSString *bonus = [NSString stringWithFormat:@"%.2f元",[_user.bonus intValue] / 100.0];
-    if ([_user.bonus intValue] == 0)
+    NSString *bonus = [NSString stringWithFormat:@"%.2f元",[_user.account.bonus intValue] / 100.0];
+    if ([_user.account.bonus intValue] == 0)
     {
         bonus = @"0元";
     }
-    NSString *grade = [NSString stringWithFormat:@"%d",[_user.grade intValue]];
+    NSString *grade = [NSString stringWithFormat:@"%d",[_user.account.grade intValue]];
     NSArray *moneys = [NSArray arrayWithObjects:balance,bonus,grade,nil];
     NSArray * moneyDetailbtnTitles = @[@"彩金",@"奖金",@"积分"];
     for (UIButton * button in self.moneyDetailbtns) {

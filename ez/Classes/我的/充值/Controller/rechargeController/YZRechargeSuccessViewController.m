@@ -23,10 +23,9 @@
 - (void)loadUserInfo
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8006),
-                           @"userId":UserId
+                           @"token" : Token
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         //存储用户信息
         if (SUCCESS) {
             YZUser *user = [YZUser objectWithKeyValues:json];

@@ -299,7 +299,8 @@
                 [confirmBtn setTitle:@"智能追号" forState:UIControlStateNormal];
             }else
             {
-                [confirmBtn setTitle:@"发起合买" forState:UIControlStateNormal];
+                confirmBtn.hidden = YES;
+//                [confirmBtn setTitle:@"发起合买" forState:UIControlStateNormal];
             }
         }else
         {
@@ -685,10 +686,9 @@
     }
     waitingView;
     NSDictionary *dict = @{
-                           @"cmd":@(8006),
-                           @"userId":UserId
+                           @"token" : Token
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if (SUCCESS) {
             //存储用户信息
