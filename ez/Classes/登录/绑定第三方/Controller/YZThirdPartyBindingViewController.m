@@ -93,11 +93,10 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(12001),
                            @"phone":self.accountTextField.text
                            };
     self.codeBtn.enabled = NO;
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/sendSmsVerifyCodeWithFindPwd" params:dict success:^(id json) {
         if(SUCCESS)
         {
             //倒计时

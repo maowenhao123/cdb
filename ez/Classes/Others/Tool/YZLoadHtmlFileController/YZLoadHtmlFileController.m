@@ -170,7 +170,7 @@
 }
 - (void)handleCustomAction:(NSURL *)url
 {
-    if (!UserId) {
+    if (!Token) {
         YZLoginViewController *login = [[YZLoginViewController alloc] init];
         YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
         [self presentViewController:nav animated:YES completion:nil];

@@ -47,27 +47,12 @@
 }
 - (void)getDataIsByDate:(BOOL)isByDate
 {
-    NSDictionary *dict = [NSDictionary dictionary];
-    NSString * url;
-    if (isByDate) {
-        NSString * roundDateStr = [self.dateStr stringByReplacingOccurrencesOfString:@"-" withString:@""];
-        dict = @{
-                   @"pageIndex":@(self.pageIndex2),
-                   @"pageSize":@(10),
-                   @"roundDateStr":roundDateStr,
-                   @"gameId":self.gameId
-                };
-        url = BaseUrlJingcai(@"/matchresults/rounddate");
-    }else
-    {
-        dict = @{
-                 @"pageIndex":@(self.pageIndex1),
-                 @"pageSize":@(10),
-                 @"gameId":self.gameId
-                 };
-        url = BaseUrlJingcai(@"/matchresults/default");
-    }
-    [[YZHttpTool shareInstance] requestTarget:self PostWithURL:url params:dict success:^(id json) {
+    NSDictionary *dict = @{
+        @"pageIndex":@(self.pageIndex1),
+        @"pageSize":@(10),
+        @"gameId":self.gameId
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/getOpenWinDetail" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"%@",json);
         if (SUCCESS) {;
@@ -91,13 +76,13 @@
             ShowErrorView;
         }
     }failure:^(NSError *error)
-    {
-         [self.tableView reloadData];
-         [self.header endRefreshing];
-         [self.footer endRefreshing];
-         [MBProgressHUD hideHUDForView:self.view];
-         YZLog(@"error = %@",error);
-     }];
+     {
+        [self.tableView reloadData];
+        [self.header endRefreshing];
+        [self.footer endRefreshing];
+        [MBProgressHUD hideHUDForView:self.view];
+        YZLog(@"error = %@",error);
+    }];
 }
 #pragma mark - 布局视图
 - (void)setupChilds

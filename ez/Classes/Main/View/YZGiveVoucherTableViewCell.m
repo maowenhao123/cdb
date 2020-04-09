@@ -111,7 +111,7 @@
 
 - (void)getVoucher
 {
-    if (!UserId) return;
+    if (!Token) return;
     NSDictionary *dict = @{
                            @"userId":UserId,
                            @"promotionId":self.promotionId,

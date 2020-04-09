@@ -215,11 +215,11 @@
 {
     [self.view endEditing:YES];
     NSDictionary *dict = @{
-                           @"cmd":@(12001),
                            @"phone":self.phoneStr
                            };
     self.codeBtn.enabled = NO;
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/sendSmsVerifyCodeWithFindPwd" params:dict success:^(id json)
+    {
         if(SUCCESS)
         {
             //倒计时
@@ -268,11 +268,10 @@
 {
     
     NSDictionary *dict = @{
-                           @"cmd":@(12011),
                            @"phone":self.phoneStr,
                            @"verifyCode":self.verifyCodeTextField.text,
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/checkSmsVerifyCodeByPhone" params:dict success:^(id json) {
         YZLog(@"json = %@",json);
         if(SUCCESS)
         {

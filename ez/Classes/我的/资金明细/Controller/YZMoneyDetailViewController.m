@@ -131,13 +131,12 @@
         type += 1;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(8029),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"type":@(type),
                            @"pageIndex":@(self.currentPageIndex),
                            @"pageSize":@(10)
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getTradeList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         UITableView *tableView = self.views[self.currentIndex];
         if (SUCCESS) {

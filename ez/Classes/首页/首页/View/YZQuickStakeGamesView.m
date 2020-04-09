@@ -374,7 +374,7 @@
 #pragma mark - 支付
 - (void)payButtonDidClick
 {
-    if (!UserId)
+    if (!Token)
     {
         YZLoginViewController *loginVc = [[YZLoginViewController alloc] init];
         YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:loginVc];
@@ -383,8 +383,8 @@
     }
     
     NSDictionary *dict = @{
-                           @"token" : Token
-                           };
+        @"token" : Token
+    };
     [MBProgressHUD showMessage:@"客官请稍后" toView:self.viewController.tabBarController.view];
     [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
@@ -405,13 +405,13 @@
 - (void)getConsumableList
 {
     NSDictionary * orderDic = @{
-                                @"money":@(200),
-                                @"game":self.gameModel.id
-                                };
+        @"money":@(200),
+        @"game":self.gameModel.id
+    };
     NSDictionary *dict = @{
-                           @"userId":UserId,
-                           @"order":orderDic,
-                           };
+        @"userId":UserId,
+        @"order":orderDic,
+    };
     [MBProgressHUD showMessage:@"客官请稍后" toView:self.viewController.tabBarController.view];
     [[YZHttpTool shareInstance] requestTarget:self.viewController PostWithURL:BaseUrlCoupon(@"/getConsumableList") params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
@@ -429,8 +429,8 @@
         }
     }failure:^(NSError *error)
      {
-         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
-     }];
+        [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
+    }];
 }
 - (void)gotoChooseVoucherVC
 {
@@ -477,11 +477,11 @@
 - (void)getCurrentTermData
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8026),
-                           @"gameId":self.gameModel.id
-                           };
+        @"storeId":@"1",
+        @"gameId":self.gameModel.id
+    };
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.viewController.tabBarController.view];
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
         if(SUCCESS)
         {
@@ -530,18 +530,17 @@
     NSNumber *amount = @(200);
     NSMutableArray *ticketList = [self getTicketList];
     NSDictionary * dict = @{
-                            @"cmd":@(8052),
-                            @"userId":UserId,
-                            @"gameId":self.gameModel.id,
-                            @"termId":self.currentTermId,
-                            @"multiple":multiple,
-                            @"amount":amount,
-                            @"ticketList":ticketList,
-                            @"payType":@"ACCOUNT",
-                            @"startTermId":self.currentTermId,
-                            };
+        @"token":Token,
+        @"gameId":self.gameModel.id,
+        @"termId":self.currentTermId,
+        @"multiple":multiple,
+        @"amount":amount,
+        @"ticketList":ticketList,
+        @"payType":@"ACCOUNT",
+        @"startTermId":self.currentTermId,
+    };
     [MBProgressHUD showMessage:text_paying toView:self.viewController.tabBarController.view];
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/normalStake" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
         if(SUCCESS)
         {
@@ -590,17 +589,17 @@
     NSDictionary *dict = [NSDictionary dictionary];
     if ([self.gameModel.id isEqualToString:@"T03"] || [self.gameModel.id isEqualToString:@"F02"]) {
         dict = @{
-                 @"numbers":numbers,
-                 @"betType":@"00",
-                 @"playType":@"01"
-                 };
+            @"numbers":numbers,
+            @"betType":@"00",
+            @"playType":@"01"
+        };
     }else
     {
         dict = @{
-                 @"numbers":numbers,
-                 @"betType":@"00",
-                 @"playType":@"00"
-                 };
+            @"numbers":numbers,
+            @"betType":@"00",
+            @"playType":@"00"
+        };
     }
     [ticketList addObject:dict];
     return ticketList;

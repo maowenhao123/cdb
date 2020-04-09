@@ -189,12 +189,11 @@
     }
     
     NSDictionary *dict = @{
-                           @"cmd":@(8009),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"phone":self.phoneTF.text
                            };
     self.codeBtn.enabled = NO;
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getVerifyCode" params:dict success:^(id json) {
         if(SUCCESS)
         {
             //倒计时
@@ -298,14 +297,13 @@
     }
     NSString *mobilePhone = self.phoneTF.text;
     NSDictionary *dict = @{
-                           @"cmd":@(8007),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"realname":self.nameTF.text,
                            @"cardNo":self.cardNoTF.text,//身份证号码
                            @"phone":mobilePhone,
                            @"verifyCode":self.codeTF.text
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/realNameAuth" params:dict success:^(id json) {
         if(SUCCESS)
         {
             YZUser *user = [YZUserDefaultTool user];

@@ -296,9 +296,8 @@
 #pragma mark - 活动
 - (void)getGuide
 {
-    if (!UserId) return;
+    if (!Token) return;
     NSDictionary *dict = @{
-        @"userId":UserId,
         @"version":@"0.0.2"
     };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlShare(@"/getGuide") params:dict success:^(id json) {
@@ -322,9 +321,9 @@
 #pragma mark - 赠送彩票
 - (void)getGiveVoucherData
 {
-    if (!UserId) return;
+    if (!Token) return;
     NSDictionary *dict = @{
-        @"userId":UserId,
+        @"token":Token,
         @"timestamp":[YZDateTool getNowTimeTimestamp],
     };
     [[YZHttpTool shareInstance] postWithURL:BaseUrl(@"promotion/couponRedPackageList") params:dict success:^(id json) {

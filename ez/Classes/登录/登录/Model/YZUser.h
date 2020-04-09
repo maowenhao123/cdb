@@ -35,10 +35,7 @@
 @interface YZUser : NSObject
 
 @property (nonatomic, strong) YZAccount *account;
-@property (nonatomic, copy) NSString *mobilePhone;//手机号码
-@property (nonatomic, copy) NSString *nickName;//昵称
 @property (nonatomic, copy) NSString *userId;//用户id
-@property (nonatomic, copy) NSString *userName;//用户名
 @property (nonatomic, strong) NSArray *banks;//银行信息
 @property (nonatomic, assign) BOOL modifyPwd;//是否已经设置密码
 @property (nonatomic, strong) YZUserInfo *user;//用户信息

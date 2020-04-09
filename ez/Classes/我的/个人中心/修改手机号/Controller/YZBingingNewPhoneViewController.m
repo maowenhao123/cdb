@@ -118,13 +118,11 @@
     }
     
     NSDictionary *dict = @{
-                           @"cmd":@(8009),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"phone":self.phoneTF.text
                            };
-    
     self.codeBtn.enabled = NO;
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getVerifyCode" params:dict success:^(id json) {
         if(SUCCESS)
         {
             //倒计时
@@ -186,16 +184,15 @@
     }
     NSString *mobilePhone = self.phoneTF.text;
     NSDictionary *dict = @{
-                           @"cmd":@(8010),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"phone":mobilePhone,
                            @"verifyCode":self.codeTF.text
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/bindPhone" params:dict success:^(id json) {
         if(SUCCESS)
         {
             YZUser *user = [YZUserDefaultTool user];
-            user.mobilePhone = mobilePhone;
+            user.user.mobile = mobilePhone;
             [YZUserDefaultTool saveUser:user];
             [MBProgressHUD showSuccess:@"修改手机号成功"];
             [self.navigationController popToViewController:self.navigationController.viewControllers[1] animated:YES];

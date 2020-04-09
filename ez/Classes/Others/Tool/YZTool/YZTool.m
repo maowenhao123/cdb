@@ -447,7 +447,7 @@ static NSDictionary * bankDicInfo;
 static NSInteger seq = 0;
 + (void)setAlias
 {
-    if (!UserId)
+    if (!Token)
     {
         NSSet * tagSet = [NSSet setWithArray:@[mainChannel, childChannel, [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]]];
         [JPUSHService cleanTags:^(NSInteger iResCode, NSSet *iTags, NSInteger seq) {
@@ -642,10 +642,10 @@ static NSInteger seq = 0;
 + (BOOL)needChangeNickName
 {
     YZUser *user = [YZUserDefaultTool user];
-    if (YZStringIsEmpty(user.nickName)) {
+    if (YZStringIsEmpty(user.user.nickName)) {
         return YES;
     }
-    NSString * nickName = user.nickName;
+    NSString * nickName = user.user.nickName;
     if ([YZValidateTool validateMobile:nickName])//是手机号码
     {
         return YES;

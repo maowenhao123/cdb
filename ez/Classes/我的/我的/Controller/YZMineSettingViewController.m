@@ -173,6 +173,7 @@
     [MBProgressHUD showMessage:@"正在注销，客官请稍后" toView:self.view];
     //删除用户的个人数据
     [YZUserDefaultTool removeObjectForKey:@"userId"];
+    [YZUserDefaultTool removeObjectForKey:@"token"];
     [YZUserDefaultTool removeObjectForKey:@"userPwd"];
     [YZStatusCacheTool deleteUserStatus];//删除用户信息数据表
     [YZTool logoutAlias];

@@ -175,12 +175,11 @@
 - (void)confirmMessage
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8007),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"realname":self.nameTF.text,
                            @"cardNo":self.cardNoTF.text//身份证号码
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/realNameAuth" params:dict success:^(id json) {
         if(SUCCESS)
         {
             YZUser *user = [YZUserDefaultTool user];

@@ -124,9 +124,9 @@
     }
     CGFloat doneButtonY = 0;
     if (self.displayingKeyboard) {
-        doneButtonY = screenHeight - XButtonH;
+        doneButtonY = screenHeight - XButtonH - [YZTool getSafeAreaBottom];
     } else {
-        doneButtonY = screenHeight + kbHeight - XButtonH;
+        doneButtonY = screenHeight + kbHeight - XButtonH - [YZTool getSafeAreaBottom];
     }
     UIButton *XButton = [[UIButton alloc] initWithFrame:CGRectMake(XButtonX, doneButtonY, XButtonW, XButtonH)];
     XButton.titleLabel.font = [UIFont systemFontOfSize:27];

@@ -114,11 +114,10 @@
 - (void)getCurrentTermData
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8026),
-                           @"gameId":_param.gameId
-                           };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
-        
+                            @"storeId":@"1",
+                            @"gameId":_param.gameId
+                            };
+     [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         YZLog(@"getCurrentTermData - json = %@",json);
         if(SUCCESS)
         {
@@ -158,13 +157,13 @@
 #pragma  mark - 发起合买支付接口
 - (void)comfirmStartUnionBuy
 {
-    NSString *phone = [YZUserDefaultTool user].mobilePhone.length ? [YZUserDefaultTool user].mobilePhone : @"";
+    NSString *phone = [YZUserDefaultTool user].user.mobile.length ? [YZUserDefaultTool user].user.mobile : @"";
     YZUser *user = [YZUserDefaultTool user];
     NSDictionary *dict = @{
                            @"cmd":@(8128),
                            @"userId":UserId,
                            @"gameId":_param.gameId,
-                           @"userName":user.userName,
+                           @"userName":user.user.nickName,
                            @"phone":phone,
                            @"termId":_param.termId,
                            @"multiple":_param.multiple,
@@ -210,7 +209,7 @@
 #pragma  mark - 参与合买支付接口
 - (void)comfirmPaticipateUnionBuy
 {
-    NSString *phone = [YZUserDefaultTool user].mobilePhone.length ? [YZUserDefaultTool user].mobilePhone : @"";
+    NSString *phone = [YZUserDefaultTool user].user.mobile.length ? [YZUserDefaultTool user].user.mobile : @"";
     NSDictionary *dict = @{
                            @"cmd":@(8129),
                            @"userId":UserId,

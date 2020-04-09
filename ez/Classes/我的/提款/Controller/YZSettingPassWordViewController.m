@@ -49,12 +49,12 @@
     
     UILabel * phoneLabel = [[UILabel alloc]init];
     YZUser *user = [YZUserDefaultTool user];
-    if (user.mobilePhone.length > 8) {
-        NSString *phoneNo = [user.mobilePhone stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"*****"];
+    if (user.user.mobile.length > 8) {
+        NSString *phoneNo = [user.user.mobile stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"*****"];
         phoneLabel.text = phoneNo;
     }else
     {
-        phoneLabel.text = user.mobilePhone;
+        phoneLabel.text = user.user.mobile;
     }
     phoneLabel.font = [UIFont systemFontOfSize:YZGetFontSize(28)];
     phoneLabel.textColor = YZColor(180, 180, 180, 180);
@@ -132,11 +132,10 @@
     [self.view endEditing:YES];
     YZUser *user = [YZUserDefaultTool user];
     NSDictionary *dict = @{
-                           @"cmd":@(12001),
-                           @"phone":user.mobilePhone
+                           @"phone":user.user.mobile
                            };
     self.codeBtn.enabled = NO;
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/sendSmsVerifyCodeWithFindPwd" params:dict success:^(id json) {
         if(SUCCESS)
         {
             //倒计时
@@ -190,12 +189,11 @@
     }
     YZUser *user = [YZUserDefaultTool user];
     NSDictionary *dict = @{
-                           @"cmd":@(10620),
-                           @"phone":user.mobilePhone,
+                           @"phone":user.user.mobile,
                            @"verifyCode":self.codeTF.text,
                            @"passwd":self.passWordTF.text
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/resetPasswd" params:dict success:^(id json) {
         if(SUCCESS)
         {
             [MBProgressHUD showSuccess:@"设置密码成功"];

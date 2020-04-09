@@ -376,7 +376,7 @@
     YZUser *user = [YZUserDefaultTool user];
     NSDictionary *dict = @{
                            @"gameId":self.order.gameId,
-                           @"userName":user.userName
+                           @"userName":user.user.nickName
                            };
     waitingView;
     [[YZHttpTool shareInstance] postWithURL:BaseUrlShare(@"/getShareOrder") params:dict success:^(id json) {

@@ -782,10 +782,10 @@
 {
     if(_nextOpenRemainSeconds > 0) return;
     NSDictionary *dict = @{
-        @"cmd":@(8026),
+        @"storeId":@"1",
         @"gameId":self.gameId
     };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         YZLog(@"%@",json);
         self.currentTermDict = json;
         NSArray *termList = json[@"game"][@"termList"];

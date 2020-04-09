@@ -209,7 +209,7 @@
         if(SUCCESS)
         {
             YZUser *user = [YZUserDefaultTool user];
-            [MBProgressHUD showSuccess:[NSString stringWithFormat:@"验证码已发送至%@", user.mobilePhone]];
+            [MBProgressHUD showSuccess:[NSString stringWithFormat:@"验证码已发送至%@", user.user.mobile]];
             //倒计时
             [self countDown];
         }else

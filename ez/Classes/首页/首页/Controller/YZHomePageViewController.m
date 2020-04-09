@@ -117,7 +117,7 @@
 - (void)navButtonDidClick:(UIButton *)button
 {
     if (button.tag == 0) {
-        if (!UserId) {
+        if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
             YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
             [self presentViewController:nav animated:YES completion:nil];
@@ -127,7 +127,7 @@
         [self.navigationController pushViewController:messageVC animated:YES];
     }else if (button.tag == 1)
     {
-        if (!UserId) {
+        if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
             YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
             [self presentViewController:nav animated:YES completion:nil];
@@ -150,11 +150,10 @@
 #pragma mark - message
 - (void)getMessageCount
 {
-    if (!UserId) {
+    if (!Token) {
         return;
     }
     NSDictionary *dict = @{
-                           @"userId":UserId
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlJiguang(@"/countUnRead") params:dict success:^(id json) {
         YZLog(@"countUnReadMessage:%@",json);

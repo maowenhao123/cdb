@@ -43,7 +43,7 @@
     waitingView
     YZUser *user = [YZUserDefaultTool user];
     NSDictionary *dict = @{
-                           @"userName":user.userName
+                           @"userName":user.user.nickName
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlShare(@"/getShareFriend") params:dict success:^(id json) {
         YZLog(@"%@",json);

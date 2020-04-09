@@ -633,15 +633,12 @@
 - (void)confirmBtnDidClick:(NSString *)nickName
 {
     if (YZStringIsEmpty(nickName)) return;
-    YZUser *user = [YZUserDefaultTool user];
-    NSDictionary *dict = @{
-                           @"cmd":@(8126),
-                           @"userId":UserId,
-                           @"userName":user.userName,
-                           @"nickName":nickName
-                           };
     waitingView
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    NSDictionary *dict = @{
+        @"token":Token,
+        @"nickName":nickName
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/setNickName" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
         {
@@ -839,7 +836,7 @@
     UIImage * image = [UIImage imageNamed:@"logo1"];
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:descr thumImage:image];
     YZUser *user = [YZUserDefaultTool user];
-    NSString * nickName = user.nickName;
+    NSString * nickName = user.user.nickName;
     shareObject.webpageUrl = [NSString stringWithFormat:@"%@/unionbuydetail?unionBuyPlanId=%@&userName=%@", @"shareBaseUrl", _unionBuyPlanId, nickName];
     messageObject.shareObject = shareObject;//调用分享接口
     [WXApi registerApp:WXAppIdOld withDescription:@"中彩啦"];

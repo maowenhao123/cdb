@@ -207,7 +207,7 @@
         self.nickNameLabel.text = thirdPartyStatus.name;
     }else
     {
-        self.nickNameLabel.text = _user.nickName;
+        self.nickNameLabel.text = _user.user.nickName;
     }
     
     if (_user.user.realname) {
@@ -216,7 +216,7 @@
     {
         self.nameCertificationLabel.text = @"未认证";
     }
-    if (_user.mobilePhone) {
+    if (_user.user.mobile) {
         self.phoneBindingLabel.text = @"已绑定手机";
     }else
     {

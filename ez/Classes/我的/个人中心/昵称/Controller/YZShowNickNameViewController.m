@@ -22,7 +22,7 @@
     [super viewWillAppear:animated];
     
     YZUser *user = [YZUserDefaultTool user];
-    self.desLabel.text = user.nickName;
+    self.desLabel.text = user.user.nickName;
     CGSize desLabelSize = [self.desLabel.text sizeWithLabelFont:self.desLabel.font];
     self.desLabel.frame = CGRectMake(screenWidth - desLabelSize.width - YZMargin, 0,desLabelSize.width, YZCellH);
 }
@@ -53,7 +53,7 @@
     desLabel.font = [UIFont systemFontOfSize:YZGetFontSize(28)];
     desLabel.textColor = YZGrayTextColor;
     YZUser *user = [YZUserDefaultTool user];
-    desLabel.text = user.nickName;
+    desLabel.text = user.user.nickName;
     CGSize desLabelSize = [desLabel.text sizeWithLabelFont:desLabel.font];
     desLabel.frame = CGRectMake(screenWidth - desLabelSize.width - YZMargin, 0,desLabelSize.width, YZCellH);
     [view addSubview:desLabel];

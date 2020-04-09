@@ -108,7 +108,7 @@
     self.afreshButton.selected = YES;
     dispatch_time_t selectedtime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(animateDuration * NSEC_PER_SEC));
     dispatch_after(selectedtime, dispatch_get_main_queue(), ^{
-       self.afreshButton.selected = NO;
+        self.afreshButton.selected = NO;
     });
     for (UIView * subView in self.ballView.subviews) {//先删除之前的视图
         [subView removeFromSuperview];
@@ -183,10 +183,10 @@
                               delay:0
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                             rollBallView.y = rollBallView.y + animateH;
-                         } completion:^(BOOL finished) {
-                             
-                         }];
+            rollBallView.y = rollBallView.y + animateH;
+        } completion:^(BOOL finished) {
+            
+        }];
         [self.ballView addSubview:rollBallView];
     }
 }
@@ -202,8 +202,8 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"token" : Token
-                           };
+        @"token" : Token
+    };
     [MBProgressHUD showMessage:@"客官请稍后" toView:self.viewController.tabBarController.view];
     [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
@@ -224,13 +224,13 @@
 - (void)getConsumableList
 {
     NSDictionary * orderDic = @{
-                                @"money":@(200),
-                                @"game":@"F01"
-                                };
+        @"money":@(200),
+        @"game":@"F01"
+    };
     NSDictionary *dict = @{
-                           @"userId":UserId,
-                           @"order":orderDic,
-                           };
+        @"userId":UserId,
+        @"order":orderDic,
+    };
     [MBProgressHUD showMessage:@"客官请稍后" toView:self.viewController.tabBarController.view];
     [[YZHttpTool shareInstance] requestTarget:self.owner PostWithURL:BaseUrlCoupon(@"/getConsumableList") params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
@@ -247,7 +247,7 @@
             [self showComfirmPayAlertView];
         }
     }failure:^(NSError *error)
-    {
+     {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
     }];
 }
@@ -296,11 +296,11 @@
 - (void)getCurrentTermData
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8026),
-                           @"gameId":@"F01"
-                           };
+        @"storeId":@"1",
+        @"gameId":@"F01"
+    };
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.viewController.tabBarController.view];
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
         if(SUCCESS)
         {
@@ -347,18 +347,17 @@
     NSNumber *amount = @(200);
     NSMutableArray *ticketList = [self getTicketList];
     NSDictionary * dict = @{
-                            @"cmd":@(8052),
-                            @"userId":UserId,
-                            @"gameId":@"F01",
-                            @"termId":self.currentTermId,
-                            @"multiple":multiple,
-                            @"amount":amount,
-                            @"ticketList":ticketList,
-                            @"payType":@"ACCOUNT",
-                            @"startTermId":self.currentTermId,
-                            };
+        @"token":Token,
+        @"gameId":@"F01",
+        @"termId":self.currentTermId,
+        @"multiple":multiple,
+        @"amount":amount,
+        @"ticketList":ticketList,
+        @"payType":@"ACCOUNT",
+        @"startTermId":self.currentTermId,
+    };
     [MBProgressHUD showMessage:text_paying toView:self.viewController.tabBarController.view];
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/normalStake" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
         if(SUCCESS)
         {

@@ -43,9 +43,8 @@
 - (void)loadData
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8017),
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getOpenWinList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if (SUCCESS) {
             self.termList = json[@"termList"];

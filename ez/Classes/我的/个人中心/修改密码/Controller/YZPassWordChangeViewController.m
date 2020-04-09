@@ -119,12 +119,11 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(8008),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"oldPassword":self.oldPassWordTF.text,
                            @"newPassword":self.passWordTF.text
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/modifyPassword" params:dict success:^(id json) {
         if(SUCCESS)
         {
             [MBProgressHUD showSuccess:@"修改密码成功"];

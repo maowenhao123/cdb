@@ -439,15 +439,12 @@
 - (void)confirmBtnDidClick:(NSString *)nickName
 {
     if (YZStringIsEmpty(nickName)) return;
-    YZUser *user = [YZUserDefaultTool user];
-    NSDictionary *dict = @{
-                           @"cmd":@(8126),
-                           @"userId":UserId,
-                           @"userName":user.userName,
-                           @"nickName":nickName
-                           };
     waitingView
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    NSDictionary *dict = @{
+        @"token":Token,
+        @"nickName":nickName
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/setNickName" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
         {

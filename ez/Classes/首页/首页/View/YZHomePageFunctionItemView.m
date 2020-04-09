@@ -75,7 +75,7 @@
 - (void)didTap:(UITapGestureRecognizer *)tap
 {
     if ([self.functionModel.type isEqualToString:@"POINT"]) {//积分兑换
-        if (!UserId) {
+        if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
             YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
             [self.viewController presentViewController:nav animated:YES completion:nil];
@@ -94,7 +94,7 @@
         [self.viewController.navigationController pushViewController:webVC animated:YES];
     }else if ([self.functionModel.type isEqualToString:@"PAYMENT"])//充值
     {
-        if (!UserId) {
+        if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
             YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
             [self.viewController presentViewController:nav animated:YES completion:nil];
@@ -104,7 +104,7 @@
         [self.viewController.navigationController pushViewController:rechargeVC animated:YES];
     }else if ([self.functionModel.type isEqualToString:@"COUPON"])//彩券
     {
-        if (!UserId) {
+        if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
             YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
             [self.viewController presentViewController:nav animated:YES completion:nil];
@@ -118,7 +118,7 @@
         [self.viewController.navigationController pushViewController:initiateUnionBuyVC animated:YES];
     }else if ([self.functionModel.type isEqualToString:@"COMMUNITY"])//彩友圈
     {
-        if (!UserId) {
+        if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
             YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
             [self.viewController presentViewController:nav animated:YES completion:nil];
@@ -128,7 +128,7 @@
         [self.viewController.navigationController pushViewController:messageVC animated:YES];
     }else if ([self.functionModel.type isEqualToString:@"KEFU"])//在线客服列表
     {
-        if (!UserId) {
+        if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
             YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
             [self.viewController presentViewController:nav animated:YES completion:nil];

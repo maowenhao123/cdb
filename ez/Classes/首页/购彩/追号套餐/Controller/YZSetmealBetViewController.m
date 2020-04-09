@@ -67,10 +67,10 @@
 {
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.view];
     NSDictionary *dict = @{
-                           @"cmd":@(8026),
-                           @"gameId":self.gameId
-                           };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+                            @"storeId":@"1",
+                            @"gameId":self.gameId
+                            };
+     [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"getCurrentTerm:%@",json);
         if(SUCCESS)

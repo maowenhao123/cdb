@@ -221,7 +221,7 @@
     MJRefreshGifHeader *header = self.headerViews[self.currentIndex];
     MJRefreshAutoGifFooter *footer = self.footerViews[self.currentIndex];
 
-    if (!UserId)//没有登录时
+    if (!Token)//没有登录时
     {
         //结束刷新
         [header endRefreshing];
@@ -249,12 +249,11 @@
         pageIndex = @(self.pageIndex4);
     }
     NSDictionary *dict = @{
-                           @"cmd":cmd,
-                           @"userId":UserId,
-                           @"pageIndex":pageIndex,
-                           @"pageSize":@(10)
+                           @"pageIndex": pageIndex,
+                           @"pageSize": @(10),
+                           @"storeId": @"1"
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getOrderList" params:dict success:^(id json) {
         YZLog(@"%@",json);
         [MBProgressHUD hideHUDForView:self.view];
         UITableView *tableView = self.views[self.currentIndex];

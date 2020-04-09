@@ -112,11 +112,10 @@
 - (void)loadOpenLotteryDetail
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8019),
                            @"gameId":self.gameId,
                            @"termId":self.termId
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getOpenWinDetail" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if (SUCCESS) {
             NSMutableDictionary *termDict = [json[@"term"] mutableCopy];

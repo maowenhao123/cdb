@@ -57,10 +57,10 @@
 {
     if(_nextOpenRemainSeconds > 0) return;
     NSDictionary *dict = @{
-        @"cmd":@(8026),
+        @"storeId":@"1",
         @"gameId":self.gameId
     };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         YZLog(@"%@",json);
         if (SUCCESS) {
             self.currentTermDict = json;
@@ -109,7 +109,7 @@
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]init];
     NSDateComponents *deltaDate = [YZDateTool getDateComponentsBySeconds:_remainSeconds];
     NSDateComponents *nextOpenDeltaDate = [YZDateTool getDateComponentsBySeconds:_nextOpenRemainSeconds];
-   
+    
     if(_remainSeconds > 0)//当前期正在销售
     {
         NSString * deltaTime;
@@ -180,7 +180,7 @@
     //title
     YZTitleButton *titleBtn = [[YZTitleButton alloc] initWithFrame:CGRectMake(0, 0, 0, 20)];
     self.titleBtn = titleBtn;
-        [self.titleBtn setImage:[UIImage imageNamed:@"down_arrow_black"] forState:UIControlStateNormal];
+    [self.titleBtn setImage:[UIImage imageNamed:@"down_arrow_black"] forState:UIControlStateNormal];
     [titleBtn addTarget:self action:@selector(titleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = titleBtn;
     

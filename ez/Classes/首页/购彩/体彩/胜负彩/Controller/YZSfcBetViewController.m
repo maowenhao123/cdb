@@ -367,7 +367,7 @@
 }
 - (void)loadUserInfo
 {
-    if (!UserId)
+    if (!Token)
     {
         [MBProgressHUD hideHUDForView:self.view];
         return;
@@ -470,11 +470,10 @@
 {
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.view];
     NSDictionary *dict = @{
-                           @"cmd":@(8026),
+                           @"storeId":@"1",
                            @"gameId":self.gameId
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
-        
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"getCurrentTermData - json = %@",json);
         if([json[@"retCode"] isEqualToNumber:@(0)])
@@ -521,8 +520,7 @@
     NSNumber *multiple = [NSNumber numberWithInt:[self.multipleTextField.text intValue]];
     NSNumber *amount = [NSNumber numberWithInt:(int)self.amountMoney * 100];
     NSDictionary *dict = @{
-                           @"cmd":@(8052),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"gameId":self.gameId,
                            @"termId":self.termId,
                            @"multiple":multiple,
@@ -532,9 +530,7 @@
                            @"termCount":@(1),
                            @"ticketList":[self getTicketList],
                            };
-    
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
-        
+    [[YZHttpTool shareInstance] postWithURL:@"/normalStake" params:dict success:^(id json) {
         YZLog(@"json = %@",json);
         [MBProgressHUD hideHUDForView:self.view];//隐藏正在支付的弹框
         if(SUCCESS)

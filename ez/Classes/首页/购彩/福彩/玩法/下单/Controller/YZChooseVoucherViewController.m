@@ -315,8 +315,7 @@
     NSDictionary * dict= [NSDictionary dictionary];
     if (self.voucherStatus) {//选择彩券
         dict =@{
-                @"cmd":@(8052),
-                @"userId":UserId,
+                @"token":Token,
                 @"gameId":self.gameId,
                 @"termId":self.currentTermId,
                 @"multiple":multiple,
@@ -329,8 +328,7 @@
     }else
     {
         dict =@{
-                @"cmd":@(8052),
-                @"userId":UserId,
+                @"token":Token,
                 @"gameId":self.gameId,
                 @"termId":self.currentTermId,
                 @"multiple":multiple,
@@ -340,7 +338,7 @@
                 @"startTermId":self.currentTermId,
                 };
     }
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/normalStake" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];//隐藏正在支付的弹框
         if(SUCCESS)
         {
@@ -416,8 +414,7 @@
     NSDictionary * dict= [NSDictionary dictionary];
     if (self.voucherStatus) {//选择彩券
         dict =@{
-                @"cmd":@(8052),
-                @"userId":UserId,
+                @"token":Token,
                 @"gameId":self.gameId,
                 @"termId":self.termId,
                 @"multiple":multiple,
@@ -431,8 +428,7 @@
     }else
     {
         dict =@{
-                @"cmd":@(8052),
-                @"userId":UserId,
+                @"token":Token,
                 @"gameId":self.gameId,
                 @"termId":self.termId,
                 @"multiple":multiple,
@@ -443,7 +439,7 @@
                 @"ticketList":self.ticketList,
                 };
     }
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/normalStake" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];//隐藏正在支付的弹框
         if(SUCCESS)
         {

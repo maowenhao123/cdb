@@ -515,10 +515,10 @@
 {
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.view];
     NSDictionary *dict = @{
-                           @"cmd":@(8026),
-                           @"gameId":_scheme.gameId
-                           };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+                            @"storeId":@"1",
+                            @"gameId":_scheme.gameId
+                            };
+     [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
         {
@@ -562,8 +562,7 @@
 {
     [MBProgressHUD showMessage:text_paying toView:self.view];
     NSDictionary *dict = @{
-                           @"cmd":@(8050),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"gameId":_scheme.gameId,
                            @"termId":self.currentTermId,
                            @"multiple":@(_multiple),
@@ -574,7 +573,7 @@
                            @"startTermId":self.currentTermId,
                            @"winStop":[NSNumber numberWithBool:_winStop]
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/chaseStake" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
         {

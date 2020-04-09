@@ -78,9 +78,9 @@
 {
     YZUser *user = [YZUserDefaultTool user];
     HVisitorInfo *visitor = [[HVisitorInfo alloc] init];
-    visitor.name = user.userName;
-    visitor.nickName = user.nickName;
-    visitor.phone = user.mobilePhone;
+    visitor.name = user.user.nickName;
+    visitor.nickName = user.user.nickName;
+    visitor.phone = user.user.mobile;
     return visitor;
 }
 

@@ -81,12 +81,11 @@
     }
     
     NSDictionary *dict = @{
-                           @"cmd":@(12200),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"cardNo":self.textField.text,
                            };
     waitingView
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/verifyIdCard" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
         {

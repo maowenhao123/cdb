@@ -195,13 +195,12 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(10620),
                            @"phone":self.phoneStr,
                            @"verifyCode":self.verifyCode,
                            @"passwd":self.passWordTF.text
                            };
     [MBProgressHUD showMessage:@"修改密码中..." toView:self.view];
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/resetPasswd" params:dict success:^(id json) {
         if(SUCCESS)
         {
             [self accountLogin];

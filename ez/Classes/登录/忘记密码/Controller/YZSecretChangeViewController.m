@@ -177,10 +177,9 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(10601),
                            @"userName":self.accountTextField.text
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getPhone" params:dict success:^(id json) {
         YZLog(@"json = %@",json);
         if(SUCCESS)
         {

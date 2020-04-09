@@ -78,12 +78,11 @@
 - (void)getData
 {
     NSDictionary *dict = @{
-                           @"cmd":@(11100),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"pageIndex":@(self.pageIndex),
                            @"pageSize":@(10)
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getChargeList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"%@",json);
         [MBProgressHUD hideHUDForView:self.view animated:YES];

@@ -36,7 +36,7 @@
 
 - (void)getGiveVoucherData
 {
-    if (!UserId) return;
+    if (!Token) return;
     NSDictionary *dict = @{
                            @"userId":UserId,
                            @"timestamp":[YZDateTool getNowTimeTimestamp],
@@ -186,7 +186,7 @@
 #pragma mark - 关闭彩券
 - (void)closeImageViewDidClick
 {
-    if (!UserId) return;
+    if (!Token) return;
     NSDictionary *dict = @{
                            @"userId":UserId,
                            @"promotionId":self.giveVoucherModel.couponRedPackagePromotion.promotionId,

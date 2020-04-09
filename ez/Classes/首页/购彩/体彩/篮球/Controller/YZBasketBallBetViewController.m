@@ -356,7 +356,7 @@
 
 - (void)loadUserInfo
 {
-    if (!UserId)
+    if (!Token)
     {
         [MBProgressHUD hideHUDForView:self.view];
         return;

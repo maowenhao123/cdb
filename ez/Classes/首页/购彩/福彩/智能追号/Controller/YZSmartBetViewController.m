@@ -160,10 +160,10 @@
 {
     if(_nextOpenRemainSeconds > 0) return;
     NSDictionary *dict = @{
-                           @"cmd":@(8026),
-                           @"gameId":self.gameId
-                           };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+                            @"storeId":@"1",
+                            @"gameId":self.gameId
+                            };
+     [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         if(SUCCESS)
         {
             _currentTermDict = json;
@@ -582,10 +582,10 @@
 - (void)getCurrentTermDataForPay
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8026),
-                           @"gameId":self.gameId
-                           };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+                            @"storeId":@"1",
+                            @"gameId":self.gameId
+                            };
+     [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         if(SUCCESS)
         {
             NSArray *termList = json[@"game"][@"termList"];
@@ -649,8 +649,7 @@
         [smartSchemeList addObject:dictionary];
     }
     NSDictionary *dict = @{
-                           @"cmd":@(8051),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"gameId":self.gameId,
                            @"termId":_currentTermId,
                            @"amount":[NSNumber numberWithInt:self.amountMoney * 100],
@@ -662,7 +661,7 @@
                            @"smartSchemeList":smartSchemeList,
                            @"multiple":@1
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/smartChaseStake" params:dict success:^(id json) {
         if(SUCCESS)
         {
             [MBProgressHUD hideHUDForView:self.view];

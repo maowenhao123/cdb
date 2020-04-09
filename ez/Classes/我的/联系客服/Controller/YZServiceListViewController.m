@@ -157,7 +157,7 @@
                 {
                     YZLog(@"登录成功");
                     YZUser *user = [YZUserDefaultTool user];
-                    [[EMClient sharedClient] setApnsNickname:user.nickName];
+                    [[EMClient sharedClient] setApnsNickname:user.user.nickName];
                     EMPushOptions *options = [[EMClient sharedClient] pushOptions];
                     options.displayStyle = EMPushDisplayStyleMessageSummary;// 显示消息内容
                     EMError *pushError = [[EMClient sharedClient] updatePushOptionsToServer]; // 更新配置到服务器，该方法为同步方法，如果需要，请放到单独线程

@@ -41,12 +41,12 @@
     
     UILabel * phoneLabel = [[UILabel alloc]init];
     YZUser *user = [YZUserDefaultTool user];
-    if (user.mobilePhone.length > 8) {
-        NSString *phoneNo = [user.mobilePhone stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"*****"];
+    if (user.user.mobile.length > 8) {
+        NSString *phoneNo = [user.user.mobile stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"*****"];
         phoneLabel.text = phoneNo;
     }else
     {
-        phoneLabel.text = user.mobilePhone;
+        phoneLabel.text = user.user.mobile;
     }
     phoneLabel.font = [UIFont systemFontOfSize:YZGetFontSize(28)];
     phoneLabel.textColor = YZColor(180, 180, 180, 180);

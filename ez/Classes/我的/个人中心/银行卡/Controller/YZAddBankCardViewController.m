@@ -176,13 +176,12 @@
         accountName = user.user.realname;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(10721),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"bank":self.bankNameTF.text,
                            @"accountNumber":self.bankNumberCardTF.text,
                            @"accountName":accountName,
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/addBankCard" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"%@",json);
         if (SUCCESS) {

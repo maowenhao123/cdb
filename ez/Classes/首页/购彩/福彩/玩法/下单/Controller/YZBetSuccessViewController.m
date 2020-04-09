@@ -388,7 +388,7 @@
     UIImage * image = [UIImage imageNamed:@"logo1"];
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:descr thumImage:image];
     YZUser *user = [YZUserDefaultTool user];
-    NSString * nickName = user.nickName;
+    NSString * nickName = user.user.nickName;
         shareObject.webpageUrl = [NSString stringWithFormat:@"%@/unionbuydetail?unionBuyPlanId=%@&userName=%@", shareBaseUrl, self.unionbuyModel.unionBuyPlanId, nickName];
     messageObject.shareObject = shareObject;//调用分享接口
     [WXApi registerApp:WXAppIdOld withDescription:@"中彩啦"];

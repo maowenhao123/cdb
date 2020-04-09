@@ -40,10 +40,9 @@
 - (void)getBankData
 {
     NSDictionary *dict = @{
-                           @"cmd":@(10700),
-                           @"userId":UserId
-                           };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+        @"token": Token
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/getBankCardList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"%@",json);
         if (SUCCESS) {
@@ -154,11 +153,10 @@
 {
     
     NSDictionary *dict = @{
-                           @"cmd":@(10722),
-                           @"userId":UserId,
-                           @"cardId":cardId
-                           };
-     [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+        @"token":Token,
+        @"cardId":cardId
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/deleteBankCard" params:dict success:^(id json) {
         if (SUCCESS) {
             [MBProgressHUD showSuccess:@"银行卡删除成功"];
             [self.bankCards removeObjectAtIndex:indexPath.section];
@@ -168,8 +166,8 @@
             ShowErrorView;
         }
     }failure:^(NSError *error)
-    {
-         YZLog(@"error = %@",error);
+     {
+        YZLog(@"error = %@",error);
     }];
 }
 #pragma mark - 初始化

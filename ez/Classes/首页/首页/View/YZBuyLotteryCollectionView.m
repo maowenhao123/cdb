@@ -186,14 +186,14 @@
 - (void)getGameInfoDataWith:(MJRefreshGifHeader *)header
 {
     NSDictionary *dict = @{
-                           @"version":@"0.0.8",
+                           @"storeId":@"1",
                            };
-    [[YZHttpTool shareInstance] postWithURL:BaseUrlSalesManager(@"/getGameInfoList") params:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getCurrentTermList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self];
         [header endRefreshing];
         YZLog(@"gameInfo:%@",json);
         if (SUCCESS){
-            self.gameInfos = [YZBuyLotteryCellStatus objectArrayWithKeyValuesArray:json[@"gameInfoList"]];
+            self.gameInfos = [YZBuyLotteryCellStatus objectArrayWithKeyValuesArray:json[@"gameList"]];
             [UIView performWithoutAnimation:^{
                 [self reloadSections:[NSIndexSet indexSetWithIndex:4]];
             }];

@@ -42,7 +42,7 @@
     [self.view addSubview:textField];
     if (self.isChange) {
         YZUser *user = [YZUserDefaultTool user];
-        textField.placeholder = user.nickName;
+        textField.placeholder = user.user.nickName;
     }else
     {
         textField.placeholder = @"请输入昵称，2-10个汉字、字母组合";
@@ -74,19 +74,19 @@
 
 - (void)confirmBtnDidClick
 {
+    [self.view endEditing:YES];
+    
     if (YZStringIsEmpty(self.textField.text))
     {
         [MBProgressHUD showError:@"请输入昵称"];
         return;
     }
-    YZUser *user = [YZUserDefaultTool user];
+    
     NSDictionary *dict = @{
-                           @"cmd":@(8126),
-                           @"userId":UserId,
-                           @"userName":user.userName,
-                           @"nickName":self.textField.text
-                           };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+        @"token":Token,
+        @"nickName":self.textField.text
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/setNickName" params:dict success:^(id json) {
         if(SUCCESS)
         {
             [self loadUserInfo];
@@ -102,8 +102,8 @@
 {
     if (!Token) return;
     NSDictionary *dict = @{
-                           @"token" : Token
-                           };
+        @"token":Token
+    };
     [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         YZLog(@"%@",json);
         if (SUCCESS) {

@@ -69,9 +69,9 @@
 - (void)getOrderDetailData
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8022),
-                           @"orderId":self.orderId
-                           };
+        @"cmd":@(8022),
+        @"orderId":self.orderId
+    };
     
     [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
         YZLog(@"json = %@",json);
@@ -116,7 +116,7 @@
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [tableView setEstimatedSectionHeaderHeightAndFooterHeight];
     [self.view addSubview:tableView];
-
+    
     //顶部视图
     UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 50 + orderInfoLabelH * orderInfoLabelCount + 7 * 2 + 10)];
     headerView.backgroundColor = YZBackgroundColor;
@@ -319,7 +319,7 @@
         return nil;
     }else
     {
-         //开奖号码
+        //开奖号码
         UIView * winNumberView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 40 + 35)];
         winNumberView.backgroundColor = [UIColor whiteColor];
         
@@ -335,7 +335,7 @@
         
         winNumber = [winNumber stringByReplacingOccurrencesOfString:@"|" withString:@","];
         NSArray *winNumberArr = [winNumber componentsSeparatedByString:@","];
-
+        
         CGFloat padding = YZMargin;//最左边球里边框的间距
         CGFloat padding1 = 5;//两个球之间的间距
         CGFloat ballW = 25;
@@ -408,8 +408,8 @@
     }
     waitingView;
     NSDictionary *dict = @{
-                           @"token" : Token
-                           };
+        @"token" : Token
+    };
     [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if (SUCCESS) {
@@ -430,11 +430,11 @@
 {
     NSDictionary * orderDic = @{@"money":self.order.amount,
                                 @"game":self.gameId
-                                };
+    };
     NSDictionary *dict = @{
-                           @"userId":UserId,
-                           @"order":orderDic,
-                           };
+        @"userId":UserId,
+        @"order":orderDic,
+    };
     [[YZHttpTool shareInstance] requestTarget:self PostWithURL:BaseUrlCoupon(@"/getConsumableList") params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (SUCCESS) {;
@@ -450,8 +450,8 @@
             [self showComfirmPayAlertView];
         }
     }failure:^(NSError *error)
-    {
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
+     {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 - (void)gotoChooseVoucherVC
@@ -502,10 +502,10 @@
 {
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.view];
     NSDictionary *dict = @{
-                           @"cmd":@(8026),
-                           @"gameId":self.order.gameId
-                           };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+        @"storeId":@"1",
+        @"gameId":self.order.gameId
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
         {
@@ -550,17 +550,16 @@
     [MBProgressHUD showMessage:text_paying toView:self.view];
     
     NSDictionary *dict = @{
-                           @"cmd":@(8052),
-                           @"userId":UserId,
-                           @"gameId":self.order.gameId,
-                           @"termId":self.currentTermId,
-                           @"multiple":self.order.multiple,
-                           @"amount":self.order.amount,
-                           @"ticketList":self.ticketList,
-                           @"payType":@"ACCOUNT",
-                           @"startTermId":self.currentTermId,
-                           };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+        @"token":Token,
+        @"gameId":self.order.gameId,
+        @"termId":self.currentTermId,
+        @"multiple":self.order.multiple,
+        @"amount":self.order.amount,
+        @"ticketList":self.ticketList,
+        @"payType":@"ACCOUNT",
+        @"startTermId":self.currentTermId,
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/normalStake" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
         {
@@ -638,9 +637,9 @@
 {
     YZUser *user = [YZUserDefaultTool user];
     NSDictionary *dict = @{
-                           @"gameId":self.order.gameId,
-                           @"userName":user.userName
-                           };
+        @"gameId":self.order.gameId,
+        @"userName":user.user.nickName
+    };
     waitingView;
     [[YZHttpTool shareInstance] postWithURL:BaseUrlShare(@"/getShareOrder") params:dict success:^(id json) {
         YZLog(@"getShareOrder:%@",json);
@@ -653,7 +652,7 @@
             };
         }
     } failure:^(NSError *error)
-    {
+     {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"error = %@",error);
     }];

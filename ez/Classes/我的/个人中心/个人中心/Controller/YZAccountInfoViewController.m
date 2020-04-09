@@ -53,7 +53,7 @@
             desLabel.font = [UIFont systemFontOfSize:YZGetFontSize(28)];
             desLabel.textColor = YZBlackTextColor;
             YZUser *user = [YZUserDefaultTool user];
-            desLabel.text = user.userName;
+            desLabel.text = user.user.nickName;
             desLabel.textAlignment = NSTextAlignmentRight;
             CGSize size = [desLabel.text sizeWithLabelFont:desLabel.font];
             desLabel.frame = CGRectMake(screenWidth - YZMargin - size.width, 0, size.width, YZCellH);
@@ -115,7 +115,7 @@
     }else if (button.tag == 3)
     {
         YZUser *user = [YZUserDefaultTool user];
-        if (user.mobilePhone) {//已绑定手机
+        if (user.user.mobile) {//已绑定手机
             YZShowPhoneViewController * showPhoneVC = [[YZShowPhoneViewController alloc]init];
             [self.navigationController pushViewController:showPhoneVC animated:YES];
         }else

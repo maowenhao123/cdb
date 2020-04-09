@@ -102,12 +102,11 @@
 
 - (void)getMessageCount
 {
-    if (!UserId)
+    if (!Token)
     {
         return;
     }
     NSDictionary *dict = @{
-                           @"userId":UserId
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlJiguang(@"/countUnRead") params:dict success:^(id json) {
         if (SUCCESS) {
@@ -371,8 +370,8 @@
     //赋值个人基本信息
     NSString * loginWay = [YZUserDefaultTool getObjectForKey:@"loginWay"];
     YZThirdPartyStatus *thirdPartyStatus = [YZUserDefaultTool thirdPartyStatus];
-    if (!YZStringIsEmpty(_user.nickName)) {
-        self.nickNameLabel.text = _user.nickName;
+    if (!YZStringIsEmpty(_user.user.nickName)) {
+        self.nickNameLabel.text = _user.user.nickName;
     }else if ([loginWay isEqualToString:@"thirdPartyLogin"] && thirdPartyStatus)//第三方登录
     {
         self.nickNameLabel.text = thirdPartyStatus.name;
@@ -384,7 +383,7 @@
     {
         self.nameCertificationLabel.text = @"未认证";
     }
-    if (_user.mobilePhone) {
+    if (_user.user.mobile) {
         self.phoneBindingLabel.text = @"已绑定手机";
     }else
     {
@@ -480,17 +479,17 @@
 - (void)walletButtonDidClick:(UIButton *)button
 {
     if (button.tag == 1) {//提款
-        if (!_user.user.realname || !_user.mobilePhone) {
+        if (!_user.user.realname || !_user.user.mobile) {
             UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"完善实名信息后才能提款哦" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction * alertAction1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
             UIAlertAction * alertAction2 = [UIAlertAction actionWithTitle:@"去完善" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                if (!_user.user.realname && !_user.mobilePhone) {
+                if (!_user.user.realname && !_user.user.mobile) {
                     YZNamePhoneBindingViewController * namePhoneBindingVC = [[YZNamePhoneBindingViewController alloc]init];
                     [self.navigationController pushViewController:namePhoneBindingVC animated:YES];
-                }else if (!_user.user.realname  && _user.mobilePhone) {//没有实名认证
+                }else if (!_user.user.realname  && _user.user.mobile) {//没有实名认证
                     YZRealNameViewController * realNameVC = [[YZRealNameViewController alloc]init];
                     [self.navigationController pushViewController:realNameVC animated:YES];
-                }else if (!_user.mobilePhone && _user.user.realname) {
+                }else if (!_user.user.mobile && _user.user.realname) {
                     YZPhoneBindingViewController * PhoneBindingVC = [[YZPhoneBindingViewController alloc]init];
                     [self.navigationController pushViewController:PhoneBindingVC animated:YES];
                 }

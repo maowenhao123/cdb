@@ -116,7 +116,12 @@
     }
     
     //彩种名称
-    self.titleLabel.text = status.gameName;
+    if (YZStringIsEmpty(status.gameName)) {
+        self.titleLabel.text = [YZTool gameIdNameDict][status.gameId];
+    }else
+    {
+        self.titleLabel.text = status.gameName;
+    }
     //彩种描述
     self.descriptionLabel.text = nil;
     self.descriptionLabel.textColor = YZGrayTextColor;
