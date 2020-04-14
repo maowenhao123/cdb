@@ -26,12 +26,12 @@
         return;
     }
     //微信注册
-    [WXApi registerApp:WXAppIdNew withDescription:@"中彩啦"];
+    [WXApi registerApp:WXAppId withDescription:@"彩店宝"];
 
     NSString * payInfoJson = [@{@"clientType":@(1)} JSONRepresentation];
     NSDictionary *dict = @{
                            @"cmd":@(8041),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"amount":amount,
                            @"payType":paymentId,
                            @"payInfo":payInfoJson

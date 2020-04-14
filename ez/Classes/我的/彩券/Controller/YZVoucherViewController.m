@@ -148,7 +148,7 @@
         param = @"/getFailedList";
     }
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            @"pageIndex":@(self.currentPageIndex),
                            @"pageSize":@(10)
                            };

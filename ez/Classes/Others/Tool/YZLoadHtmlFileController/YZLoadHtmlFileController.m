@@ -178,7 +178,7 @@
     }
     
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlShare(@"/getUpgradeCoupon") params:dict success:^(id json) {
         YZLog(@"getGuide:%@",json);

@@ -589,7 +589,7 @@
 - (void)bottomViewConfirmBtnClick
 {
     [self.view endEditing:YES];
-    if(!UserId)//没登录
+    if(!Token)//没登录
     {
         YZLoginViewController *loginVc = [[YZLoginViewController alloc] init];
         YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:loginVc];
@@ -839,7 +839,7 @@
     NSString * nickName = user.user.nickName;
     shareObject.webpageUrl = [NSString stringWithFormat:@"%@/unionbuydetail?unionBuyPlanId=%@&userName=%@", @"shareBaseUrl", _unionBuyPlanId, nickName];
     messageObject.shareObject = shareObject;//调用分享接口
-    [WXApi registerApp:WXAppIdOld withDescription:@"中彩啦"];
+    [WXApi registerApp:WXAppId withDescription:@"彩店宝"];
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {
             NSInteger errorCode = error.code;

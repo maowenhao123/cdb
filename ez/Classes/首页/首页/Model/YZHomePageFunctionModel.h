@@ -21,6 +21,7 @@ OTHERS  代表  其他类型
 */
 @property (nonatomic,copy) NSString *type;
 @property (nonatomic,copy) NSString *iconUrl;
+@property (nonatomic,copy) NSString *iconName;
 @property (nonatomic,copy) NSString *url;
 
 @end

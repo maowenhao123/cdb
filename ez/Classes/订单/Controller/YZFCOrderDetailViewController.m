@@ -432,7 +432,7 @@
                                 @"game":self.gameId
     };
     NSDictionary *dict = @{
-        @"userId":UserId,
+        @"token":Token,
         @"order":orderDic,
     };
     [[YZHttpTool shareInstance] requestTarget:self PostWithURL:BaseUrlCoupon(@"/getConsumableList") params:dict success:^(id json) {
@@ -516,25 +516,7 @@
                 return;
             }
             self.currentTermId = [termList lastObject][@"termId"];
-            if(!Jump)//不跳
-            {
-                [self comfirmPay];//支付
-            }else //跳转网页
-            {
-                [MBProgressHUD hideHUDForView:self.view];
-                NSNumber *multiple = self.order.multiple;//投多少倍
-                NSNumber *amount = self.order.amount;
-                NSNumber *termCount = @(1);//追期数
-                NSMutableArray *ticketList = self.ticketList;
-                NSString *ticketListJsonStr = [ticketList JSONRepresentation];
-                YZLog(@"ticketListJsonStr = %@",ticketListJsonStr);
-                NSString * mcpStr = @"ZCmcp";
-                NSString *param = [NSString stringWithFormat:@"userId=%@&gameId=%@&termId=%@&multiple=%@&amount=%@&ticketList=%@&payType=%@&termCount=%@&startTermId=%@&id=%@&channel=%@&childChannel=%@&version=%@&remark=%@",UserId,self.gameId,self.currentTermId,multiple,amount,[ticketListJsonStr URLEncodedString],@"ACCOUNT",termCount,self.currentTermId,@"1407305392008",mainChannel,childChannel,[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],mcpStr];
-                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@",jumpURLStr,param]];
-                YZLog(@"url = %@",url);
-                
-                [[UIApplication sharedApplication] openURL:url];
-            }
+            [self comfirmPay];//支付
         }else
         {
             ShowErrorView
@@ -678,7 +660,7 @@
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:descr thumImage:image];
     shareObject.webpageUrl = json[@"url"];
     messageObject.shareObject = shareObject;//调用分享接口
-    [WXApi registerApp:WXAppIdOld withDescription:@"中彩啦"];
+    [WXApi registerApp:WXAppId withDescription:@"彩店宝"];
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {
             NSInteger errorCode = error.code;

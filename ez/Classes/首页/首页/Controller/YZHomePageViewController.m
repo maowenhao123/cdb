@@ -64,7 +64,7 @@
     //店铺名
     UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(avatarImageView.frame) + 5, statusBarH + 5, navView.width - (CGRectGetMaxX(avatarImageView.frame) + 5) - 120, 28)];
     self.nameLabel = nameLabel;
-    nameLabel.text = @"中彩啦投注站";
+    nameLabel.text = @"彩店宝投注站";
     nameLabel.textColor = YZBlackTextColor;
     nameLabel.font = [UIFont boldSystemFontOfSize:YZGetFontSize(35)];
     [navView addSubview:nameLabel];

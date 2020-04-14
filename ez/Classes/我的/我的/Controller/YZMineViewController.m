@@ -77,8 +77,8 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"token" : Token
-                           };
+        @"token" : Token
+    };
     [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         YZLog(@"%@",json);
         [MBProgressHUD hideHUDForView:self.view];
@@ -107,7 +107,7 @@
         return;
     }
     NSDictionary *dict = @{
-                           };
+    };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlJiguang(@"/countUnRead") params:dict success:^(id json) {
         if (SUCCESS) {
             int countUnReadMessage = [json[@"count"] intValue];
@@ -115,8 +115,8 @@
         }
     } failure:^(NSError *error)
      {
-         YZLog(@"error = %@",error);
-     }];
+        YZLog(@"error = %@",error);
+    }];
 }
 
 #pragma mark - 布局视图
@@ -273,11 +273,11 @@
     CGFloat functionBtnH = 70;
     NSMutableArray * buttonTitles = [NSMutableArray arrayWithArray:@[@"投注详情", @"资金明细", @"充值记录", @"提款记录", @"消息中心", @"购彩帮助", @"彩店信息"]];
     NSMutableArray * buttonImageNames = [NSMutableArray arrayWithArray:@[@"mine_order_zc_icon", @"mine_money_zc_icon", @"mine_recharge_record_zc_icon", @"mine_withdrawal_record_zc_icon", @"mine_message_zc_icon", @"mine_help_zc_icon", @"mine_shop_icon"]];
-    BOOL share_open = [YZUserDefaultTool getIntForKey:@"share_open"];
-    if (share_open) {
-        [buttonTitles addObject:@"邀请好友"];
-        [buttonImageNames addObject:@"mine_share_icon"];
-    }
+    //    BOOL share_open = [YZUserDefaultTool getIntForKey:@"share_open"];
+    //    if (share_open) {
+    [buttonTitles addObject:@"邀请好友"];
+    [buttonImageNames addObject:@"mine_share_icon"];
+    //    }
     for (int i = 0; i < buttonTitles.count; i++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.tag = i;
@@ -294,7 +294,7 @@
     }
     
     scrollView.contentSize = CGSizeMake(screenWidth, CGRectGetMaxY(functionView.frame) + 10);
-
+    
     //初始化头部刷新控件
     MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshViewBeginRefreshing)];
     [YZTool setRefreshHeaderGif:header];
@@ -355,11 +355,11 @@
 {
     [UIView animateWithDuration:animateDuration
                      animations:^{
-                         self.guideView.alpha = 0;
-                     }
+        self.guideView.alpha = 0;
+    }
                      completion:^(BOOL finished) {
-                         [self.guideView removeFromSuperview];
-                     }];
+        [self.guideView removeFromSuperview];
+    }];
 }
 
 #pragma mark - 设置数据
@@ -576,34 +576,20 @@
 
 - (void)imageManageCropImage:(UIImage *)image
 {
-    NSDictionary *dict = @{
-                           @"type": @"user",
-                           };
-    [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/getAliOssToken") params:dict success:^(id json) {
-        YZLog(@"getAliOssToken:%@",json);
-        if (SUCCESS){
-            [[YZHttpTool shareInstance] uploadWithImage:image currentIndex:0 totalCount:1 aliOssToken:json[@"aliOssToken"] Success:^(NSString * picUrl) {
-                [self setUserHeadPortraitWithUserHeadPortrait:picUrl image:image];
-            } Failure:^(NSError *error) {
-                [MBProgressHUD showError:@"上传图片失败"];
-            }  Progress:^(float percent) {
-                
-            }];
-        }else
-        {
-            ShowErrorView
-        }
-    } failure:^(NSError *error) {
-        YZLog(@"error = %@",error);
-    }];
+    [[YZHttpTool shareInstance] uploadWithURL:@"/uploadImage/user" image:image currentIndex:1 totalCount:1 Success:^(id json) {
+        [self setUserHeadPortraitWithUserHeadPortrait:json[@"imgPath"] image:image];
+    } Failure:^(NSError *error) {
+        [MBProgressHUD showError:@"上传图片失败"];
+    } Progress:nil];
 }
 
 - (void)setUserHeadPortraitWithUserHeadPortrait:(NSString *)userHeadPortrait image:(UIImage *)image
 {
     NSDictionary *dict = @{
-                           @"userHeadPortrait": userHeadPortrait
-                           };
-    [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/setUserHeadPortrait") params:dict success:^(id json) {
+        @"token":Token,
+        @"url": userHeadPortrait
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/setUserHead" params:dict success:^(id json) {
         YZLog(@"setUserHeadPortrait:%@",json);
         if (SUCCESS){
             self.avatarImageView.image = image;

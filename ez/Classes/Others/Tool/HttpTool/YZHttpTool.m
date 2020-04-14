@@ -56,18 +56,13 @@
         [MBProgressHUD hideHUDForView:target.view animated:YES];
     }
 }
-/**
- *  请求数据
- */
+
+#pragma mark -  请求数据
 - (void) postWithParams:(NSDictionary *)params success:(void (^)(id))success failure:(void (^)(NSError *))failure
 {
-    // 创建请求管理对象
     AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
-    // 设置请求格式
     mgr.requestSerializer = [AFJSONRequestSerializer serializer];
-    // 设置请求时间
     mgr.requestSerializer.timeoutInterval = requestTimeoutInterval;
-    // 设置返回格式
     mgr.responseSerializer = [AFJSONResponseSerializer serializer];
     
     NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
@@ -162,10 +157,6 @@
     if (![tempDict.allKeys containsObject:@"version"]) {
         [tempDict setValue:@"0.0.1" forKey:@"version"];
     }
-    NSString * KUserId = [YZUserDefaultTool getObjectForKey:@"userId"];
-    if (!YZStringIsEmpty(KUserId) && ![tempDict.allKeys containsObject:@"userId"]) {
-        [tempDict setValue:KUserId forKey:@"userId"];
-    }
     [tempDict addEntriesFromDictionary:params];//拼接参数
     NSString * jsonDict = [self toJSONString:tempDict];
     NSString * sign = [NSString stringWithFormat:@"%@123456", jsonDict];
@@ -198,28 +189,8 @@
     }];
     //启动任务
     [task resume];
-    //    // 发送请求
-    //    [manager POST:tempUrl
-    //       parameters:tempDict
-    //         progress:^(NSProgress * _Nonnull uploadProgress) {
-    //
-    //    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-    //        if (success) {
-    //            success(responseObject);
-    //        }
-    //    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-    //        if (failure) {
-    //            failure(error);
-    //            YZLog(@"error:%@", error);
-    //            if ([self checkNetState]) {
-    //                [MBProgressHUD showError:@"加载失败，请稍后再试"];
-    //            }else
-    //            {
-    //                [MBProgressHUD showError:@"亲~~~网络不给力..."];
-    //            }
-    //        }
-    //    }];
 }
+
 #pragma mark - 获取合买数据
 - (void)getUnionBuyStatusWithUserName:(NSString *)userName gameId:(NSString *)gameId sortType:(SortType)sortType fieldType:(FieldType)fieldType  index:(NSInteger)index getSuccess:(void(^)(NSArray *unionBuys))getSuccess getFailure:(void(^)())getFailure
 {
@@ -253,7 +224,54 @@
     }];
 }
 
-//上传图片
+#pragma mark - 上传图片
+- (void)uploadWithURL:(NSString *)url image:(UIImage *)image currentIndex:(NSInteger)currentIndex totalCount:(NSInteger)totalCount Success:(void (^)(id json))success Failure:(void (^)(NSError * error))failure Progress:(void(^)(float percent))percent
+{
+    MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:KEY_WINDOW animated:YES];
+    HUD.mode = MBProgressHUDModeAnnularDeterminate;//圆环作为进度条
+    if (totalCount == 1)
+    {
+        HUD.label.text = @"图片上传中....";
+    }else
+    {
+        HUD.label.text = [NSString stringWithFormat:@"%ld/%ld图片上传中....", (long)currentIndex, totalCount];
+    }
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    [manager POST:[NSString stringWithFormat:@"%@%@", baseUrl, url] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSData * data = UIImageJPEGRepresentation(image, 1.0);
+        CGFloat dataKBytes = data.length/1000.0;
+        CGFloat maxQuality = 0.9f;
+        CGFloat lastData = dataKBytes;
+        while (dataKBytes > 300 && maxQuality > 0.01f) {
+            maxQuality = maxQuality - 0.01f;
+            data = UIImageJPEGRepresentation(image, maxQuality);
+            dataKBytes = data.length / 1000.0;
+            if (lastData == dataKBytes) {
+                break;
+            }else{
+                lastData = dataKBytes;
+            }
+        }
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        // 设置时间格式
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        NSString *str = [formatter stringFromDate:[NSDate date]];
+        NSString *fileName = [NSString stringWithFormat:@"%@.png", str];
+        [formData appendPartWithFileData:data name:@"file" fileName:fileName mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            HUD.progress = uploadProgress.fractionCompleted;
+        });
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success(responseObject);
+        [HUD hideAnimated:YES];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(error);
+        [HUD hideAnimated:YES];
+    }];
+}
+
 - (void)uploadWithImage:(UIImage *)image currentIndex:(NSInteger)currentIndex totalCount:(NSInteger)totalCount aliOssToken:(NSDictionary *)aliOssToken Success:(void (^)(NSString * picUrl))success Failure:(void (^)(NSError * error))failure Progress:(void(^)(float percent))percent
 {
     __block MBProgressHUD *HUD;

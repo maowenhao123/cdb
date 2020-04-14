@@ -160,7 +160,7 @@
 - (void)attentionButonDidClick
 {
     NSDictionary *dict = @{
-                           @"userId": UserId,
+                           @"token": Token,
                            @"byConcernUserId": self.userId,
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/userConcern") params:dict success:^(id json) {

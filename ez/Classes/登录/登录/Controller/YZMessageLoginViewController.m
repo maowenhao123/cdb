@@ -108,11 +108,10 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"cmd":@(12013),
                            @"phone":self.phoneTextField.text
                            };
     self.codeBtn.enabled = NO;
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/sendSmsVerifyCodeWithRegist" params:dict success:^(id json) {
         if(SUCCESS)
         {
             //倒计时
@@ -176,15 +175,12 @@
         [MBProgressHUD showError:@"请输入验证码"];
         return;
     }
-    [MBProgressHUD showMessage:@"正在登录,客官请稍后" toView:self.view];
-    NSString * imei = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    [MBProgressHUD showMessage:@"正在登录, 客官请稍后" toView:self.view];
     NSDictionary *dict = @{
-                           @"cmd": @(10637),
                            @"phone": self.phoneTextField.text,
-                           @"verifyCode": self.codeTextField.text,
-                           @"imei": imei
+                           @"verifyCode": self.codeTextField.text
                            };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/loginWithVerifyCode" params:dict success:^(id json) {
         YZLog(@"json = %@",json);
         [MBProgressHUD hideHUDForView:self.view];
         //检查账号密码返回数据

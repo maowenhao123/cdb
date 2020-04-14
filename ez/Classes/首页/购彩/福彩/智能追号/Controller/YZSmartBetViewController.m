@@ -543,7 +543,7 @@
     {
         [MBProgressHUD showError:@"单次投注方案不能超过2万元!"];
         return;
-    }else if(!UserId)//没登录
+    }else if(!Token)//没登录
     {
         YZLoginViewController *loginVc = [[YZLoginViewController alloc] init];
         YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:loginVc];
@@ -595,7 +595,7 @@
                 return;
             }
             _currentTermId = [termList lastObject][@"termId"];
-            [self isJump:Jump];
+            [self comfirmPay];//支付
         }else
         {
             ShowErrorView
@@ -604,33 +604,7 @@
         YZLog(@"getCurrentTermData - error = %@",error);
     }];
 }
-- (void)isJump:(BOOL)jump
-{
-    if(!jump)//不跳
-    {
-        [MBProgressHUD showMessage:text_paying toView:self.view];
-        [self comfirmPay];//支付
-    }else //跳转网页
-    {
-        [MBProgressHUD hideHUDForView:self.view];
-        NSMutableArray *ticketList = [YZBetTool getS1x5TicketList];
-        NSMutableArray * smartSchemeList = [NSMutableArray array];
-        for (YZSmartBet * smartBet in self.smartBetArray) {
-            NSDictionary * dictionary = @{
-                                          @"termId":smartBet.termId,
-                                          @"mutiple":[NSNumber numberWithInt:[smartBet.multiple intValue]]
-                                          };
-            [smartSchemeList addObject:dictionary];
-        }
-        NSString *ticketListJsonStr = [ticketList JSONRepresentation];
-        NSString *smartSchemeListJsonStr = [smartSchemeList JSONRepresentation];
-        NSString * mcpStr = @"ZCmcp";
-        NSString *param = [NSString stringWithFormat:@"userId=%@&gameId=%@&termId=%@&smartSchemeList=%@&amount=%@&ticketList=%@&payType=%@&termCount=%@&startTermId=%@&winStop=%@&id=%@&channel=%@&childChannel=%@&version=%@&remark=%@",UserId,self.gameId,_currentTermId,[smartSchemeListJsonStr URLEncodedString],[NSNumber numberWithInt:self.amountMoney * 100],[ticketListJsonStr URLEncodedString],@"ACCOUNT",[NSNumber numberWithInteger:self.smartBetArray.count],_currentTermId,[NSNumber numberWithBool:_winStop],@"1407305392008",mainChannel,childChannel,[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],mcpStr];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@",jumpURLStr,param]];
-        
-        [[UIApplication sharedApplication] openURL:url];
-    }
-}
+
 - (void)gotoRecharge
 {
     YZRechargeListViewController *rechargeVc = [[YZRechargeListViewController alloc] init];

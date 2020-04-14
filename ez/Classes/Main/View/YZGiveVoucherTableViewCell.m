@@ -113,7 +113,7 @@
 {
     if (!Token) return;
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            @"promotionId":self.promotionId,
                            @"redpackageId":self.couponRedPackage.redpackageId,
                            };

@@ -68,7 +68,7 @@
     NSDictionary * dict = @{
                             @"pageIndex":@(self.pageIndex),
                             @"pageSize":@(10),
-                            @"userId": UserId
+                            @"token": Token,
                             };
     [MBProgressHUD showMessage:@"客官请稍后" toView:self];
     [[YZHttpTool shareInstance] postWithURL:url params:dict success:^(id json) {

@@ -163,7 +163,7 @@
     UIAlertAction * alertAction1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction * alertAction2 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         NSDictionary *dict = @{
-                               @"userId": UserId,
+                               @"token": Token,
                                @"cancelUserId": dic[@"userId"],
                                };
         [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/cancelUserConcern") params:dict success:^(id json) {

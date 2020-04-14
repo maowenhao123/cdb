@@ -416,7 +416,7 @@
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:descr thumImage:image];
     shareObject.webpageUrl = json[@"url"];
     messageObject.shareObject = shareObject;//调用分享接口
-    [WXApi registerApp:WXAppIdOld withDescription:@"中彩啦"];
+    [WXApi registerApp:WXAppId withDescription:@"彩店宝"];
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
         if (error) {
             NSInteger errorCode = error.code;

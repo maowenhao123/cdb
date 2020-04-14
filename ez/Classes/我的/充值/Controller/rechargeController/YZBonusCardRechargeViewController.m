@@ -137,7 +137,7 @@
     [MBProgressHUD showMessage:@"正在充值，客官请稍后" toView:self.view];
     NSDictionary *dict = @{
                            @"cmd":@(8031),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"cardId":self.cardIdTextField.text,
                            @"password":self.pwdTextField.text
                            };

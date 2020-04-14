@@ -464,7 +464,7 @@ static NSInteger seq = 0;
     
     //设置tag
     NSDictionary *dict = @{
-        @"userId":UserId,
+        @"token":Token,
     };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlJiguang(@"/getTag") params:dict success:^(id json) {
         if (SUCCESS) {

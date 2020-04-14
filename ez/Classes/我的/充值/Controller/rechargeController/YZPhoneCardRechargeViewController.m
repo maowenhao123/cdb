@@ -230,7 +230,7 @@
     NSNumber *chargeMoney = [NSNumber numberWithFloat:[self.chargeMoneyTextField.text floatValue] * 100];
     NSDictionary *dict = @{
                            @"cmd":@(8030),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"cardTypeCombine":@(_cardTypeCombine),
                            @"chargeMoney":chargeMoney,
                            @"sn":self.snTextField.text,

@@ -42,7 +42,7 @@
                                 @"game":self.gameId
                                 };
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            @"order":orderDic,
                            };
     [[YZHttpTool shareInstance] requestTarget:self PostWithURL:BaseUrlCoupon(@"/getConsumableList") params:dict success:^(id json) {

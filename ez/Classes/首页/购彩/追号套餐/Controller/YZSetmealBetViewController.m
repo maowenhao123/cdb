@@ -84,7 +84,7 @@
                 self.currentTermId = [termList lastObject][@"termId"];
             }
             if (isPay) {
-                [self isJump:Jump];
+                [self comfirmPay];//支付
             }else
             {
                 [self getChasePlanData];
@@ -425,7 +425,7 @@
         [MBProgressHUD showError:@"单次投注方案不能超过2万元!"];
         return;
     }
-    if(!UserId)//没登录
+    if(!Token)//没登录
     {
         YZLoginViewController *loginVc = [[YZLoginViewController alloc] init];
         YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:loginVc];
@@ -496,27 +496,6 @@
     [self.navigationController pushViewController:rechargeVc animated:YES];
 }
 
-- (void)isJump:(BOOL)jump
-{
-    if(!jump)//不跳
-    {
-        [self comfirmPay];//支付
-    }else //跳转网页
-    {
-        [MBProgressHUD hideHUDForView:self.view];
-        NSNumber *multiple = @([self.multiple integerValue]);//投多少倍
-        NSNumber *amount = @((int)self.amountMoney * 100);
-        NSNumber *termCount = self.schemeSetmealInfoModel.termCount;//追期数
-        NSMutableArray *ticketList = [self getTicketList];
-        NSString *ticketListJsonStr = [ticketList JSONRepresentation];
-        YZLog(@"ticketListJsonStr = %@",ticketListJsonStr);
-        NSString * mcpStr = @"ZCmcp";
-        NSString *param = [NSString stringWithFormat:@"userId=%@&gameId=%@&termId=%@&multiple=%@&amount=%@&ticketList=%@&payType=%@&termCount=%@&startTermId=%@&winStop=%@&id=%@&channel=%@&childChannel=%@&version=%@&remark=%@",UserId,self.gameId,self.currentTermId,multiple,amount,[ticketListJsonStr URLEncodedString],@"ACCOUNT",termCount,self.currentTermId,@false,@"1407305392008",mainChannel,childChannel,[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],mcpStr];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@",jumpURLStr,param]];
-        YZLog(@"url:%@",url);
-        [[UIApplication sharedApplication] openURL:url];
-    }
-}
 #pragma  mark - 确认支付
 - (void)comfirmPay//支付接口
 {
@@ -529,7 +508,7 @@
     NSMutableArray *ticketList = [self getTicketList];
     NSDictionary * dict = @{
                               @"cmd":@(8053),
-                              @"userId":UserId,
+                              @"token":Token,
                               @"gameId":self.gameId,
                               @"termId":self.currentTermId,
                               @"multiple":multiple,

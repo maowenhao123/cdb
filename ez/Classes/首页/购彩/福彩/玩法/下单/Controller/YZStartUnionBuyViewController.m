@@ -407,7 +407,7 @@
 #pragma  mark - 确认按钮点击
 - (void)confirmBtnClick
 {
-    if(!UserId)//没登录
+    if(!Token)//没登录
     {
         YZLoginViewController *loginVc = [[YZLoginViewController alloc] init];
         YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:loginVc];

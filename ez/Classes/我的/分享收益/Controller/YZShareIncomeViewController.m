@@ -11,7 +11,7 @@
 #import "YZShareIncomeTableViewCell.h"
 #import "YZNoDataTableViewCell.h"
 
-@interface YZShareIncomeViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface YZShareIncomeViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     int _pageIndex;
 }
@@ -39,7 +39,7 @@
     waitingView;
     NSDictionary *dict = @{
                            @"cmd":@(10636),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"pageIndex":@(_pageIndex),
                            @"pageSize":@10
                            };

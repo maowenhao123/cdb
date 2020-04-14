@@ -238,7 +238,7 @@
 - (void)attentionButonDidClick
 {
     NSDictionary *dict = @{
-                           @"userId": UserId,
+                           @"token": Token,
                            @"byConcernUserId": _circleModel.userId,
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/userConcern") params:dict success:^(id json) {
@@ -269,7 +269,7 @@
         topicId = self.circleModel.id;
     }
     NSDictionary *dict = @{
-                           @"userId": UserId,
+                           @"token": Token,
                            @"topicId": topicId,
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/topicLike") params:dict success:^(id json) {

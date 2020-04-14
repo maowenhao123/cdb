@@ -72,10 +72,9 @@
 - (void)getBankData
 {
     NSDictionary *dict = @{
-                           @"cmd":@(10700),
-                           @"userId":UserId
-                           };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+        @"token": Token
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/getBankCardList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"%@",json);
         if (SUCCESS) {
@@ -370,12 +369,10 @@
     YZBankCardStatus * status = self.bankCards[self.selBankCardIndex];
     NSString * cardId = status.cardId;
     NSNumber * money = @([self.withdrawalTF.text floatValue] * 100);
-    NSNumber * cmd = @(10920);
     NSDictionary *dict = [NSDictionary dictionary];
     if (type == 1) {//密码验证
         dict = @{
-                @"cmd":cmd,
-                @"userId":UserId,
+                @"token":Token,
                 @"cardId":cardId,
                 @"money":money,
                 @"passwd":passWord,
@@ -384,15 +381,14 @@
     }else//短信验证
     {
        dict = @{
-                @"cmd":cmd,
-                @"userId":UserId,
+                @"token":Token,
                 @"cardId":cardId,
                 @"money":money,
                 @"verifyCode":passWord,
                 @"type": @(type)
                 };
     }
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/appPetition" params:dict success:^(id json) {
         YZLog(@"%@",json);
         if (SUCCESS) {
             [MBProgressHUD showSuccess:@"申请提款成功，请等待"];

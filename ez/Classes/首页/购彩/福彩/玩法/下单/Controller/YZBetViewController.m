@@ -654,7 +654,7 @@
         [MBProgressHUD showError:@"单次投注方案不能超过2万元!"];
         return;
     }
-    if(!UserId)//没登录
+    if(!Token)//没登录
     {
         YZLoginViewController *loginVc = [[YZLoginViewController alloc] init];
         YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:loginVc];
@@ -716,7 +716,7 @@
                                 @"game":self.gameId
     };
     NSDictionary *dict = @{
-        @"userId":UserId,
+        @"token":Token,
         @"order":orderDic,
     };
     [[YZHttpTool shareInstance] requestTarget:self PostWithURL:BaseUrlCoupon(@"/getConsumableList") params:dict success:^(id json) {
@@ -803,7 +803,7 @@
             }else
             {
                 self.currentTermId = [termList lastObject][@"termId"];
-                [self isJump:Jump];
+                [self comfirmPay];//支付
             }
         }else
         {
@@ -815,27 +815,7 @@
         YZLog(@"getCurrentTermData - error = %@",error);
     }];
 }
-- (void)isJump:(BOOL)jump
-{
-    if(!jump)//不跳
-    {
-        [self comfirmPay];//支付
-    }else //跳转网页
-    {
-        [MBProgressHUD hideHUDForView:self.view];
-        NSNumber *multiple = [NSNumber numberWithInt:[self.multipleTextField.text intValue]];//投多少倍
-        NSNumber *amount = [NSNumber numberWithInt:(int)self.amountMoney * 100];
-        NSNumber *termCount = [NSNumber numberWithInt:[self.termTextField.text intValue]];//追期数
-        NSMutableArray *ticketList = self.ticketList;
-        NSString *ticketListJsonStr = [ticketList JSONRepresentation];
-        YZLog(@"ticketListJsonStr = %@",ticketListJsonStr);
-        NSString * mcpStr = @"ZCmcp";
-        NSString *param = [NSString stringWithFormat:@"userId=%@&gameId=%@&termId=%@&multiple=%@&amount=%@&ticketList=%@&payType=%@&termCount=%@&startTermId=%@&winStop=%@&id=%@&channel=%@&childChannel=%@&version=%@&remark=%@",UserId,self.gameId,self.currentTermId,multiple,amount,[ticketListJsonStr URLEncodedString],@"ACCOUNT",termCount,self.currentTermId,self.winStopBtn.selected ? @true : @false,@"1407305392008",mainChannel,childChannel,[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],mcpStr];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@",jumpURLStr,param]];
-        YZLog(@"url:%@",url);
-        [[UIApplication sharedApplication] openURL:url];
-    }
-}
+ 
 #pragma  mark - 确认支付
 - (void)comfirmPay//支付接口
 {

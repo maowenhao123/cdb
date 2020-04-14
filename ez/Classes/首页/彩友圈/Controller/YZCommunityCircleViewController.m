@@ -29,7 +29,7 @@
 - (void)getData
 {
     NSDictionary *dict = @{
-                           @"userId": UserId,
+                           @"token": Token,
                            @"communityId": self.communityId,
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/getCommunityPlayType") params:dict success:^(id json) {
@@ -97,7 +97,7 @@
     }
     
     NSDictionary *dict = @{
-                           @"userId": UserId,
+                           @"token": Token,
                            @"communityId": self.communityId,
                            @"playTypes": playTypes
                            };

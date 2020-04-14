@@ -228,7 +228,7 @@
         @"game":@"F01"
     };
     NSDictionary *dict = @{
-        @"userId":UserId,
+        @"token":Token,
         @"order":orderDic,
     };
     [MBProgressHUD showMessage:@"客官请稍后" toView:self.viewController.tabBarController.view];
@@ -311,7 +311,7 @@
                 return;
             }
             self.currentTermId = [termList lastObject][@"termId"];
-            [self isJump:Jump];
+            [self comfirmPay];//支付
         }else
         {
             ShowErrorView;
@@ -321,25 +321,7 @@
         [MBProgressHUD hideHUDForView:self.viewController.tabBarController.view animated:YES];
     }];
 }
-- (void)isJump:(BOOL)jump
-{
-    if(!jump)//不跳
-    {
-        [self comfirmPay];//支付
-    }else //跳转网页
-    {
-        NSNumber *multiple = @(1);//投多少倍
-        NSNumber *amount = @(200);
-        NSNumber *termCount = @(1);//追期数
-        NSMutableArray *ticketList = [self getTicketList];
-        NSString *ticketListJsonStr = [ticketList JSONRepresentation];
-        YZLog(@"ticketListJsonStr = %@",ticketListJsonStr);
-        NSString * mcpStr = @"ZCmcp";
-        NSString *param = [NSString stringWithFormat:@"userId=%@&gameId=%@&termId=%@&multiple=%@&amount=%@&ticketList=%@&payType=%@&termCount=%@&startTermId=%@&winStop=%@&id=%@&channel=%@&childChannel=%@&version=%@&remark=%@",UserId,@"F01",self.currentTermId,multiple,amount,[ticketListJsonStr URLEncodedString],@"ACCOUNT",termCount,self.currentTermId,@false,@"1407305392008",mainChannel,childChannel,[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],mcpStr];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@",jumpURLStr,param]];
-        [[UIApplication sharedApplication] openURL:url];
-    }
-}
+
 #pragma  mark - 确认支付
 - (void)comfirmPay//支付接口
 {

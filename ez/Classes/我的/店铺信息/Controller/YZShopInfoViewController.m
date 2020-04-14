@@ -7,13 +7,17 @@
 //
 
 #import "YZShopInfoViewController.h"
+#import "YZShopModel.h"
 
 @interface YZShopInfoViewController ()
 
+@property (nonatomic, weak) UIView * topView;
 @property (nonatomic, weak) UIImageView *avatarImageView;
 @property (nonatomic, weak) UILabel *phoneLabel;
 @property (nonatomic, weak) UILabel *addressLabel;
+@property (nonatomic, weak) UILabel * payLabel;
 @property (nonatomic, weak) UIImageView *erCodeImageView;
+@property (nonatomic, strong) YZShopModel * shopModel;
 
 @end
 
@@ -55,13 +59,65 @@
     self.view.backgroundColor = YZColor(249, 96, 66, 1);
     self.title = @"店铺二维码";
     [self setupChilds];
+    [self getShopInfo];
+}
+
+#pragma mark - 请求数据
+- (void)getShopInfo
+{
+    waitingView_loadingData;
+    NSDictionary *dict = @{
+        @"storeId":@"1",
+        @"token":Token
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/getStoreInfo" params:dict success:^(id json) {
+        YZLog(@"%@",json);
+        [MBProgressHUD hideHUDForView:self.view];
+        if (SUCCESS) {
+            YZShopModel *shopModel = [YZShopModel objectWithKeyValues:json[@"store"]];
+            shopModel.payList = [YZShopPayModel objectArrayWithKeyValuesArray:json[@"store"][@"payList"]];
+            self.shopModel = shopModel;
+        }else
+        {
+            ShowErrorView;
+        }
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view];
+        YZLog(@"账户error");
+    }];
+}
+
+#pragma mark - Setting
+- (void)setShopModel:(YZShopModel *)shopModel
+{
+    _shopModel = shopModel;
+    
+    [self.avatarImageView sd_setImageWithURL:[NSURL URLWithString:_shopModel.headUrl] placeholderImage:[UIImage imageNamed:@"avatar_zc"]];
+    self.phoneLabel.text = _shopModel.phone;
+    self.addressLabel.text = _shopModel.address;
+    CGSize addressLabelSize = [self.addressLabel.text sizeWithFont:self.addressLabel.font maxSize:CGSizeMake(self.addressLabel.width, MAXFLOAT)];
+    CGFloat addressLabelH = addressLabelSize.height;
+    if (addressLabelH < 17) {
+        addressLabelH = 17;
+    }
+    self.addressLabel.height = addressLabelH;
+    self.payLabel.y = CGRectGetMaxY(self.addressLabel.frame) + 13;
+    
+    for (int i = 0; i < _shopModel.payList.count; i++) {
+        YZShopPayModel * payModel = _shopModel.payList[i];
+        UIImageView *payImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.payLabel.frame) + (20 + 5) * i, self.payLabel.y, 20, 20)];
+        [payImageView sd_setImageWithURL:[NSURL URLWithString:payModel.imgUrl]];
+        [self.topView addSubview:payImageView];
+        
+        self.topView.height = CGRectGetMaxY(payImageView.frame) + 12;
+    }
 }
 
 #pragma mark - 布局视图
 - (void)setupChilds
 {
     //内容
-    UIView * contentView = [[UIView alloc] initWithFrame:CGRectMake(YZMargin, YZMargin, screenWidth - 2 * YZMargin, 450)];
+    UIView * contentView = [[UIView alloc] initWithFrame:CGRectMake(YZMargin, YZMargin, screenWidth - 2 * YZMargin, 470)];
     contentView.backgroundColor = [UIColor whiteColor];
     contentView.layer.cornerRadius = 5;
     contentView.layer.masksToBounds = YES;
@@ -69,6 +125,7 @@
     
     //顶部 店铺信息
     UIView * topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, contentView.width, 120)];
+    self.topView = topView;
     topView.backgroundColor = YZColor(246, 246, 246, 1);
     [contentView addSubview:topView];
     
@@ -94,11 +151,10 @@
         if (i == 0)
         {
             self.phoneLabel = label;
-            label.text = @"123*****123";
         }else
         {
             self.addressLabel = label;
-            label.text = @"河南省洛阳市******";
+            label.numberOfLines = 0;
         }
         label.textColor = YZBlackTextColor;
         label.font = [UIFont systemFontOfSize:YZGetFontSize(30)];
@@ -106,27 +162,14 @@
     }
     
     UILabel * payLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(avatarImageView.frame) + 10, CGRectGetMaxY(self.addressLabel.frame) + 13, 80, 20)];
+    self.payLabel = payLabel;
     payLabel.text = @"本店支持：";
     payLabel.textColor = YZDrayGrayTextColor;
     payLabel.font = [UIFont systemFontOfSize:YZGetFontSize(28)];
     [topView addSubview:payLabel];
     
-    for (int i = 0; i < 3; i++) {
-        UIImageView *payImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(payLabel.frame) + (20 + 5) * i, payLabel.y, 20, 20)];
-        if (i == 0) {
-            payImageView.image = [UIImage imageNamed:@"shop_weixin_icon"];
-        }else if (i == 1)
-        {
-            payImageView.image = [UIImage imageNamed:@"shop_alipay_icon"];
-        }else if (i == 2)
-        {
-            payImageView.image = [UIImage imageNamed:@"shop_yun_icon"];
-        }
-        [topView addSubview:payImageView];
-    }
-    
     //二维码
-    UILabel *erCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(YZMargin, CGRectGetMaxY(topView.frame) + 30, contentView.width - 2 * YZMargin, 20)];
+    UILabel *erCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(YZMargin, CGRectGetMaxY(topView.frame) + 50, contentView.width - 2 * YZMargin, 20)];
     erCodeLabel.text = @"扫一扫二维码，立即购彩";
     erCodeLabel.textAlignment = NSTextAlignmentCenter;
     erCodeLabel.textColor = YZDrayGrayTextColor;

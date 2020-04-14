@@ -7,7 +7,7 @@
 //
 
 #import "YZBuyLotteryCollectionReusableView.h"
-#import "YZInformationH5ViewController.h"
+#import "YZForecastViewController.h"
 
 @implementation YZBuyLotteryCollectionReusableView
 
@@ -41,7 +41,7 @@
 
 - (void)allButtonDidClick
 {
-    YZInformationH5ViewController * informationVC = [[YZInformationH5ViewController alloc] init];
+    YZForecastViewController * informationVC = [[YZForecastViewController alloc] init];
     [self.viewController.navigationController pushViewController:informationVC animated:YES];
 }
 

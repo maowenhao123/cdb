@@ -454,7 +454,7 @@
         return;
     }
     //微信注册
-    [WXApi registerApp:WXAppIdOld withDescription:@"中彩啦"];
+    [WXApi registerApp:WXAppId withDescription:@"彩店宝"];
     UMSocialPlatformType platformType;
     if (btn.tag == 101)
     {

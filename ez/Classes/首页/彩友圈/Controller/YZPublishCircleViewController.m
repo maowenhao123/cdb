@@ -203,7 +203,7 @@
     NSDictionary * topicInfo = @{
                                  @"communityId": self.communityId,
                                  @"playTypeId": self.playtypeId,
-                                 @"userId": UserId,
+                                 @"token": Token,
                                  @"type": @(0),
                                  @"topicAlbumList": topicAlbumList,
                                  @"content": self.descTV.text

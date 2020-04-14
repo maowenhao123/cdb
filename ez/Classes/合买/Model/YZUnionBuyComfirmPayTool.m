@@ -56,7 +56,7 @@
 {
     _param = param;
     self.sourceController = sourceController;
-    if(!UserId)//没登录
+    if(!Token)//没登录
     {
         YZLoginViewController *loginVc = [[YZLoginViewController alloc] init];
         YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:loginVc];
@@ -129,19 +129,13 @@
             }
             NSString *currentTermId = [termList lastObject][@"termId"];
             _param.termId = currentTermId;
-            if(!Jump)//不跳
+            [MBProgressHUD showMessage:text_paying toView:nil];
+            if(self.isParticipateUnionBuy)//参与合买
             {
-                [MBProgressHUD showMessage:text_paying toView:nil];
-                if(self.isParticipateUnionBuy)//参与合买
-                {
-                    [self comfirmPaticipateUnionBuy];
-                }else if(self.isStartUnionBuy)//发起合买
-                {
-                    [self comfirmStartUnionBuy];
-                }
-            }else //跳转网页
+                [self comfirmPaticipateUnionBuy];
+            }else if(self.isStartUnionBuy)//发起合买
             {
-                [MBProgressHUD hideHUD];
+                [self comfirmStartUnionBuy];
             }
         }else
         {
@@ -161,7 +155,7 @@
     YZUser *user = [YZUserDefaultTool user];
     NSDictionary *dict = @{
                            @"cmd":@(8128),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"gameId":_param.gameId,
                            @"userName":user.user.nickName,
                            @"phone":phone,
@@ -212,7 +206,7 @@
     NSString *phone = [YZUserDefaultTool user].user.mobile.length ? [YZUserDefaultTool user].user.mobile : @"";
     NSDictionary *dict = @{
                            @"cmd":@(8129),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"payType":@"ACCOUNT",
                            @"phone":phone,
                            @"userName":_param.userName,

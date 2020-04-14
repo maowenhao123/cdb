@@ -354,7 +354,7 @@
 #pragma mark - 投注按钮点击
 - (void)betBtnClick
 {
-    if(!UserId)//没登录
+    if(!Token)//没登录
     {
         YZLoginViewController *loginVc = [[YZLoginViewController alloc] init];
         YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:loginVc];
@@ -398,7 +398,7 @@
                                 @"game":self.gameId
                                 };
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            @"order":orderDic,
                            };
     [[YZHttpTool shareInstance] requestTarget:self PostWithURL:BaseUrlCoupon(@"/getConsumableList") params:dict success:^(id json) {
@@ -485,24 +485,7 @@
                 return ;
             }
             self.currentTermId = [termList lastObject][@"termId"];
-            if(!Jump)//不跳
-            {
-                [self comfirmPay];//支付
-            }else //跳转网页
-            {
-                [MBProgressHUD hideHUDForView:self.view];
-                NSNumber *multiple = [NSNumber numberWithInt:[self.multipleTextField.text intValue]];//投多少倍
-                NSNumber *amount = [NSNumber numberWithInt:(int)self.amountMoney * 100];
-                NSMutableArray *ticketList = [self getTicketList];
-                NSString *ticketListJsonStr = [ticketList JSONRepresentation];
-                YZLog(@"ticketListJsonStr = %@",ticketListJsonStr);
-                NSString * mcpStr = @"ZCmcp";
-                NSString *param = [NSString stringWithFormat:@"userId=%@&gameId=%@&termId=%@&multiple=%@&amount=%@&ticketList=%@&payType=%@&id=%@&channel=%@&childChannel=%@&version=%@&playType=%@&termCount=%@&remark=%@",UserId,self.gameId,self.currentTermId,multiple,amount,[ticketListJsonStr URLEncodedString],@"ACCOUNT",@"1407305392008",mainChannel,childChannel,[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],_playType,@(1),mcpStr];
-                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@",jumpURLStr,param]];
-                YZLog(@"url = %@",url);
-                
-                [[UIApplication sharedApplication] openURL:url];
-            }
+            [self comfirmPay];//支付
         }else
         {
             ShowErrorView

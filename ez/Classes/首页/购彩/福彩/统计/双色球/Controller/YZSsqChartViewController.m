@@ -652,7 +652,7 @@
 - (void)settingGotoHelpVC
 {
     YZLoadHtmlFileController * webVC = [[YZLoadHtmlFileController alloc]initWithFileName:@"chart_help_F01_T01.html"];
-    webVC.title = @"中彩啦";
+    webVC.title = @"彩店宝";
     [self.navigationController pushViewController:webVC animated:YES];
 }
 - (void)settingConfirm

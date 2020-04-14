@@ -71,7 +71,7 @@
     if (imagesURLStrings.count > 0) {//有数据时才可以选择
         YZRespPromotionStatus *status = self.respPromotionList[index];
         NSString * showAddr = status.showAddr;
-//        showAddr = @"http://i.ez1898.com/zc_down/guidepage.html";
+        //        showAddr = @"http://i.ez1898.com/zc_down/guidepage.html";
         if (YZStringIsEmpty(showAddr)) return;//没有链接时，不跳转
         YZLoadHtmlFileController * webVC = [[YZLoadHtmlFileController alloc]initWithWeb:showAddr];
         webVC.title = status.title;
@@ -83,12 +83,13 @@
 {
     //获得当前版本号
     NSDictionary *dict = @{
-                           };
-    [[YZHttpTool shareInstance] postWithURL:BaseUrlAdvert(@"") params:dict success:^(id json) {
+        @"storeId": @"1"
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/getadvert" params:dict success:^(id json) {
         [header endRefreshing];
         YZLog(@"getPromotionList:%@",json);
         if (SUCCESS){
-            self.respPromotionList = [YZRespPromotionStatus objectArrayWithKeyValuesArray:json[@"respAdvertList"]];
+            self.respPromotionList = [YZRespPromotionStatus objectArrayWithKeyValuesArray:json[@"adverts"]];
             [self setData];
         }else
         {
@@ -96,11 +97,11 @@
             [self setData];
         }
     }failure:^(NSError *error)
-    {
-         [header endRefreshing];
-         self.respPromotionList = nil;
-         [self setData];
-         YZLog(@"error = %@",error);
+     {
+        [header endRefreshing];
+        self.respPromotionList = nil;
+        [self setData];
+        YZLog(@"error = %@",error);
     }];
 }
 - (void)setData

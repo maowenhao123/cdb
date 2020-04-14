@@ -192,7 +192,7 @@
     NSNumber *amount = [NSNumber numberWithFloat:[self.amountTextTield.text floatValue] * 100];
     NSDictionary *dict = @{
                            @"cmd":@(8041),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"amount":amount,
                            @"payType":self.paymentId,
                            @"payInfo":payInfoJsonStr

@@ -23,7 +23,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = YZBackgroundColor;
         self.itemViewW = self.width / 5;
         [self setupChilds];
     }

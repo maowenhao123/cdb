@@ -27,7 +27,7 @@
     NSString * payInfoJson = [@{@"clientType":@(1)} JSONRepresentation];
     NSDictionary *dict = @{
                            @"cmd":@(8041),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"amount":amount,
                            @"payType":paymentId,
                            @"payInfo":payInfoJson

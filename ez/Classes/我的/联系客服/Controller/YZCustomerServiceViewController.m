@@ -160,7 +160,7 @@
 {
     //注册
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            };
     waitingView
     [[YZHttpTool shareInstance] postWithURL:BaseUrlEasemob(@"/register") params:dict success:^(id json) {

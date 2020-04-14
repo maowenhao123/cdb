@@ -7,37 +7,21 @@
 //
 #define bannerCellId @"BuyLotteryCollectionViewBannerCellId"
 #define functionCellId @"HomePageFunctionCollectionViewCellId"
-#define recommendLotteryCellId @"RecommendLotteryCollectionViewCellId"
-#define cycleScrollCellId @"BuyLotteryCollectionViewCycleScrollCellId"
 #define gameInfoCellId @"BuyLotteryCollectionViewGameInfoCellId"
 
-#define InformationHeaderId @"InformationHeaderId"
-#define InformationCellId @"InformationCellId"
-
 #define bannerH 180
-#define cycleScrollViewH 29
 #define cellH 90
-#define informationCell 110
 #import "YZBuyLotteryCollectionView.h"
-#import "YZLoginViewController.h"
-#import "YZLoadHtmlFileController.h"
 #import "YZGameIdViewController.h"
-#import "YZInformationDetailViewController.h"
 #import "YZInitiateUnionBuyViewController.h"
 #import "YZBannerCollectionViewCell.h"
-#import "YZBuyLotteryCollectionReusableView.h"
 #import "YZHomePageFunctionCollectionViewCell.h"
-#import "YZRecommendLotteryCollectionViewCell.h"
-#import "YZCycleScrollViewCollectionViewCell.h"
 #import "YZBuyLotteryCollectionViewCell.h"
-#import "YZInformationCollectionViewCell.h"
 
 @interface YZBuyLotteryCollectionView ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, assign) int pageIndex;
 @property (nonatomic,strong) NSArray *functions;
-@property (nonatomic, strong) YZQuickStakeGameModel *quickStakeGameModel;
-@property (nonatomic, strong) YZUnionBuyStatus *unionBuyStatus;
 @property (nonatomic, strong) NSArray *cycleDatas;
 @property (nonatomic, strong) NSArray *gameInfos;
 @property (nonatomic, strong) NSMutableArray *informations;
@@ -57,17 +41,7 @@
         [self registerClass];
         [MBProgressHUD showMessage:@"获取数据，客官请稍后..." toView:self];
         [self getFunctionData];
-        [self getNoticeData];
-        [self getGameInfoDataWith:nil];
-        [self getInformationDataWith:nil];
-        [self getQuickStakeData];
-        [self getAllUnionBuyStatus];
-        
-        //初始化底部刷新控件
-        MJRefreshBackGifFooter *footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshViewBeginRefreshing)];
-        [YZTool setRefreshFooterData:footer];
-        self.footer = footer;
-        self.mj_footer = footer;
+        [self getGameInfoDataWith:nil];;
     }
     return self;
 }
@@ -75,13 +49,9 @@
 #pragma mark - 注册
 - (void)registerClass
 {
-    [self registerClass:[YZBuyLotteryCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:InformationHeaderId];
     [self registerClass:[YZBannerCollectionViewCell class] forCellWithReuseIdentifier:bannerCellId];
     [self registerClass:[YZHomePageFunctionCollectionViewCell class] forCellWithReuseIdentifier:functionCellId];
-    [self registerClass:[YZRecommendLotteryCollectionViewCell class] forCellWithReuseIdentifier:recommendLotteryCellId];
-    [self registerClass:[YZCycleScrollViewCollectionViewCell class] forCellWithReuseIdentifier:cycleScrollCellId];
     [self registerClass:[YZBuyLotteryCollectionViewCell class] forCellWithReuseIdentifier:gameInfoCellId];
-    [self registerClass:[YZInformationCollectionViewCell class] forCellWithReuseIdentifier:InformationCellId];
 }
 #pragma mark - 获取数据
 - (void)headerRefreshViewBeginRefreshingWith:(MJRefreshGifHeader *)header
@@ -91,94 +61,35 @@
     YZBannerCollectionViewCell * bannerCollectionViewCell = (YZBannerCollectionViewCell * )[self cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
     [bannerCollectionViewCell getDataWith:header];
     [self getFunctionData];
-    [self getQuickStakeData];
-    [self getNoticeData];
     [self getGameInfoDataWith:header];
-    [self getInformationDataWith:header];
-}
-
-- (void)footerRefreshViewBeginRefreshing
-{
-    self.pageIndex ++;
-    [self getInformationDataWith:nil];
 }
 
 - (void)getFunctionData
 {
-    NSDictionary *dict = @{
-                           @"version": @"0.0.5"
-                           };
-    [[YZHttpTool shareInstance] postWithURL:BaseUrlSalesManager(@"/getShortcutModules") params:dict success:^(id json) {
-        YZLog(@"getShortcutModules:%@",json);
-        if (SUCCESS) {
-            NSArray *functions = [YZHomePageFunctionModel objectArrayWithKeyValuesArray:json[@"shortcutModules"]];
-            NSMutableArray *functions_mu = [NSMutableArray array];
-            for (YZHomePageFunctionModel * functionModel in functions) {
-                if (![functionModel.type isEqualToString:@"COMMUNITY"] && ![functionModel.type isEqualToString:@"UNIONPLAN"]) {
-                    [functions_mu addObject:functionModel];
-                }
-            }
-            self.functions = [NSArray arrayWithArray:functions];
-            [UIView performWithoutAnimation:^{
-                [self reloadSections:[NSIndexSet indexSetWithIndex:1]];
-            }];
+    NSMutableArray * functions_mu = [NSMutableArray array];
+    for (int i = 0; i < 4; i++) {
+        YZHomePageFunctionModel *functionModel = [[YZHomePageFunctionModel alloc] init];
+        if (i == 0) {
+            functionModel.iconName = @"home_recharge";
+            functionModel.name = @"点我充值";
+        }else if (i == 1)
+        {
+            functionModel.iconName = @"home_integral_conversion";
+            functionModel.name = @"积分兑换";
+        }else if (i == 2)
+        {
+            functionModel.iconName = @"home_forecast";
+            functionModel.name = @"预测推荐";
+        }else if (i == 3)
+        {
+            functionModel.iconName = @"home_live";
+            functionModel.name = @"视频直播";
         }
-    } failure:^(NSError *error)
-    {
-        YZLog(@"error = %@",error);
-    }];
-}
-
-//获取推荐彩票
-- (void)getQuickStakeData
-{
-    NSDictionary *dict = @{
-                           };
-    [[YZHttpTool shareInstance] postWithURL:BaseUrlSalesManager(@"/getQuickStakeGames") params:dict success:^(id json) {
-        YZLog(@"getQuickStakeGames:%@",json);
-        if (SUCCESS) {
-            NSArray * dataArray = [YZQuickStakeGameModel objectArrayWithKeyValuesArray:json[@"games"]];
-            self.quickStakeGameModel = dataArray.firstObject;
-            [UIView performWithoutAnimation:^{
-                [self reloadSections:[NSIndexSet indexSetWithIndex:2]];
-            }];
-        }
-    } failure:^(NSError *error)
-    {
-        YZLog(@"error = %@",error);
-    }];
-}
-
-//获取合买数据
-- (void)getAllUnionBuyStatus
-{
-    [[YZHttpTool shareInstance] getUnionBuyStatusWithUserName:@"" gameId:@"" sortType:sortTypeDescending fieldType:fieldTypeOrderByProgress index:0 getSuccess:^(NSArray *unionBuys) {
-        NSArray * unionBuyStatuss = [YZUnionBuyStatus objectArrayWithKeyValuesArray:unionBuys];
-        self.unionBuyStatus = unionBuyStatuss.firstObject;
-        [UIView performWithoutAnimation:^{
-            [self reloadSections:[NSIndexSet indexSetWithIndex:2]];
-        }];
-    } getFailure:^{
-        YZLog(@"error");
-    }];
-}
-
-//获取滚动新闻
-- (void)getNoticeData
-{
-    NSDictionary *dict = @{
-                           };
-    [[YZHttpTool shareInstance] postWithURL:BaseUrlNotice(@"/getNoticeList") params:dict success:^(id json) {
-        YZLog(@"getNoticeList:%@",json);
-        if (SUCCESS){
-            self.cycleDatas = [YZNoticeStatus objectArrayWithKeyValuesArray:json[@"notices"]];
-            [UIView performWithoutAnimation:^{
-                [self reloadSections:[NSIndexSet indexSetWithIndex:3]];
-            }];
-        }
-    }failure:^(NSError *error)
-    {
-        YZLog(@"error = %@",error);
+        [functions_mu addObject:functionModel];
+    }
+    self.functions = [NSArray arrayWithArray:functions_mu];
+    [UIView performWithoutAnimation:^{
+        [self reloadSections:[NSIndexSet indexSetWithIndex:1]];
     }];
 }
 
@@ -188,20 +99,20 @@
     NSDictionary *dict = @{
                            @"storeId":@"1",
                            };
-    [[YZHttpTool shareInstance] postWithURL:@"/getCurrentTermList" params:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self];
         [header endRefreshing];
         YZLog(@"gameInfo:%@",json);
         if (SUCCESS){
-            self.gameInfos = [YZBuyLotteryCellStatus objectArrayWithKeyValuesArray:json[@"gameList"]];
+            self.gameInfos = [YZBuyLotteryCellStatus objectArrayWithKeyValuesArray:json[@"game"]];
             [UIView performWithoutAnimation:^{
-                [self reloadSections:[NSIndexSet indexSetWithIndex:4]];
+                [self reloadSections:[NSIndexSet indexSetWithIndex:2]];
             }];
         }else
         {
             self.gameInfos = [self getDefaultGameInfos];
             [UIView performWithoutAnimation:^{
-                [self reloadSections:[NSIndexSet indexSetWithIndex:4]];
+                [self reloadSections:[NSIndexSet indexSetWithIndex:2]];
             }];
         }
     }failure:^(NSError *error)
@@ -210,43 +121,8 @@
          [header endRefreshing];
          self.gameInfos = [self getDefaultGameInfos];
          [UIView performWithoutAnimation:^{
-            [self reloadSections:[NSIndexSet indexSetWithIndex:4]];
+            [self reloadSections:[NSIndexSet indexSetWithIndex:2]];
          }];
-         YZLog(@"error = %@",error);
-    }];
-}
-
-//获取资讯
-- (void)getInformationDataWith:(MJRefreshGifHeader *)header
-{
-    NSDictionary *dict = @{
-                           @"pageIndex":@(self.pageIndex),
-                           @"pageSize":@(10)
-                           };
-    [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/getAppHomePageInformationList") params:dict success:^(id json) {
-        YZLog(@"getAppHomePageInformationList:%@",json);
-        if (SUCCESS){
-            if (self.pageIndex == 0) {
-                [self.informations removeAllObjects];
-            }
-            NSArray * newInformations = [YZInformationModel objectArrayWithKeyValuesArray:json[@"appInformations"]];
-            [self.informations addObjectsFromArray:newInformations];
-            if (newInformations.count == 0) {
-                [self.footer endRefreshingWithNoMoreData];
-            }else
-            {
-                [self.footer endRefreshing];
-            }
-            [UIView performWithoutAnimation:^{
-                [self reloadSections:[NSIndexSet indexSetWithIndex:5]];
-            }];
-        }else
-        {
-            [self.footer endRefreshing];
-        }
-    }failure:^(NSError *error)
-    {
-         [self.footer endRefreshing];
          YZLog(@"error = %@",error);
     }];
 }
@@ -254,11 +130,12 @@
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    if (section == 5 && !YZArrayIsEmpty(self.informations)) {
+    if (section == 2 && !YZArrayIsEmpty(self.informations)) {
         return CGSizeMake(screenWidth, 10 + 40);
     }
     return CGSizeZero;
 }
+
 //配置item的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -267,56 +144,24 @@
         return CGSizeMake(self.width, bannerH);
     }else if (indexPath.section == 1)
     {
-        if (self.functions.count > 5) {
-            return CGSizeMake(self.width, 95);
-        }else if (self.functions.count <= 5 && self.functions.count > 0)
-        {
-            return CGSizeMake(self.width, 84);
-        }else
-        {
-            return CGSizeMake(self.width, 1);
-        }
+        return CGSizeMake(self.width, 84);
     }else if (indexPath.section == 2)
     {
-        if (!YZObjectIsEmpty(self.quickStakeGameModel) || !YZObjectIsEmpty(self.unionBuyStatus)) {
-            return CGSizeMake(self.width, 115);
-        }else
-        {
-            return CGSizeMake(self.width, 1);
-        }
-    }else if (indexPath.section == 3)
-    {
-        if (self.cycleDatas.count == 0) {//没有数据时
-            return CGSizeMake(self.width, 10);
-        }else
-        {
-            return CGSizeMake(self.width, cycleScrollViewH);
-        }
-    }else if (indexPath.section == 4)
-    {
         return CGSizeMake(self.width / 2, cellH);
-    }else if (indexPath.section == 5){
-        return CGSizeMake(self.width, informationCell);
     }
     return CGSizeMake(self.width, 0);
-}
-
-- (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    view.layer.zPosition = 0.0;
 }
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 6;
+    return 3;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (section == 4) {
+    if (section == 2) {
         return self.gameInfos.count;
-    }else if (section == 5){
-        return self.informations.count;
     }
     return 1;
 }
@@ -333,21 +178,6 @@
         return cell;
     }else if (indexPath.section == 2)
     {
-        YZRecommendLotteryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:recommendLotteryCellId forIndexPath:indexPath];
-        if (!YZObjectIsEmpty(self.quickStakeGameModel)) {
-            cell.gameModel = self.quickStakeGameModel;
-        }
-        if (!YZObjectIsEmpty(self.unionBuyStatus)) {
-            cell.unionBuyStatus = self.unionBuyStatus;
-        }
-        return cell;
-    }else if (indexPath.section == 3)
-    {
-        YZCycleScrollViewCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cycleScrollCellId forIndexPath:indexPath];
-        cell.cycleDatas = self.cycleDatas;
-        return cell;
-    }else if (indexPath.section == 4)
-    {
         YZBuyLotteryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:gameInfoCellId forIndexPath:indexPath];
         cell.status = self.gameInfos[indexPath.row];
         if (indexPath.row % 2 == 0) {
@@ -357,20 +187,6 @@
             cell.line2.hidden = YES;
         }
         return cell;
-    }else if (indexPath.section == 5)
-    {
-        YZInformationCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:InformationCellId forIndexPath:indexPath];
-        cell.informationModel = self.informations[indexPath.row];
-        return cell;
-    }
-    return nil;
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    if (kind == UICollectionElementKindSectionHeader && indexPath.section == 5 && !YZArrayIsEmpty(self.informations)) {
-        YZBuyLotteryCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:InformationHeaderId forIndexPath:indexPath];
-        return headerView;
     }
     return nil;
 }
@@ -379,7 +195,7 @@
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 4)
+    if (indexPath.section == 2)
     {
         YZBuyLotteryCellStatus * status = self.gameInfos[indexPath.row];
         if ([status.gameId isEqualToString:@"UNIONPLAN"]) {
@@ -390,23 +206,12 @@
             YZGameIdViewController *destVc = (YZGameIdViewController *)[[[YZTool gameDestClassDict][status.gameId] alloc] initWithGameId:status.gameId];
             [self.viewController.navigationController pushViewController:destVc animated:YES];
         }
-    }else if (indexPath.section == 5)
-    {
-        //阅读量+1
-        YZInformationModel *informationModel = self.informations[indexPath.row];
-        NSInteger browseTimes = [informationModel.browseTimes integerValue] + 1;
-        informationModel.browseTimes = @(browseTimes);
-        [collectionView reloadItemsAtIndexPaths:@[indexPath]];
-        
-        YZInformationDetailViewController *informationDetailVC = [[YZInformationDetailViewController alloc] init];
-        informationDetailVC.informationModel = informationModel;
-        [self.viewController.navigationController pushViewController:informationDetailVC animated:YES];
     }
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 4 || indexPath.section == 5)
+    if (indexPath.section == 2)
     {
         return YES;
     }

@@ -44,7 +44,7 @@
 {
     NSDictionary *dict = @{
                            @"cmd":@(12500),
-                           @"userId":UserId,
+                           @"token":Token,
                            @"pageIndex":@(self.pageIndex),
                            @"pageSize":@(10)
                            };

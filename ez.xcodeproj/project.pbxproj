@@ -31,11 +31,16 @@
 		1D96B6CC2379519300F1FC63 /* YZErCodeRechargeSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D96B6CA2379519300F1FC63 /* YZErCodeRechargeSuccessView.m */; };
 		1D9B49A023B991F80017DB2A /* YZKy481BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9B499E23B991F80017DB2A /* YZKy481BaseView.m */; };
 		1D9B49AA23B99D290017DB2A /* YZChongDanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9B49A823B99D290017DB2A /* YZChongDanView.m */; };
+		1DAEFA7C2444530200070076 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1DAEFA7A2444530100070076 /* AlipaySDK.bundle */; };
+		1DAEFA7D2444530200070076 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DAEFA7B2444530100070076 /* AlipaySDK.framework */; };
+		1DAEFA8324455CF400070076 /* YZInformationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAEFA8224455CF400070076 /* YZInformationListViewController.m */; };
+		1DAEFA8624455E4800070076 /* YZInformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAEFA8524455E4800070076 /* YZInformationTableViewCell.m */; };
+		1DAEFA8924455F5B00070076 /* YZZCBuyLotteryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAEFA8824455F5B00070076 /* YZZCBuyLotteryCollectionViewCell.m */; };
+		1DAEFA8C244590F100070076 /* YZShopModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DAEFA8B244590F100070076 /* YZShopModel.m */; };
 		1DB2A59622C1F660000AFE52 /* YZ11x5PlayTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2A59422C1F660000AFE52 /* YZ11x5PlayTypeView.m */; };
 		1DB2A5A022C20615000AFE52 /* YZCirclePlayTypePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB2A59E22C20615000AFE52 /* YZCirclePlayTypePickerView.m */; };
 		1DB33E75237D429500463EEE /* YZKy481Math.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB33E73237D429500463EEE /* YZKy481Math.m */; };
 		1DB467962432DB2700E79943 /* YZInitiateUnionBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB467952432DB2700E79943 /* YZInitiateUnionBuyViewController.m */; };
-		1DB467992432DB3F00E79943 /* YZZCBuyLotteryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB467982432DB3F00E79943 /* YZZCBuyLotteryCollectionViewCell.m */; };
 		1DB467A32432F1F400E79943 /* YZShopInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB467A22432F1F400E79943 /* YZShopInfoViewController.m */; };
 		1DB6AA7722D2EAE700B2D6EF /* AliyunOSSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DB6AA7522D2EAE700B2D6EF /* AliyunOSSiOS.framework */; };
 		1DB6AA8B22D31E9800B2D6EF /* YZCustomerServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB6AA8922D31E9700B2D6EF /* YZCustomerServiceViewController.m */; };
@@ -393,7 +398,6 @@
 		AA3A9D4021DEF5A200F9147C /* HelpDeskLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA3A9D3821DEF58A00F9147C /* HelpDeskLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA3A9D4121DEF5A200F9147C /* HyphenateLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3A9D3721DEF58A00F9147C /* HyphenateLite.framework */; };
 		AA3A9D4221DEF5A200F9147C /* HyphenateLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA3A9D3721DEF58A00F9147C /* HyphenateLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AA4366DC21AE6876002D5613 /* YZMineHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4366DA21AE6876002D5613 /* YZMineHeaderView.m */; };
 		AA43DCB01F4AE0F70018818E /* YZUpGradeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA43DCAE1F4AE0F70018818E /* YZUpGradeView.m */; };
 		AA4B7BBF20172C1900A6F764 /* YZQrCodeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4B7BBD20172C1900A6F764 /* YZQrCodeModel.m */; };
 		AA57887C22851CB9002292EA /* jcore-ios-2.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA57887522851CB8002292EA /* jcore-ios-2.0.0.a */; };
@@ -455,8 +459,6 @@
 		AA74E1CB1FFE0AEA003B53AF /* YZMineSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E1451FFE0AEA003B53AF /* YZMineSettingViewController.m */; };
 		AA74E1CF1FFE0AEA003B53AF /* YZMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E1491FFE0AEA003B53AF /* YZMineViewController.m */; };
 		AA74E1D11FFE0AEA003B53AF /* YZFunctionStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E14B1FFE0AEA003B53AF /* YZFunctionStatus.m */; };
-		AA74E1D31FFE0AEA003B53AF /* YZChooseAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E14F1FFE0AEA003B53AF /* YZChooseAvatarView.m */; };
-		AA74E1D71FFE0AEA003B53AF /* YZMineFunctionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E1531FFE0AEA003B53AF /* YZMineFunctionTableViewCell.m */; };
 		AA74E25D1FFE0C41003B53AF /* YZSettingPassWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E24F1FFE0C41003B53AF /* YZSettingPassWordViewController.m */; };
 		AA74E25F1FFE0C41003B53AF /* YZWithdrawalRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E2501FFE0C41003B53AF /* YZWithdrawalRecordViewController.m */; };
 		AA74E2611FFE0C41003B53AF /* YZWithdrawalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E2511FFE0C41003B53AF /* YZWithdrawalViewController.m */; };
@@ -485,9 +487,7 @@
 		AA74EA3A1FFE17DE003B53AF /* walletResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AA74E79F1FFE17DD003B53AF /* walletResources.bundle */; };
 		AA74EA3C1FFE17DE003B53AF /* libPaySdkColor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA74E7A01FFE17DD003B53AF /* libPaySdkColor.a */; };
 		AA74EA3E1FFE17DE003B53AF /* libPaymentControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA74E7A31FFE17DD003B53AF /* libPaymentControl.a */; };
-		AA74EA401FFE17DE003B53AF /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AA74E7A51FFE17DD003B53AF /* AlipaySDK.bundle */; };
 		AA74EA421FFE17DE003B53AF /* YZAliPayOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E7A61FFE17DD003B53AF /* YZAliPayOrder.m */; };
-		AA74EA441FFE17DE003B53AF /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA74E7A81FFE17DD003B53AF /* AlipaySDK.framework */; };
 		AA74EA461FFE17DE003B53AF /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA74E7AA1FFE17DD003B53AF /* UMMobClick.framework */; };
 		AA74EA4A1FFE17DE003B53AF /* UIView+FLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E7B21FFE17DD003B53AF /* UIView+FLExtension.m */; };
 		AA74EA4C1FFE17DE003B53AF /* NSDate+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74E7B71FFE17DD003B53AF /* NSDate+Category.m */; };
@@ -709,11 +709,10 @@
 		AA74ECD81FFE1AD6003B53AF /* YZMessageStstus.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74ECCC1FFE1AD6003B53AF /* YZMessageStstus.m */; };
 		AA74ECDA1FFE1AD6003B53AF /* YZMessageType.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74ECCE1FFE1AD6003B53AF /* YZMessageType.m */; };
 		AA74ECDC1FFE1AD6003B53AF /* YZMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA74ECD11FFE1AD6003B53AF /* YZMessageTableViewCell.m */; };
-		AA92647C224B1CD200FCEFC7 /* YZInformationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92647A224B1CD200FCEFC7 /* YZInformationCollectionViewCell.m */; };
 		AA926481224B1E5A00FCEFC7 /* YZInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92647F224B1E5A00FCEFC7 /* YZInformationModel.m */; };
 		AA92648A224B54E400FCEFC7 /* YZInformationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA926488224B54E400FCEFC7 /* YZInformationDetailViewController.m */; };
 		AA926494224B5C1800FCEFC7 /* YZInformationType.m in Sources */ = {isa = PBXBuildFile; fileRef = AA926492224B5C1800FCEFC7 /* YZInformationType.m */; };
-		AA926499224B5C7600FCEFC7 /* YZInformationH5ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA926497224B5C7600FCEFC7 /* YZInformationH5ViewController.m */; };
+		AA926499224B5C7600FCEFC7 /* YZForecastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA926497224B5C7600FCEFC7 /* YZForecastViewController.m */; };
 		AA9264A4224C666A00FCEFC7 /* YZBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9264A2224C666A00FCEFC7 /* YZBottomButton.m */; };
 		AAA65A3222A75D5800DB7427 /* YZQuickStakeGamesView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA65A3022A75D5800DB7427 /* YZQuickStakeGamesView.m */; };
 		AAA65A3722A7604000DB7427 /* YZQuickUnionBuyView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA65A3522A7604000DB7427 /* YZQuickUnionBuyView.m */; };
@@ -859,6 +858,16 @@
 		1D9B499E23B991F80017DB2A /* YZKy481BaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZKy481BaseView.m; sourceTree = "<group>"; };
 		1D9B49A723B99D290017DB2A /* YZChongDanView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZChongDanView.h; sourceTree = "<group>"; };
 		1D9B49A823B99D290017DB2A /* YZChongDanView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZChongDanView.m; sourceTree = "<group>"; };
+		1DAEFA7A2444530100070076 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		1DAEFA7B2444530100070076 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		1DAEFA8124455CF400070076 /* YZInformationListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZInformationListViewController.h; sourceTree = "<group>"; };
+		1DAEFA8224455CF400070076 /* YZInformationListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZInformationListViewController.m; sourceTree = "<group>"; };
+		1DAEFA8424455E4800070076 /* YZInformationTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZInformationTableViewCell.h; sourceTree = "<group>"; };
+		1DAEFA8524455E4800070076 /* YZInformationTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZInformationTableViewCell.m; sourceTree = "<group>"; };
+		1DAEFA8724455F5B00070076 /* YZZCBuyLotteryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZZCBuyLotteryCollectionViewCell.h; sourceTree = "<group>"; };
+		1DAEFA8824455F5B00070076 /* YZZCBuyLotteryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZZCBuyLotteryCollectionViewCell.m; sourceTree = "<group>"; };
+		1DAEFA8A244590F100070076 /* YZShopModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZShopModel.h; sourceTree = "<group>"; };
+		1DAEFA8B244590F100070076 /* YZShopModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZShopModel.m; sourceTree = "<group>"; };
 		1DB2A59322C1F660000AFE52 /* YZ11x5PlayTypeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZ11x5PlayTypeView.h; sourceTree = "<group>"; };
 		1DB2A59422C1F660000AFE52 /* YZ11x5PlayTypeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZ11x5PlayTypeView.m; sourceTree = "<group>"; };
 		1DB2A59D22C20615000AFE52 /* YZCirclePlayTypePickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZCirclePlayTypePickerView.h; sourceTree = "<group>"; };
@@ -867,8 +876,6 @@
 		1DB33E73237D429500463EEE /* YZKy481Math.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZKy481Math.m; sourceTree = "<group>"; };
 		1DB467942432DB2700E79943 /* YZInitiateUnionBuyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZInitiateUnionBuyViewController.h; sourceTree = "<group>"; };
 		1DB467952432DB2700E79943 /* YZInitiateUnionBuyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZInitiateUnionBuyViewController.m; sourceTree = "<group>"; };
-		1DB467972432DB3F00E79943 /* YZZCBuyLotteryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZZCBuyLotteryCollectionViewCell.h; sourceTree = "<group>"; };
-		1DB467982432DB3F00E79943 /* YZZCBuyLotteryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZZCBuyLotteryCollectionViewCell.m; sourceTree = "<group>"; };
 		1DB467A12432F1F400E79943 /* YZShopInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZShopInfoViewController.h; sourceTree = "<group>"; };
 		1DB467A22432F1F400E79943 /* YZShopInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZShopInfoViewController.m; sourceTree = "<group>"; };
 		1DB6AA7522D2EAE700B2D6EF /* AliyunOSSiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AliyunOSSiOS.framework; sourceTree = "<group>"; };
@@ -1579,8 +1586,6 @@
 		AA3657CF21D224B9009BE71B /* YZActivityModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZActivityModel.m; sourceTree = "<group>"; };
 		AA3A9D3721DEF58A00F9147C /* HyphenateLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HyphenateLite.framework; sourceTree = "<group>"; };
 		AA3A9D3821DEF58A00F9147C /* HelpDeskLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HelpDeskLite.framework; sourceTree = "<group>"; };
-		AA4366D921AE6876002D5613 /* YZMineHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZMineHeaderView.h; sourceTree = "<group>"; };
-		AA4366DA21AE6876002D5613 /* YZMineHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZMineHeaderView.m; sourceTree = "<group>"; };
 		AA43DCAD1F4AE0F70018818E /* YZUpGradeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZUpGradeView.h; sourceTree = "<group>"; };
 		AA43DCAE1F4AE0F70018818E /* YZUpGradeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZUpGradeView.m; sourceTree = "<group>"; };
 		AA4B7BBC20172C1900A6F764 /* YZQrCodeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZQrCodeModel.h; sourceTree = "<group>"; };
@@ -1705,10 +1710,6 @@
 		AA74E1491FFE0AEA003B53AF /* YZMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZMineViewController.m; sourceTree = "<group>"; };
 		AA74E14B1FFE0AEA003B53AF /* YZFunctionStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZFunctionStatus.m; sourceTree = "<group>"; };
 		AA74E14C1FFE0AEA003B53AF /* YZFunctionStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZFunctionStatus.h; sourceTree = "<group>"; };
-		AA74E14F1FFE0AEA003B53AF /* YZChooseAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZChooseAvatarView.m; sourceTree = "<group>"; };
-		AA74E1501FFE0AEA003B53AF /* YZMineFunctionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZMineFunctionTableViewCell.h; sourceTree = "<group>"; };
-		AA74E1511FFE0AEA003B53AF /* YZChooseAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZChooseAvatarView.h; sourceTree = "<group>"; };
-		AA74E1531FFE0AEA003B53AF /* YZMineFunctionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZMineFunctionTableViewCell.m; sourceTree = "<group>"; };
 		AA74E24E1FFE0C41003B53AF /* YZWithdrawalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZWithdrawalViewController.h; sourceTree = "<group>"; };
 		AA74E24F1FFE0C41003B53AF /* YZSettingPassWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZSettingPassWordViewController.m; sourceTree = "<group>"; };
 		AA74E2501FFE0C41003B53AF /* YZWithdrawalRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZWithdrawalRecordViewController.m; sourceTree = "<group>"; };
@@ -1763,10 +1764,8 @@
 		AA74E7A01FFE17DD003B53AF /* libPaySdkColor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPaySdkColor.a; sourceTree = "<group>"; };
 		AA74E7A21FFE17DD003B53AF /* UPPaymentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPaymentControl.h; sourceTree = "<group>"; };
 		AA74E7A31FFE17DD003B53AF /* libPaymentControl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPaymentControl.a; sourceTree = "<group>"; };
-		AA74E7A51FFE17DD003B53AF /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		AA74E7A61FFE17DD003B53AF /* YZAliPayOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZAliPayOrder.m; sourceTree = "<group>"; };
 		AA74E7A71FFE17DD003B53AF /* YZAliPayOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZAliPayOrder.h; sourceTree = "<group>"; };
-		AA74E7A81FFE17DD003B53AF /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		AA74E7AA1FFE17DD003B53AF /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		AA74E7AE1FFE17DD003B53AF /* HelpDeskUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpDeskUI.h; sourceTree = "<group>"; };
 		AA74E7B11FFE17DD003B53AF /* UIView+FLExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FLExtension.h"; sourceTree = "<group>"; };
@@ -2217,16 +2216,14 @@
 		AA74ECD21FFE1AD6003B53AF /* YZMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZMessageTableViewCell.h; sourceTree = "<group>"; };
 		AA7FE7B320BBDF5A00A8C7A7 /* YZBasketBallTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZBasketBallTableViewCell.h; sourceTree = "<group>"; };
 		AA7FE7B420BBDF5A00A8C7A7 /* YZBasketBallTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZBasketBallTableViewCell.m; sourceTree = "<group>"; };
-		AA926479224B1CD200FCEFC7 /* YZInformationCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZInformationCollectionViewCell.h; sourceTree = "<group>"; };
-		AA92647A224B1CD200FCEFC7 /* YZInformationCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZInformationCollectionViewCell.m; sourceTree = "<group>"; };
 		AA92647E224B1E5A00FCEFC7 /* YZInformationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZInformationModel.h; sourceTree = "<group>"; };
 		AA92647F224B1E5A00FCEFC7 /* YZInformationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZInformationModel.m; sourceTree = "<group>"; };
 		AA926487224B54E400FCEFC7 /* YZInformationDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZInformationDetailViewController.h; sourceTree = "<group>"; };
 		AA926488224B54E400FCEFC7 /* YZInformationDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZInformationDetailViewController.m; sourceTree = "<group>"; };
 		AA926491224B5C1800FCEFC7 /* YZInformationType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZInformationType.h; sourceTree = "<group>"; };
 		AA926492224B5C1800FCEFC7 /* YZInformationType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZInformationType.m; sourceTree = "<group>"; };
-		AA926496224B5C7600FCEFC7 /* YZInformationH5ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZInformationH5ViewController.h; sourceTree = "<group>"; };
-		AA926497224B5C7600FCEFC7 /* YZInformationH5ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZInformationH5ViewController.m; sourceTree = "<group>"; };
+		AA926496224B5C7600FCEFC7 /* YZForecastViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZForecastViewController.h; sourceTree = "<group>"; };
+		AA926497224B5C7600FCEFC7 /* YZForecastViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZForecastViewController.m; sourceTree = "<group>"; };
 		AA9264A1224C666A00FCEFC7 /* YZBottomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZBottomButton.h; sourceTree = "<group>"; };
 		AA9264A2224C666A00FCEFC7 /* YZBottomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZBottomButton.m; sourceTree = "<group>"; };
 		AAA65A2F22A75D5800DB7427 /* YZQuickStakeGamesView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YZQuickStakeGamesView.h; sourceTree = "<group>"; };
@@ -2384,6 +2381,7 @@
 				AA74EB381FFE17DF003B53AF /* TencentOpenAPI.framework in Frameworks */,
 				AA74EA381FFE17DE003B53AF /* libWeChatSDK.a in Frameworks */,
 				AA74EA741FFE17DF003B53AF /* hdlibopencore-amrwb.a in Frameworks */,
+				1DAEFA7D2444530200070076 /* AlipaySDK.framework in Frameworks */,
 				AA74EB281FFE17DF003B53AF /* libSocialSMS.a in Frameworks */,
 				CEA4F1601DF10E790069AE52 /* UserNotifications.framework in Frameworks */,
 				AA74EB301FFE17DF003B53AF /* libSocialSina.a in Frameworks */,
@@ -2392,7 +2390,6 @@
 				CE58BA991DE58BF80033B300 /* Security.framework in Frameworks */,
 				1DB6AA7722D2EAE700B2D6EF /* AliyunOSSiOS.framework in Frameworks */,
 				CE58BA891DE58BF80033B300 /* CoreGraphics.framework in Frameworks */,
-				AA74EA441FFE17DE003B53AF /* AlipaySDK.framework in Frameworks */,
 				AA74EA461FFE17DE003B53AF /* UMMobClick.framework in Frameworks */,
 				AA3A9D3F21DEF5A200F9147C /* HelpDeskLite.framework in Frameworks */,
 				AA74EB341FFE17DF003B53AF /* libSocialQQ.a in Frameworks */,
@@ -3135,6 +3132,8 @@
 		1DB4679C2432F1BA00E79943 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1DAEFA8A244590F100070076 /* YZShopModel.h */,
+				1DAEFA8B244590F100070076 /* YZShopModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4746,6 +4745,8 @@
 			children = (
 				AA3292721FFE27B600CA77DA /* YZHomePageViewController.h */,
 				AA3292711FFE27B600CA77DA /* YZHomePageViewController.m */,
+				1DAEFA8124455CF400070076 /* YZInformationListViewController.h */,
+				1DAEFA8224455CF400070076 /* YZInformationListViewController.m */,
 				AA926487224B54E400FCEFC7 /* YZInformationDetailViewController.h */,
 				AA926488224B54E400FCEFC7 /* YZInformationDetailViewController.m */,
 			);
@@ -4795,12 +4796,12 @@
 				AA3292831FFE27B600CA77DA /* YZCycleScrollView.m */,
 				AA3292861FFE27B600CA77DA /* YZBuyLotteryCollectionViewCell.h */,
 				AA32928F1FFE27B600CA77DA /* YZBuyLotteryCollectionViewCell.m */,
+				1DAEFA8724455F5B00070076 /* YZZCBuyLotteryCollectionViewCell.h */,
+				1DAEFA8824455F5B00070076 /* YZZCBuyLotteryCollectionViewCell.m */,
 				AA3292821FFE27B600CA77DA /* YZSupView.h */,
 				AA32928C1FFE27B600CA77DA /* YZSupView.m */,
-				1DB467972432DB3F00E79943 /* YZZCBuyLotteryCollectionViewCell.h */,
-				1DB467982432DB3F00E79943 /* YZZCBuyLotteryCollectionViewCell.m */,
-				AA926479224B1CD200FCEFC7 /* YZInformationCollectionViewCell.h */,
-				AA92647A224B1CD200FCEFC7 /* YZInformationCollectionViewCell.m */,
+				1DAEFA8424455E4800070076 /* YZInformationTableViewCell.h */,
+				1DAEFA8524455E4800070076 /* YZInformationTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4827,8 +4828,8 @@
 		AA3292A01FFE27B600CA77DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				AA926496224B5C7600FCEFC7 /* YZInformationH5ViewController.h */,
-				AA926497224B5C7600FCEFC7 /* YZInformationH5ViewController.m */,
+				AA926496224B5C7600FCEFC7 /* YZForecastViewController.h */,
+				AA926497224B5C7600FCEFC7 /* YZForecastViewController.m */,
 				AAAFECCA2048EC260066E6B1 /* YZForecastDetailViewController.h */,
 				AAAFECCB2048EC260066E6B1 /* YZForecastDetailViewController.m */,
 			);
@@ -5144,8 +5145,8 @@
 		AA74E14A1FFE0AEA003B53AF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AA74E14B1FFE0AEA003B53AF /* YZFunctionStatus.m */,
 				AA74E14C1FFE0AEA003B53AF /* YZFunctionStatus.h */,
+				AA74E14B1FFE0AEA003B53AF /* YZFunctionStatus.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5153,12 +5154,6 @@
 		AA74E14D1FFE0AEA003B53AF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AA4366D921AE6876002D5613 /* YZMineHeaderView.h */,
-				AA4366DA21AE6876002D5613 /* YZMineHeaderView.m */,
-				AA74E1511FFE0AEA003B53AF /* YZChooseAvatarView.h */,
-				AA74E14F1FFE0AEA003B53AF /* YZChooseAvatarView.m */,
-				AA74E1501FFE0AEA003B53AF /* YZMineFunctionTableViewCell.h */,
-				AA74E1531FFE0AEA003B53AF /* YZMineFunctionTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5471,10 +5466,10 @@
 		AA74E7A41FFE17DD003B53AF /* AliSDK */ = {
 			isa = PBXGroup;
 			children = (
-				AA74E7A51FFE17DD003B53AF /* AlipaySDK.bundle */,
+				1DAEFA7A2444530100070076 /* AlipaySDK.bundle */,
+				1DAEFA7B2444530100070076 /* AlipaySDK.framework */,
 				AA74E7A61FFE17DD003B53AF /* YZAliPayOrder.m */,
 				AA74E7A71FFE17DD003B53AF /* YZAliPayOrder.h */,
-				AA74E7A81FFE17DD003B53AF /* AlipaySDK.framework */,
 			);
 			path = AliSDK;
 			sourceTree = "<group>";
@@ -6925,6 +6920,7 @@
 				ORGANIZATIONNAME = 9ge;
 				TargetAttributes = {
 					CE58B9481DE58BF80033B300 = {
+						DevelopmentTeam = 65FQR43XBY;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -6983,7 +6979,6 @@
 				AA74EC2C1FFE17E0003B53AF /* T02.html in Resources */,
 				AA74EC221FFE17E0003B53AF /* T62.html in Resources */,
 				AA74EC301FFE17E0003B53AF /* T01.html in Resources */,
-				AA74EA401FFE17DE003B53AF /* AlipaySDK.bundle in Resources */,
 				AA74EC1A1FFE17E0003B53AF /* F02.html in Resources */,
 				AA74EC101FFE17E0003B53AF /* unionBuy.html in Resources */,
 				AA74EC441FFE17E0003B53AF /* help.htm in Resources */,
@@ -7005,6 +7000,7 @@
 				AA74EB181FFE17DF003B53AF /* HelpDeskUIResource.bundle in Resources */,
 				AA74EC401FFE17E0003B53AF /* chart_help_F01_T01_2.jpg in Resources */,
 				AA74EC261FFE17E0003B53AF /* chart_help_F01_T01.html in Resources */,
+				1DAEFA7C2444530200070076 /* AlipaySDK.bundle in Resources */,
 				AA74EA701FFE17DF003B53AF /* bg_rl_satisfaction.png in Resources */,
 				CE58BAD51DE58BF80033B300 /* area.plist in Resources */,
 				AA74EC3E1FFE17E0003B53AF /* T51.html in Resources */,
@@ -7129,7 +7125,6 @@
 				1DBD8C5E22CB00470024CF7B /* PSTGridLayoutInfo.m in Sources */,
 				AA74E1381FFE0A86003B53AF /* YZSchemeDetailTableViewCell.m in Sources */,
 				AA3292F21FFE27B600CA77DA /* YZKsSantongView.m in Sources */,
-				AA74E1D71FFE0AEA003B53AF /* YZMineFunctionTableViewCell.m in Sources */,
 				AAE55C74207EF8B000A29844 /* YZIntegralCouponsCollectionViewCell.m in Sources */,
 				AA3292DC1FFE27B600CA77DA /* YZKsHistoryTableView.m in Sources */,
 				AA3290821FFE1D6100CA77DA /* YZShareIncomeTableViewCell.m in Sources */,
@@ -7267,7 +7262,6 @@
 				1DBD8E5E22CB2C250024CF7B /* UIImage+MultiFormat.m in Sources */,
 				AA74EC621FFE17E0003B53AF /* UIViewController+YZNoNetController.m in Sources */,
 				AA74EB4E1FFE17DF003B53AF /* NSObject+MJMember.m in Sources */,
-				AA74E1D31FFE0AEA003B53AF /* YZChooseAvatarView.m in Sources */,
 				AA3293301FFE27B600CA77DA /* YZChartColdHotTableViewCell.m in Sources */,
 				AAAFECCD2048EC260066E6B1 /* YZForecastDetailViewController.m in Sources */,
 				AA1E102F20F8A6CB0045FBD4 /* YZTextField.m in Sources */,
@@ -7326,6 +7320,7 @@
 				AAE55C7A207EF8B000A29844 /* YZIntegralCustomCountCollectionViewCell.m in Sources */,
 				1DCD87A92399EE19006D9269 /* YZYZ11x5ChartTableViewCell.m in Sources */,
 				AA74EBBC1FFE17E0003B53AF /* AFImageDownloader.m in Sources */,
+				1DAEFA8924455F5B00070076 /* YZZCBuyLotteryCollectionViewCell.m in Sources */,
 				AA3293CE1FFE27B700CA77DA /* YZFBMatchDetailStandingsTitleTableViewCell.m in Sources */,
 				1DBD8E9722CB2C250024CF7B /* SDWebImageCoderHelper.m in Sources */,
 				AAE55C7C207EF8B000A29844 /* YZIntegralHeaderView.m in Sources */,
@@ -7379,7 +7374,6 @@
 				AA3293841FFE27B700CA77DA /* YZRecommendRowStatus.m in Sources */,
 				AA74EB5A1FFE17DF003B53AF /* MJRefreshBackGifFooter.m in Sources */,
 				AA74E11C1FFE0A86003B53AF /* YZOrderViewController.m in Sources */,
-				1DB467992432DB3F00E79943 /* YZZCBuyLotteryCollectionViewCell.m in Sources */,
 				1D2E3341237162F300E8C9AC /* YZKy481ChongView.m in Sources */,
 				AA32939E1FFE27B700CA77DA /* YZFBMatchDetailStandingsStatus.m in Sources */,
 				AA74EBA21FFE17E0003B53AF /* AFHTTPSessionManager.m in Sources */,
@@ -7500,7 +7494,7 @@
 				1DBD8E7022CB2C250024CF7B /* NSImage+WebCache.m in Sources */,
 				AA27DA18202193EE0068C9CA /* YZHomePageFunctionItemView.m in Sources */,
 				AA0268CE20108E060069647F /* YZQuickStakeGameModel.m in Sources */,
-				AA926499224B5C7600FCEFC7 /* YZInformationH5ViewController.m in Sources */,
+				AA926499224B5C7600FCEFC7 /* YZForecastViewController.m in Sources */,
 				AA74EB5C1FFE17DF003B53AF /* MJRefreshBackStateFooter.m in Sources */,
 				AA3293C01FFE27B700CA77DA /* YZFBMatchDetailOddsTitleTableViewCell.m in Sources */,
 				AA32933C1FFE27B600CA77DA /* YZChartBottomView.m in Sources */,
@@ -7510,6 +7504,7 @@
 				AAD2531520F5EFE400ACAA72 /* YZSetmealNumberTableViewCell.m in Sources */,
 				AA74EB001FFE17DF003B53AF /* HDBubbleView+Gif.m in Sources */,
 				AAC40A812269A46D00075764 /* YZMessageLoginViewController.m in Sources */,
+				1DAEFA8624455E4800070076 /* YZInformationTableViewCell.m in Sources */,
 				AA74E0AA1FFE0A0C003B53AF /* YZWinNumberBall.m in Sources */,
 				AAC06BE323953F9D00FFCA9D /* YZKy481ChartZhiTableViewCell.m in Sources */,
 				AA74EA641FFE17DF003B53AF /* HDChineseToPinyin.m in Sources */,
@@ -7550,7 +7545,6 @@
 				AAD1207020BD2BD900D47F85 /* YZBasketBallPassWayView.m in Sources */,
 				1DBD8E9122CB2C250024CF7B /* SDAnimatedImageRep.m in Sources */,
 				1DBD8C5522CB00470024CF7B /* PSTCollectionViewController.m in Sources */,
-				AA92647C224B1CD200FCEFC7 /* YZInformationCollectionViewCell.m in Sources */,
 				1DD0334322C4A478006094A2 /* YZCircleUserInfoHeaderView.m in Sources */,
 				AA3293641FFE27B600CA77DA /* YZPlayPassWay.m in Sources */,
 				AA3293CA1FFE27B700CA77DA /* YZFBMatchDetailStandingsView.m in Sources */,
@@ -7623,6 +7617,7 @@
 				AA3292EE1FFE27B600CA77DA /* YZKsErbutongView.m in Sources */,
 				AA74EB7C1FFE17E0003B53AF /* SBJsonBase.m in Sources */,
 				1DBD8DF822CB2BD70024CF7B /* TAAnimatedDotView.m in Sources */,
+				1DAEFA8324455CF400070076 /* YZInformationListViewController.m in Sources */,
 				1DE61FF022CC4F7600C1490E /* TZImageManager.m in Sources */,
 				1DE6201B22CDD9A700C1490E /* YZPublishUnionBuyCircleViewController.m in Sources */,
 				AA3293121FFE27B600CA77DA /* YZChartColdHotStatus.m in Sources */,
@@ -7638,6 +7633,7 @@
 				AA3293061FFE27B600CA77DA /* YZSmartBetSettingView.m in Sources */,
 				1DBD8B5322CAFF780024CF7B /* XLPhotoBrowser.m in Sources */,
 				AA74EB721FFE17DF003B53AF /* MJRefreshAutoFooter.m in Sources */,
+				1DAEFA8C244590F100070076 /* YZShopModel.m in Sources */,
 				AA74E1361FFE0A86003B53AF /* YZFastBetView.m in Sources */,
 				AA74EB841FFE17E0003B53AF /* IQToolbar.m in Sources */,
 				AA74EB521FFE17DF003B53AF /* MJRefreshConst.m in Sources */,
@@ -7682,7 +7678,6 @@
 				AA74EAF41FFE17DF003B53AF /* HDFaceView.m in Sources */,
 				AA32905E1FFE1C9C00CA77DA /* YZVoucherViewController.m in Sources */,
 				AA74EA841FFE17DF003B53AF /* HDAudioPlayerUtil.m in Sources */,
-				AA4366DC21AE6876002D5613 /* YZMineHeaderView.m in Sources */,
 				1DBD8C4322CB00470024CF7B /* MWTapDetectingImageView.m in Sources */,
 				1DBD8E0122CB2BDE0024CF7B /* SDCycleScrollView.m in Sources */,
 				AA29936121BF68350079021B /* YZMenuView.m in Sources */,
@@ -7745,16 +7740,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-6";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ez/zc.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Zhong Cai Xun Da technology co., LTD (65FQR43XBY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.9.4;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 65FQR43XBY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7806,13 +7801,13 @@
 					"$(PROJECT_DIR)/ez/Classes/Others/SDK/IM/HelpDeskDynamicSDK/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/HDVoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/ez/Classes/Others/SDK/IM/HelpDeskDynamicSDK/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/HDVoiceConvert/opencore-amrnb",
 				);
-				MARKETING_VERSION = 1.9.4;
+				MARKETING_VERSION = 1.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lottery.zccp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lottery.cdb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4ae371d6-63b1-4a38-a3e2-ca3e8af21008";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = cdb_dev_58;
 				SWIFT_OBJC_BRIDGING_HEADER = "ez/Classes/Others/Tool/YZFootBallTool/ez-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -7826,14 +7821,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-6";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ez/zc.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Zhong Cai Xun Da technology co., LTD (65FQR43XBY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.9.4;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 65FQR43XBY;
 				ENABLE_BITCODE = NO;
@@ -7884,13 +7879,13 @@
 					"$(PROJECT_DIR)/ez/Classes/Others/SDK/IM/HelpDeskDynamicSDK/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/HDVoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/ez/Classes/Others/SDK/IM/HelpDeskDynamicSDK/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/HDVoiceConvert/opencore-amrnb",
 				);
-				MARKETING_VERSION = 1.9.4;
+				MARKETING_VERSION = 1.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lottery.zccp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lottery.cdb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8520864a-34db-4c77-88b4-1bdbb12b15e7";
-				PROVISIONING_PROFILE_SPECIFIER = zc_adhoc_577;
+				PROVISIONING_PROFILE_SPECIFIER = cdb_ad_58;
 				SWIFT_OBJC_BRIDGING_HEADER = "ez/Classes/Others/Tool/YZFootBallTool/ez-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -7903,14 +7898,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-6";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ez/zc.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing Zhong Cai Xun Da technology co., LTD (65FQR43XBY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.9.4;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 65FQR43XBY;
 				ENABLE_BITCODE = NO;
@@ -7961,13 +7956,13 @@
 					"$(PROJECT_DIR)/ez/Classes/Others/SDK/IM/HelpDeskDynamicSDK/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/HDVoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/ez/Classes/Others/SDK/IM/HelpDeskDynamicSDK/HelpDeskUI/HDUIKit/3rdparty/DeviceHelper/HDVoiceConvert/opencore-amrnb",
 				);
-				MARKETING_VERSION = 1.9.4;
+				MARKETING_VERSION = 1.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lottery.zccp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lottery.cdb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7cd768b6-a0d1-40b1-942a-27fcfe2227d0";
-				PROVISIONING_PROFILE_SPECIFIER = zc_adHoc_58;
+				PROVISIONING_PROFILE_SPECIFIER = cdb_ad_58;
 				SWIFT_OBJC_BRIDGING_HEADER = "ez/Classes/Others/Tool/YZFootBallTool/ez-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

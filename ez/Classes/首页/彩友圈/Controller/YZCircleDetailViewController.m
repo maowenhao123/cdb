@@ -247,7 +247,7 @@
     if (self.sendCommentTextView.indexPath) {
         YZCircleCommentModel * commentModel = self.commentDataArray[self.sendCommentTextView.indexPath.row];
         NSDictionary * topicCommentReply = @{
-                                             @"userId": UserId,
+                                             @"token": Token,
                                              @"topicId": self.topicId,
                                              @"commentId": commentModel.id,
                                              @"content": text
@@ -259,7 +259,7 @@
     }else
     {
         dict = @{
-                 @"userId": UserId,
+                 @"token": Token,
                  @"topicId": self.topicId,
                  @"content": text
                  };

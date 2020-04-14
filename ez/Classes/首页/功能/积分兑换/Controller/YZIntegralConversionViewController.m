@@ -349,7 +349,7 @@ NSString * const CustomCountCellId = @"YZIntegralCustomCountCollectionViewCellId
     }
     
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            @"couponId":self.selectedCouponsModel.id,
                            @"couponCount":@(self.count),
                            @"points":@(self.integral),

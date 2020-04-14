@@ -38,7 +38,7 @@
 {
     if (!Token) return;
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            @"timestamp":[YZDateTool getNowTimeTimestamp],
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrl(@"promotion/couponRedPackageList") params:dict success:^(id json) {
@@ -188,7 +188,7 @@
 {
     if (!Token) return;
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            @"promotionId":self.giveVoucherModel.couponRedPackagePromotion.promotionId,
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrl(@"promotion/closeCouponRedPackage") params:dict success:^(id json) {

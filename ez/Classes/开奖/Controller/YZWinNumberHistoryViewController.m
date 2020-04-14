@@ -87,12 +87,11 @@
 - (void)loadHistoryOpenLottery
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8018),
                            @"gameId":self.gameId,
                            @"pageIndex":@(_pageIndex),
                            @"pageSize":@(pageSize)
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameOpenWinList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
         {

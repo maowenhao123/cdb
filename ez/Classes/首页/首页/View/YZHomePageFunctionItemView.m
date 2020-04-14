@@ -7,15 +7,10 @@
 //
 
 #import "YZHomePageFunctionItemView.h"
-#import "YZInitiateUnionBuyViewController.h"
 #import "YZLoginViewController.h"
-#import "YZLoadHtmlFileController.h"
 #import "YZIntegralConversionViewController.h"
-#import "YZInformationH5ViewController.h"
+#import "YZInformationListViewController.h"
 #import "YZRechargeListViewController.h"
-#import "YZVoucherViewController.h"
-#import "YZServiceListViewController.h"
-#import "YZCircleViewController.h"
 #import "UIImageView+WebCache.h"
 
 @interface YZHomePageFunctionItemView ()
@@ -60,21 +55,13 @@
 {
     _functionModel = functionModel;
     
-    NSDictionary * imageNameDic = @{
-                                    @"POINT":@"home_integral_conversion",
-                                    @"INFORMATION":@"home_forecast",
-                                    @"PROMOTION":@"home_activity",
-                                    @"HIT":@"home_lottery",
-                                    @"GIFT":@"home_red_packet",
-                                    @"OTHERS":@"home_other",
-                                    };
-    [self.logoImageView sd_setImageWithURL:[NSURL URLWithString:_functionModel.iconUrl] placeholderImage:[UIImage imageNamed:imageNameDic[_functionModel.type]]];
+    self.logoImageView.image = [UIImage imageNamed:_functionModel.iconName];
     self.titleLabel.text = _functionModel.name;
 }
 
 - (void)didTap:(UITapGestureRecognizer *)tap
 {
-    if ([self.functionModel.type isEqualToString:@"POINT"]) {//积分兑换
+    if ([self.functionModel.name isEqualToString:@"积分兑换"]) {//积分兑换
         if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
             YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
@@ -83,16 +70,7 @@
         }
         YZIntegralConversionViewController * integralConversionVC = [[YZIntegralConversionViewController alloc] init];
         [self.viewController.navigationController pushViewController:integralConversionVC animated:YES];
-    }else if ([self.functionModel.type isEqualToString:@"INFORMATION"])//预测资讯
-    {
-        YZInformationH5ViewController * informationVC = [[YZInformationH5ViewController alloc] init];
-        [self.viewController.navigationController pushViewController:informationVC animated:YES];
-    }else if ([self.functionModel.type isEqualToString:@"HIT"] || [self.functionModel.type isEqualToString:@"PROMOTION"] || [self.functionModel.type isEqualToString:@"GIFT"] || [self.functionModel.type isEqualToString:@"OTHERS"])//活动中心 中奖专区 其他
-    {
-        YZLoadHtmlFileController * webVC = [[YZLoadHtmlFileController alloc] initWithWeb:self.functionModel.url];
-        webVC.title = self.functionModel.name;
-        [self.viewController.navigationController pushViewController:webVC animated:YES];
-    }else if ([self.functionModel.type isEqualToString:@"PAYMENT"])//充值
+    }else if ([self.functionModel.name isEqualToString:@"点我充值"])//充值
     {
         if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
@@ -102,57 +80,10 @@
         }
         YZRechargeListViewController * rechargeVC = [[YZRechargeListViewController alloc] init];
         [self.viewController.navigationController pushViewController:rechargeVC animated:YES];
-    }else if ([self.functionModel.type isEqualToString:@"COUPON"])//彩券
+    }else if ([self.functionModel.name isEqualToString:@"预测推荐"])//预测推荐
     {
-        if (!Token) {
-            YZLoginViewController *login = [[YZLoginViewController alloc] init];
-            YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
-            [self.viewController presentViewController:nav animated:YES completion:nil];
-            return;
-        }
-        YZVoucherViewController * voucherVC = [[YZVoucherViewController alloc] init];
-        [self.viewController.navigationController pushViewController:voucherVC animated:YES];
-    }else if ([self.functionModel.type isEqualToString:@"UNIONPLAN"])//发起合买
-    {
-        YZInitiateUnionBuyViewController * initiateUnionBuyVC = [[YZInitiateUnionBuyViewController alloc] init];
-        [self.viewController.navigationController pushViewController:initiateUnionBuyVC animated:YES];
-    }else if ([self.functionModel.type isEqualToString:@"COMMUNITY"])//彩友圈
-    {
-        if (!Token) {
-            YZLoginViewController *login = [[YZLoginViewController alloc] init];
-            YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
-            [self.viewController presentViewController:nav animated:YES completion:nil];
-            return;
-        }
-        YZCircleViewController * messageVC = [[YZCircleViewController alloc] init];
-        [self.viewController.navigationController pushViewController:messageVC animated:YES];
-    }else if ([self.functionModel.type isEqualToString:@"KEFU"])//在线客服列表
-    {
-        if (!Token) {
-            YZLoginViewController *login = [[YZLoginViewController alloc] init];
-            YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
-            [self.viewController presentViewController:nav animated:YES completion:nil];
-            return;
-        }
-        YZServiceListViewController * contactServiceVC = [[YZServiceListViewController alloc]init];
-        [self.viewController.navigationController pushViewController:contactServiceVC animated:YES];
-    }else if ([self.functionModel.type isEqualToString:@"ORDER"])//订单列表
-    {
-        NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [self.viewController.navigationController popToRootViewControllerAnimated:NO];
-            });
-        }];
-        NSBlockOperation *op2 = [NSBlockOperation blockOperationWithBlock:^{
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:RefreshRecordNote object:@(0)];
-            });
-        }];
-        [op2 addDependency:op1];
-        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        [queue waitUntilAllOperationsAreFinished];
-        [queue addOperation:op1];
-        [queue addOperation:op2];
+        YZInformationListViewController * informationListVC = [[YZInformationListViewController alloc] init];
+        [self.viewController.navigationController pushViewController:informationListVC animated:YES];
     }
 }
 

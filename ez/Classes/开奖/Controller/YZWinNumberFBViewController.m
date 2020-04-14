@@ -52,10 +52,10 @@
         @"pageSize":@(10),
         @"gameId":self.gameId
     };
-    [[YZHttpTool shareInstance] postWithURL:@"/getOpenWinDetail" params:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameOpenWinList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"%@",json);
-        if (SUCCESS) {;
+        if (SUCCESS) {
             NSArray * dataArray = [YZWinNumberFBStatus objectArrayWithKeyValuesArray:json[@"matchResults"]];//转模型数组
             [self.dataArray addObjectsFromArray:dataArray];
             [self.tableView reloadData];

@@ -142,7 +142,7 @@
     }
     
     NSDictionary *dict = @{
-                           @"userId":UserId
+                           @"token":Token
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlJiguang(urlStr) params:dict success:^(id json) {
         YZLog(@"messageToRead：%@",json);
@@ -172,7 +172,7 @@
         urlStr = @"/getMessageList";
     }
     NSDictionary *dict = @{
-                           @"userId":UserId,
+                           @"token":Token,
                            @"pageIndex":@(self.currentPageIndex),
                            @"pageSize":@(10)
                            };
@@ -220,7 +220,7 @@
         urlStr = @"/messageClear";
     }
     NSDictionary *dict = @{
-                           @"userId":UserId
+                           @"token":Token
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlJiguang(urlStr) params:dict success:^(id json) {
         if (SUCCESS) {
@@ -252,7 +252,7 @@
             urlStr = @"/messageDel";
         }
         NSDictionary *dict = @{
-                               @"userId":UserId,
+                               @"token":Token,
                                @"jpushMessageId":messageId
                                };
         [[YZHttpTool shareInstance] postWithURL:BaseUrlJiguang(urlStr) params:dict success:^(id json) {

@@ -190,7 +190,7 @@
                                @"gameId": self.unionbuyModel.gameId,
                                @"gameName": self.playtypeName,
                                @"multiple": self.unionbuyModel.multiple,
-                               @"userId": UserId,
+                               @"token": Token,
                                @"unionBuyUserId": self.unionbuyModel.unionBuyPlanId
                                };
     
@@ -198,7 +198,7 @@
                                  @"communityId": self.communityId,
                                  @"playTypeId": self.playtypeId,
                                  @"extInfo": extInfo,
-                                 @"userId": UserId,
+                                 @"token": Token,
                                  @"type": @(1),
                                  @"topicAlbumList": [NSArray array],
                                  @"content": @""

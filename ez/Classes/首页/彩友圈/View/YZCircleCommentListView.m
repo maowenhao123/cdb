@@ -209,7 +209,7 @@
 - (void)textViewSendButtonDidClickWithText:(NSString *)text
 {
     NSDictionary * topicCommentReply = @{
-                                         @"userId": UserId,
+                                         @"token": Token,
                                          @"topicId": self.topicId,
                                          @"commentId": self.commentId,
                                          @"content": text

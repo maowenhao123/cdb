@@ -70,7 +70,7 @@
     NSDictionary * dict = @{
              @"pageIndex":@(self.pageIndex),
              @"pageSize":@(10),
-             @"userId": UserId
+             @"token": Token,
              };
     [[YZHttpTool shareInstance] postWithURL:url params:dict success:^(id json) {
         YZLog(@"getMineMessage:%@",json);

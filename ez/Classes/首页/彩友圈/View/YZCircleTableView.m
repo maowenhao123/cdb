@@ -97,7 +97,7 @@
         dict = @{
                  @"pageIndex":@(self.pageIndex),
                  @"pageSize":@(10),
-                 @"userId": UserId
+                 @"token": Token,
                  };
     }else if (self.type == CircleUserReleaseTopic)
     {
@@ -106,7 +106,7 @@
                  @"pageIndex":@(self.pageIndex),
                  @"pageSize":@(10),
                  @"beViewedUserId": self.userId,
-                 @"userId": UserId
+                 @"token": Token,
                  };
     }else if (self.type == CircleMineTopic)
     {
@@ -114,7 +114,7 @@
         dict = @{
                  @"pageIndex":@(self.pageIndex),
                  @"pageSize":@(10),
-                 @"userId": UserId
+                 @"token": Token,
                  };
     }
     [MBProgressHUD showMessage:@"客官请稍后" toView:self];
@@ -218,7 +218,7 @@
     UIAlertAction * alertAction2 = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         YZCircleModel * circleModel = self.dataArray[indexPath.row];
         NSDictionary *dict = @{
-                               @"userId": UserId,
+                               @"token": Token,
                                @"topicId": circleModel.id,
                                };
         [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/deleteMineTopic") params:dict success:^(id json) {

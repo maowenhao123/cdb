@@ -250,13 +250,13 @@
 {
     NSString * imei = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     NSDictionary *dict = @{
-        @"cmd":@(8000),
+        @"storeId":@"1",
         @"imei":imei,
         @"version":[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]
     };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/checkVersion" params:dict success:^(id json) {
         //检查账号密码返回数据
-        YZLog(@"shouldUpgrade%@", json);
+        YZLog(@"checkVersion%@", json);
         if(SUCCESS)
         {
             if ([json[@"shouldUpgrade"] boolValue]) {

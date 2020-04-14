@@ -29,7 +29,6 @@ typedef enum : NSUInteger {
     ChooseNumberByLuckyNumber = 3,
 } ChooseNumberType;
 
-#define Jump  [json[@"status"] isEqualToNumber:@(1)]  //1跳0不跳
 #define mainChannel @"store"
 
 #define jumpURLStr @"http://html5.51mcp.com/ios/confirm.jsp"
@@ -104,6 +103,7 @@ typedef enum : NSUInteger {
 //合买大厅获取合买数据
 - (void)getUnionBuyStatusWithUserName:(NSString *)userName gameId:(NSString *)gameId sortType:(SortType)sortType fieldType:(FieldType)fieldType  index:(NSInteger)index getSuccess:(void(^)(NSArray *unionBuys))getSuccess getFailure:(void(^)())getFailure;
 #pragma mark - 图片上传
+- (void)uploadWithURL:(NSString *)url image:(UIImage *)image currentIndex:(NSInteger)currentIndex totalCount:(NSInteger)totalCount Success:(void (^)(id json))success Failure:(void (^)(NSError * error))failure Progress:(void(^)(float percent))percent;
 - (void)uploadWithImage:(UIImage *)image currentIndex:(NSInteger)currentIndex totalCount:(NSInteger)totalCount aliOssToken:(NSDictionary *)aliOssToken Success:(void (^)(NSString * picUrl))success Failure:(void (^)(NSError * error))failure Progress:(void(^)(float percent))percent;
 #pragma mark - 获取设备当前网络IP地址
 - (NSString *)getIPAddress:(BOOL)preferIPv4;

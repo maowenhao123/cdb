@@ -202,7 +202,7 @@
     
     NSDictionary *dict = @{
                            @"cmd": @(12002),
-                           @"userId": UserId
+                           @"token": Token,
                            };
     self.codeBtn.enabled = NO;
     [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {

@@ -45,7 +45,7 @@
     
     //注册一键登录
     [UASDKLogin.shareLogin registerAppId:TYRZAPPId AppKey:TYRZAPPKey];
-    [WXApi registerApp:WXAppIdOld withDescription:@"中彩啦"];
+    [WXApi registerApp:WXAppId withDescription:@"彩店宝"];
     //极光注册
     [JPUSHService setLogOFF];
     [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |UIUserNotificationTypeSound | UIUserNotificationTypeAlert)
@@ -85,8 +85,8 @@
     //设置友盟appkey
     [[UMSocialManager defaultManager] setUmSocialAppkey:UMengId];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession
-                                          appKey:WXAppIdOld
-                                       appSecret:WXAppSecretOld
+                                          appKey:WXAppId
+                                       appSecret:WXAppSecret
                                      redirectURL:@"http://mobile.umeng.com/social"];
     
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ
@@ -163,7 +163,7 @@
         }];
     }
 
-    if([[url absoluteString] rangeOfString:[NSString stringWithFormat:@"%@://pay",WXAppIdNew]].location == 0) {//微信支付
+    if([[url absoluteString] rangeOfString:[NSString stringWithFormat:@"%@://pay",WXAppId]].location == 0) {//微信支付
         return [WXApi handleOpenURL:url delegate:self];
     }else
     {
@@ -190,7 +190,7 @@
         }];
     }
 
-    if([[url absoluteString] rangeOfString:[NSString stringWithFormat:@"%@://pay",WXAppIdNew]].location == 0) {//微信支付
+    if([[url absoluteString] rangeOfString:[NSString stringWithFormat:@"%@://pay",WXAppId]].location == 0) {//微信支付
         return [WXApi handleOpenURL:url delegate:self];
     }else
     {
