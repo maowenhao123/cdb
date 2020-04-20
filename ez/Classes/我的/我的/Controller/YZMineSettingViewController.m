@@ -6,6 +6,7 @@
 //  Copyright © 2016年 9ge. All rights reserved.
 //
 #import "YZMineSettingViewController.h"
+#import "YZLoginViewController.h"
 #import "YZStatusCacheTool.h"
 #import <UMSocialCore/UMSocialCore.h>
 
@@ -185,8 +186,9 @@
     dispatch_time_t poptime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
     dispatch_after(poptime, dispatch_get_main_queue(), ^{
         [MBProgressHUD hideHUDForView:self.view];
-        [self.navigationController popToRootViewControllerAnimated:NO];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ToBuyLottery" object:nil];
+        YZLoginViewController *loginVC = [[YZLoginViewController alloc] init];
+        YZNavigationController *loginNVC = [[YZNavigationController alloc] initWithRootViewController:loginVC];
+        [UIApplication sharedApplication].keyWindow.rootViewController = loginNVC;
     });
 }
 

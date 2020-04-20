@@ -91,7 +91,7 @@
     {
         self.pageIndex4 = 0;
     }
-
+    
     if(self.currentIndex != index)
     {
         [super topBtnClick:self.topBtns[index]];
@@ -109,7 +109,7 @@
 {
     //添加btnTitle
     //self.btnTitles = @[@"投注记录", @"追号记录", @"中奖记录", @"合买记录"];
-    self.btnTitles = @[@"投注记录", @"追号记录", @"中奖记录"];
+    self.btnTitles = @[@"投注记录", @"追号记录"];
     //添加tableview
     CGFloat scrollViewH = screenHeight - statusBarH - navBarH - tabBarH - topBtnH;
     for(int i = 0; i < self.btnTitles.count; i++)
@@ -201,7 +201,7 @@
 }
 - (void)changeCurrentIndex:(int)currentIndex
 {
-     //没有数据时加载数据
+    //没有数据时加载数据
     if([self getDataCount] == 0)
     {
         [self getRecordList];
@@ -220,7 +220,7 @@
 {
     MJRefreshGifHeader *header = self.headerViews[self.currentIndex];
     MJRefreshAutoGifFooter *footer = self.footerViews[self.currentIndex];
-
+    
     if (!Token)//没有登录时
     {
         //结束刷新
@@ -229,31 +229,33 @@
         return;
     }
     
-    NSNumber *cmd = nil;
+    NSString *url = @"";
     NSNumber *pageIndex = nil;
     if(self.currentIndex == 0)
     {
-        cmd = @(8021);//投注记录
+        url = @"/getOrderList";//投注记录
         pageIndex = @(self.pageIndex1);
     }else if(self.currentIndex == 1)
     {
-        cmd = @(8023);//追号记录
+        url = @"/getSchemeList";//追号记录
         pageIndex = @(self.pageIndex2);
-    }else if(self.currentIndex == 2)
-    {
-        cmd = @(10810);//中奖记录
-        pageIndex = @(self.pageIndex3);
-    }else
-    {
-        cmd = @(8123);//合买记录
-        pageIndex = @(self.pageIndex4);
     }
+    //    else if(self.currentIndex == 2)
+    //    {
+    //        url = @"/getOrderList";//中奖记录
+    //        pageIndex = @(self.pageIndex3);
+    //    }else
+    //    {
+    //        url = @"/getOrderList";//合买记录
+    //        pageIndex = @(self.pageIndex4);
+    //    }
     NSDictionary *dict = @{
-                           @"pageIndex": pageIndex,
-                           @"pageSize": @(10),
-                           @"storeId": @"1"
-                           };
-    [[YZHttpTool shareInstance] postWithURL:@"/getOrderList" params:dict success:^(id json) {
+        @"token": Token,
+        @"pageIndex": pageIndex,
+        @"pageSize": @(10),
+        @"storeId": @"1"
+    };
+    [[YZHttpTool shareInstance] postWithURL:url params:dict success:^(id json) {
         YZLog(@"%@",json);
         [MBProgressHUD hideHUDForView:self.view];
         UITableView *tableView = self.views[self.currentIndex];
@@ -265,7 +267,7 @@
                 [oldOrderList addObjectsFromArray:orderList];
             }else if (self.currentIndex == 1)
             {
-                orderList = [YZOrderStatus objectArrayWithKeyValuesArray:json[@"schemeList"]];
+                orderList = [YZOrderStatus objectArrayWithKeyValuesArray:json[@"orderList"]];
                 [oldOrderList addObjectsFromArray:orderList];
             }else if (self.currentIndex == 2)
             {
@@ -320,7 +322,7 @@
     NSMutableArray *orderList = self.orderListArray[self.currentIndex];
     for (int i = 0; i < orderList.count; i++) {//月份
         YZOrderStatus *status = orderList[i];
-         NSString * year = [status.createTime substringWithRange:NSMakeRange(0, 4)];
+        NSString * year = [status.createTime substringWithRange:NSMakeRange(0, 4)];
         NSString * month = [status.createTime substringWithRange:NSMakeRange(5, 2)];
         NSDate * date = [YZDateTool getDateFromDateString:status.createTime format:@"yyyy-MM-dd HH:mm:ss"];
         if (date.isToday) {

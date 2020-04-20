@@ -15,6 +15,7 @@
 #import "YZSecretChangeViewController.h"
 #import "YZLoginAccountTableViewCell.h"
 #import "YZStatusCacheTool.h"
+#import "YZTabBarViewController.h"
 #import "YZMessageLoginViewController.h"
 #import "YZThirdPartyBindingViewController.h"
 #import "YZLeftViewTextField.h"
@@ -114,34 +115,34 @@
     seperator2.backgroundColor = YZWhiteLineColor;
     [loginview addSubview:seperator2];
     
-    //自动登录按钮
-    UIButton *switchbtn = [[UIButton alloc] init];
-    self.switchbtn = switchbtn;
-    [switchbtn setImage:[UIImage imageNamed:@"bet_weixuanzhong"] forState:UIControlStateNormal];
-    [switchbtn setImage:[UIImage imageNamed:@"bet_xuanzhong"] forState:UIControlStateSelected];
-    [switchbtn setImage:[UIImage imageNamed:@"bet_xuanzhong"] forState:UIControlStateHighlighted];
-    switchbtn.selected = YES;
-    [switchbtn setTitle:@"自动登录" forState:UIControlStateNormal];
-    [switchbtn setTitleColor:YZBlackTextColor forState:UIControlStateNormal];
-    switchbtn.titleLabel.font = [UIFont systemFontOfSize:YZGetFontSize(26)];
-    switchbtn.frame = CGRectMake(loginview.x, CGRectGetMaxY(loginview.frame) + 10, 85, 20);
-    [switchbtn setButtonTitleWithImageAlignment:UIButtonTitleWithImageAlignmentLeft imgTextDistance:5];
-    int autoLoginType = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"autoLogin"];
-    if (autoLoginType == 0) {//默认自动登录
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setInteger:2 forKey:@"autoLogin"];
-        [defaults synchronize];
-    }
-    if(autoLoginType == 1)
-    {
-        switchbtn.selected = NO;
-    }else
-    {
-        switchbtn.selected = YES;//默认值或者设置位自动
-    }
-    [switchbtn addTarget:self action:@selector(clickswitch:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:switchbtn];
-    
+//    //自动登录按钮
+//    UIButton *switchbtn = [[UIButton alloc] init];
+//    self.switchbtn = switchbtn;
+//    [switchbtn setImage:[UIImage imageNamed:@"bet_weixuanzhong"] forState:UIControlStateNormal];
+//    [switchbtn setImage:[UIImage imageNamed:@"bet_xuanzhong"] forState:UIControlStateSelected];
+//    [switchbtn setImage:[UIImage imageNamed:@"bet_xuanzhong"] forState:UIControlStateHighlighted];
+//    switchbtn.selected = YES;
+//    [switchbtn setTitle:@"自动登录" forState:UIControlStateNormal];
+//    [switchbtn setTitleColor:YZBlackTextColor forState:UIControlStateNormal];
+//    switchbtn.titleLabel.font = [UIFont systemFontOfSize:YZGetFontSize(26)];
+//    switchbtn.frame = CGRectMake(loginview.x, CGRectGetMaxY(loginview.frame) + 10, 85, 20);
+//    [switchbtn setButtonTitleWithImageAlignment:UIButtonTitleWithImageAlignmentLeft imgTextDistance:5];
+//    int autoLoginType = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"autoLogin"];
+//    if (autoLoginType == 0) {//默认自动登录
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        [defaults setInteger:2 forKey:@"autoLogin"];
+//        [defaults synchronize];
+//    }
+//    if(autoLoginType == 1)
+//    {
+//        switchbtn.selected = NO;
+//    }else
+//    {
+//        switchbtn.selected = YES;//默认值或者设置位自动
+//    }
+//    [switchbtn addTarget:self action:@selector(clickswitch:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:switchbtn];
+//
     //忘记密码
     UIButton *forgetButton = [UIButton buttonWithType:UIButtonTypeCustom];
     CGFloat forgetButtonY = CGRectGetMaxY(loginview.frame) + 10;
@@ -216,13 +217,13 @@
         [thirdPartyBtnSelectedImages addObject:@"login_weixin_icon_selected"];
     }
     
-    if ([TencentOAuth iphoneQQInstalled]) {//如果安装QQ
-        [thirdPartyBtnImages addObject:@"login_qq_icon"];
-        [thirdPartyBtnSelectedImages addObject:@"login_qq_icon_selected"];
-    }
-    //微博
-    [thirdPartyBtnImages addObject:@"login_sina_icon"];
-    [thirdPartyBtnSelectedImages addObject:@"login_sina_icon_selected"];
+//    if ([TencentOAuth iphoneQQInstalled]) {//如果安装QQ
+//        [thirdPartyBtnImages addObject:@"login_qq_icon"];
+//        [thirdPartyBtnSelectedImages addObject:@"login_qq_icon_selected"];
+//    }
+//    //微博
+//    [thirdPartyBtnImages addObject:@"login_sina_icon"];
+//    [thirdPartyBtnSelectedImages addObject:@"login_sina_icon_selected"];
     
     CGFloat padding = (screenWidth - thirdPartyBtnImages.count * thirdPartyBtnWH) / (thirdPartyBtnImages.count + 1);//边距
     UIButton * lastThirdPartyBtn;
@@ -360,7 +361,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNote object:nil];
             [self loadUserInfo];
             [YZTool setAlias];
-            [self backAction];
+            [UIApplication sharedApplication].keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
         }else
         {
             ShowErrorView
@@ -438,7 +439,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNote object:nil];
         [self loadUserInfo];
         [YZTool setAlias];
-        [self backAction];
+        [UIApplication sharedApplication].keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
     }else
     {
         ShowErrorView
@@ -554,7 +555,7 @@
             //发送登录成功通知
             [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNote object:nil];
             [self loadUserInfo];
-            [self backAction];
+            [UIApplication sharedApplication].keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
         }
     }else
     {

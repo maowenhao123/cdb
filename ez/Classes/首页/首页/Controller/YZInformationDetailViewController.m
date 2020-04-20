@@ -7,12 +7,14 @@
 //
 
 #import "YZInformationDetailViewController.h"
+#import "YZInformationModel.h"
 #import "YZShareView.h"
 #import "YZWebView.h"
 #import "WXApi.h"
 
 @interface YZInformationDetailViewController ()
 
+@property (nonatomic, strong) YZInformationModel *informationModel;
 @property (nonatomic, weak) YZWebView *webView;
 
 @end
@@ -22,10 +24,44 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = self.informationModel.title;
     [self setupChilds];
+    [self getData];
 }
 
+#pragma mark - 请求数据
+- (void)getData
+{
+    waitingView_loadingData;
+    NSDictionary *dict = @{
+        @"recommendId":self.recommendId,
+        @"token":Token
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/getStoreRecommendInfo" params:dict success:^(id json) {
+        YZLog(@"%@",json);
+        [MBProgressHUD hideHUDForView:self.view];
+        if (SUCCESS) {
+            self.informationModel = [YZInformationModel objectWithKeyValues:json[@"recommend"]];
+        
+        }else
+        {
+            ShowErrorView;
+        }
+    } failure:^(NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view];
+        YZLog(@"账户error");
+    }];
+}
+
+#pragma mark - Setting
+- (void)setInformationModel:(YZInformationModel *)informationModel
+{
+    _informationModel = informationModel;
+    
+    self.title = self.informationModel.title;
+    [self.webView loadHTMLString:self.informationModel.content baseURL:nil];//加载
+}
+
+#pragma mark - 请求数据
 - (void)setupChilds
 {
     //分享
@@ -35,11 +71,6 @@
     YZWebView * webView =  [[YZWebView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - statusBarH - navBarH)];
     self.webView = webView;
     [self.view addSubview:webView];
-    
-    //加载
-    NSURL* url = [NSURL URLWithString:self.informationModel.detailUrl];//创建URL
-    NSURLRequest* request = [NSURLRequest requestWithURL:url];//创建NSURLRequest
-    [self.webView loadRequest:request];//加载
 }
 
 #pragma mark - 分享
@@ -59,7 +90,7 @@
     UIImageView * imageView = [[UIImageView alloc] init];
     [imageView sd_setImageWithURL:[NSURL URLWithString:spreadPicsUrlStr] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error) {
-            image = [UIImage imageNamed:@"logo1"];
+            image = [UIImage imageNamed:@"logo"];
         }
         UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:self.informationModel.title descr:self.informationModel.intro thumImage:image];
         shareObject.webpageUrl = self.informationModel.detailUrl;

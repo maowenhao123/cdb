@@ -100,7 +100,7 @@
     //判断是否已实名认证
     //如果没有实名认证才添加确认按钮
     YZUser *user = [YZUserDefaultTool user];
-    if(!user.user.realname || !user.user.cardno)
+    if(!user.user.realName || !user.user.cardno)
     {
         YZBottomButton * confirmBtn = [YZBottomButton buttonWithType:UIButtonTypeCustom];
         self.confirmBtn = confirmBtn;
@@ -114,11 +114,11 @@
     }else //已经实名认证了，就显示出来
     {
         NSMutableString *replaceString =  replaceString = [NSMutableString string];
-        for(int i = 0;i < user.user.realname.length-1;i++)
+        for(int i = 0;i < user.user.realName.length-1;i++)
         {
             [replaceString appendString:@"*"];
         }
-        self.nameTF.text = [user.user.realname stringByReplacingCharactersInRange:NSMakeRange(1, user.user.realname.length-1) withString:replaceString];
+        self.nameTF.text = [user.user.realName stringByReplacingCharactersInRange:NSMakeRange(1, user.user.realName.length-1) withString:replaceString];
         NSString * cardNo = user.user.cardno;
         if (cardNo.length == 18) {//是身份证号
             cardNo = [cardNo stringByReplacingCharactersInRange:NSMakeRange(3, 12) withString:@"************"];
@@ -185,7 +185,7 @@
             YZUser *user = [YZUserDefaultTool user];
             YZUserInfo *userInfo = [YZUserInfo objectWithKeyValues:json[@"userInfo"]];
             user.user.cardno = userInfo.cardno;
-            user.user.realname = userInfo.realname;
+            user.user.realName = userInfo.realName;
             [YZUserDefaultTool saveUser:user];
             [MBProgressHUD showSuccess:@"实名绑定成功"];
             [self.navigationController popViewControllerAnimated:YES];

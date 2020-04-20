@@ -111,6 +111,7 @@
         
         self.topView.height = CGRectGetMaxY(payImageView.frame) + 12;
     }
+    self.erCodeImageView.image = [self generateQRCodeWithString:_shopModel.url];
 }
 
 #pragma mark - 布局视图
@@ -204,6 +205,46 @@
 - (void)buttonDidClick:(UIButton *)button
 {
     
+}
+
+- (UIImage *)generateQRCodeWithString:(NSString *)string
+{
+    CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+    [filter setDefaults];
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    [filter setValue:data forKeyPath:@"inputMessage"];
+    CIImage *image = [filter outputImage];
+    UIImage *img = [self createNonInterpolatedUIImageFormCIImage:image withSize:screenWidth];
+    UIGraphicsBeginImageContext(img.size);
+    [img drawInRect:CGRectMake(0, 0, img.size.width, img.size.height)];
+    UIImage *centerImg = [UIImage imageNamed:@"logo"];
+    CGFloat centerW = img.size.width * 0.25;
+    CGFloat centerH = centerW;
+    CGFloat centerX = (img.size.width-centerW)*0.5;
+    CGFloat centerY = (img.size.height -centerH)*0.5;
+    [centerImg drawInRect:CGRectMake(centerX, centerY, centerW, centerH)];
+    UIImage *finalImg=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return finalImg;
+}
+
+- (UIImage *)createNonInterpolatedUIImageFormCIImage:(CIImage *)image withSize:(CGFloat) size
+{
+    CGRect extent = CGRectIntegral(image.extent);
+    CGFloat scale = MIN(size/CGRectGetWidth(extent), size/CGRectGetHeight(extent));
+    size_t width = CGRectGetWidth(extent) * scale;
+    size_t height = CGRectGetHeight(extent) * scale;
+    CGColorSpaceRef cs = CGColorSpaceCreateDeviceGray();
+    CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, cs, (CGBitmapInfo)kCGImageAlphaNone);
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef bitmapImage = [context createCGImage:image fromRect:extent];
+    CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
+    CGContextScaleCTM(bitmapRef, scale, scale);
+    CGContextDrawImage(bitmapRef, extent, bitmapImage);
+    CGImageRef scaledImage = CGBitmapContextCreateImage(bitmapRef);
+    CGContextRelease(bitmapRef);
+    CGImageRelease(bitmapImage);
+    return [UIImage imageWithCGImage:scaledImage];
 }
 
 @end

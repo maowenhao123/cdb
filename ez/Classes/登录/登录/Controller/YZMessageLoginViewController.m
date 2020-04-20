@@ -7,7 +7,7 @@
 //
 
 #import "YZMessageLoginViewController.h"
-#import "YZRegisterResultViewController.h"
+#import "YZTabBarViewController.h"
 #import "YZLoadHtmlFileController.h"
 #import "YZStatusCacheTool.h"
 #import "YZValidateTool.h"
@@ -37,6 +37,8 @@
                                                 name:@"UITextFieldTextDidChangeNotification"
                                               object:self.phoneTextField];
 }
+
+
 - (void)setupChilds
 {
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, screenWidth, YZCellH * 2)];
@@ -206,7 +208,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNote object:nil];
         [self loadUserInfo];
         [YZTool setAlias];
-        [self backAction];
+        [UIApplication sharedApplication].keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
     }else
     {
         ShowErrorView
@@ -233,11 +235,6 @@
     } failure:^(NSError *error) {
         YZLog(@"账户error");
     }];
-}
-    
-- (void)backAction
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
     
 //限制输入字符个数

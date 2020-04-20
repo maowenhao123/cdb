@@ -7,6 +7,7 @@
 //
 
 #import "YZRegisterResultViewController.h"
+#import "YZTabBarViewController.h"
 #import "YZRealNameViewController.h"
 #import "YZNavigationController.h"
 #import "UIButton+YZ.h"
@@ -74,9 +75,7 @@
         [self.navigationController pushViewController:realNameVC animated:YES];
     }else
     {
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        //注册成功，发送返回购彩大厅通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ToBuyLottery" object:nil];
+        [UIApplication sharedApplication].keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
     }
 }
 

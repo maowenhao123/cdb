@@ -1419,7 +1419,7 @@
                     }
                 }
             }
-           model.avatarImage = [UIImage imageNamed:@"logo1"];
+           model.avatarImage = [UIImage imageNamed:@"logo"];
             model.failImageName = @"imageDownloadFail";
         }
 

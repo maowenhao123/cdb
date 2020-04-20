@@ -30,39 +30,47 @@
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hide)];
         [self addGestureRecognizer:tap];
         
-        UIView *contentView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, 44 + 250)];
+        UIView *contentView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, 300)];
         self.contentView = contentView;
         contentView.backgroundColor = [UIColor whiteColor];
         [self addSubview:contentView];
         
         //工具栏取消和选择
-        UIToolbar * toolBar = [[UIToolbar alloc]init];
-        toolBar.frame = CGRectMake(0, 0, screenWidth, 44);
-        [contentView addSubview:toolBar];
+        UIView * toolView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 45)];
+        toolView.backgroundColor = YZBackgroundColor;
+        [contentView addSubview:toolView];
         
-        UIBarButtonItem * barButtonItem1 = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(hide)];
-        UIBarButtonItem * spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        UIBarButtonItem * barButtonItem2 = [[UIBarButtonItem alloc]initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:self action:@selector(selectBarClicked)];
+        UIButton * cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        cancelButton.frame = CGRectMake(YZMargin, 0, 100, toolView.height);
+        [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        [cancelButton setTitleColor:YZDrayGrayTextColor forState:UIControlStateNormal];
+        cancelButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        cancelButton.titleLabel.font = [UIFont systemFontOfSize:17];
+        [cancelButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
+        [toolView addSubview:cancelButton];
         
-        //设置字体大小
-        NSDictionary * attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:15]};
-        [barButtonItem1 setTitleTextAttributes:attributes forState:UIControlStateNormal];
-        [barButtonItem2 setTitleTextAttributes:attributes forState:UIControlStateNormal];
-        
-        [toolBar setItems:@[barButtonItem1,spaceItem,barButtonItem2]];
+        UIButton * selectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        selectButton.frame = CGRectMake(screenWidth - 100 - YZMargin, 0, 100, toolView.height);
+        [selectButton setTitle:@"确定" forState:UIControlStateNormal];
+        [selectButton setTitleColor:YZBaseColor forState:UIControlStateNormal];
+        selectButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        selectButton.titleLabel.font = [UIFont systemFontOfSize:17];
+        [selectButton addTarget:self action:@selector(selectBarClicked) forControlEvents:UIControlEventTouchUpInside];
+        [toolView addSubview:selectButton];
         
         //PickerView
-        UIPickerView * pickView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 44, screenWidth, 250)];
-        pickView.backgroundColor = [UIColor whiteColor];
-        pickView.delegate = self;
-        pickView.dataSource = self;
-        [contentView addSubview:pickView];
+        UIPickerView * pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(toolView.frame), screenWidth, contentView.height - CGRectGetMaxY(toolView.frame))];
+        pickerView.backgroundColor = [UIColor whiteColor];
+        pickerView.delegate = self;
+        pickerView.dataSource = self;
+        [contentView addSubview:pickerView];
         
-        [pickView selectRow:index inComponent:0 animated:NO];
+        [pickerView selectRow:index inComponent:0 animated:NO];
         self.selectedString = self.dataArray[index];
     }
     return self;
 }
+
 #pragma  mark - function
 - (void)selectBarClicked
 {
@@ -73,16 +81,19 @@
     [self hide];
 }
 
-- (void)show{
+- (void)show
+{
     UIView *topView = [KEY_WINDOW.subviews firstObject];
     [topView addSubview:self];
     
-    [UIView animateWithDuration:animateDuration animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.contentView.y = screenHeight - self.contentView.height;
     }];
 }
-- (void)hide{
-    [UIView animateWithDuration:animateDuration animations:^{
+
+- (void)hide
+{
+    [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0;
         self.contentView.y = screenHeight;
     } completion:^(BOOL finished) {
@@ -91,35 +102,43 @@
 }
 
 #pragma mark - UIPickerViewDataSource
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
     return 1;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
     return self.dataArray.count;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
     return self.dataArray[row];
 }
 
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 36;
+}
+
 #pragma mark - UIPickerViewDelegate
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
     UILabel* pickerLabel = (UILabel*)view;
     if (!pickerLabel){
         pickerLabel = [[UILabel alloc] init];
-        pickerLabel.minimumScaleFactor = 8.0;
-        pickerLabel.adjustsFontSizeToFitWidth = YES;
         pickerLabel.textColor = YZBlackTextColor;
         [pickerLabel setTextAlignment:NSTextAlignmentCenter];
         [pickerLabel setBackgroundColor:[UIColor clearColor]];
         [pickerLabel setFont:[UIFont systemFontOfSize:17]];
     }
-    pickerLabel.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+    pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
     return pickerLabel;
 }
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
     self.selectedString = self.dataArray[row];
 }
 

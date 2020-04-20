@@ -95,10 +95,10 @@
         {
             self.nameTF = textField;
             YZUser *user = [YZUserDefaultTool user];
-            NSString * realname = user.user.realname;
+            NSString * realname = user.user.realName;
             if (realname.length > 1) {//实名认证后就自动读取实名认证的姓名
                 textField.userInteractionEnabled = NO;
-                for (int j = 0; j < user.user.realname.length - 1; j++) {
+                for (int j = 0; j < user.user.realName.length - 1; j++) {
                     realname = [realname stringByReplacingCharactersInRange:NSMakeRange(1 + j, 1) withString:@"*"];
                 }
                 textField.text = realname;
@@ -125,7 +125,8 @@
 }
 - (void)selectPickerView:(UIButton *)button
 {
-    [self.view endEditing:YES];//取消其他键盘
+    [self.view endEditing:YES];
+    
     NSArray * bankNames = @[@"中国建设银行",@"中国工商银行",@"中国农业银行",@"中国邮政储蓄银行",@"中国银行",@"交通银行",@"招商银行",@"中国光大银行",@"兴业银行",@"平安银行",@"中国民生银行",@"上海浦东发展银行",@"广东发展银行",@"华夏银行",@"中信银行"];
     //选择银行
     YZBottomPickerView * bankChooseView = [[YZBottomPickerView alloc]initWithArray:bankNames index:_index];
@@ -156,6 +157,8 @@
 }
 - (void)confirmButtonClick
 {
+    [self.view endEditing:YES];
+    
     if(![YZValidateTool validateCardNumber:self.bankNumberCardTF.text])//银行卡号
     {
         [MBProgressHUD showError:@"银行卡号格式错误"];
@@ -173,7 +176,7 @@
     NSString * accountName = self.nameTF.text;
     if (!self.nameTF.userInteractionEnabled) {
         YZUser *user = [YZUserDefaultTool user];
-        accountName = user.user.realname;
+        accountName = user.user.realName;
     }
     NSDictionary *dict = @{
                            @"token":Token,
@@ -181,6 +184,7 @@
                            @"accountNumber":self.bankNumberCardTF.text,
                            @"accountName":accountName,
                            };
+    [MBProgressHUD showMessage:@"添加中..." toView:self.view];
     [[YZHttpTool shareInstance] postWithURL:@"/addBankCard" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         YZLog(@"%@",json);

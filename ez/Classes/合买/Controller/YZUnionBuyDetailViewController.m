@@ -833,7 +833,7 @@
     NSString * title = _unionBuyStatus.title ? _unionBuyStatus.title : @"无";
     NSString * descr = _unionBuyStatus.desc ? _unionBuyStatus.desc : @"无";
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    UIImage * image = [UIImage imageNamed:@"logo1"];
+    UIImage * image = [UIImage imageNamed:@"logo"];
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:descr thumImage:image];
     YZUser *user = [YZUserDefaultTool user];
     NSString * nickName = user.user.nickName;

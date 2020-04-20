@@ -123,7 +123,7 @@
     UIImageView * imageView = [[UIImageView alloc] init];
     [imageView sd_setImageWithURL:[NSURL URLWithString:spreadPicsUrlStr] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error) {
-            image = [UIImage imageNamed:@"logo1"];
+            image = [UIImage imageNamed:@"logo"];
         }
         UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:self.informationModel.title descr:self.informationModel.intro thumImage:image];
         shareObject.webpageUrl = self.web;

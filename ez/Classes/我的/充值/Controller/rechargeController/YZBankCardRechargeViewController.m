@@ -92,9 +92,9 @@
         }
     }
 //    YZUser *user = [YZUserDefaultTool user];
-//    if(user.user.realname && user.user.cardno)//如果已经实名，就显示出来
+//    if(user.user.realName && user.user.cardno)//如果已经实名，就显示出来
 //    {
-//        self.nameTF.text = user.user.realname;
+//        self.nameTF.text = user.user.realName;
 //        self.cardNoTF.text = user.user.cardno;
 //    }
     

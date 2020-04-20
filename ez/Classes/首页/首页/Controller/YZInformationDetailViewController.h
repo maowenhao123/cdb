@@ -7,13 +7,12 @@
 //
 
 #import "YZBaseViewController.h"
-#import "YZInformationModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YZInformationDetailViewController : YZBaseViewController
 
-@property (nonatomic, strong) YZInformationModel *informationModel;
+@property (nonatomic, copy) NSString * recommendId;
 
 @end
 

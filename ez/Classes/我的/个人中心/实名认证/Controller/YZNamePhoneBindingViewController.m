@@ -309,7 +309,7 @@
             YZUser *user = [YZUserDefaultTool user];
             YZUserInfo *userInfo = [YZUserInfo objectWithKeyValues:json[@"userInfo"]];
             user.user.cardno = userInfo.cardno;
-            user.user.realname = userInfo.realname;
+            user.user.realName = userInfo.realName;
             [YZUserDefaultTool saveUser:user];
             [MBProgressHUD showSuccess:@"实名绑定成功"];
             [self.navigationController popViewControllerAnimated:YES];

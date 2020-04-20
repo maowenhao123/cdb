@@ -7,6 +7,7 @@
 //
 
 #import "YZNewFeatureViewController.h"
+#import "YZLoginViewController.h"
 #import "YZTabBarViewController.h"
 
 @interface YZNewFeatureViewController ()
@@ -92,7 +93,14 @@
 {
     // 显示状态栏
     [UIApplication sharedApplication].statusBarHidden = NO;
-    [UIApplication sharedApplication].keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
+    if (Token) {
+        [UIApplication sharedApplication].keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
+    }else
+    {
+        YZLoginViewController *loginVC = [[YZLoginViewController alloc] init];
+        YZNavigationController *loginNVC = [[YZNavigationController alloc] initWithRootViewController:loginVC];
+        [UIApplication sharedApplication].keyWindow.rootViewController = loginNVC;
+    }
 }
 
 @end

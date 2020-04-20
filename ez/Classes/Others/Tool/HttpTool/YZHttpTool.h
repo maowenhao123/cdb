@@ -29,9 +29,7 @@ typedef enum : NSUInteger {
     ChooseNumberByLuckyNumber = 3,
 } ChooseNumberType;
 
-#define mainChannel @"store"
-
-#define jumpURLStr @"http://html5.51mcp.com/ios/confirm.jsp"
+#define mainChannel @"sta"
 
 ////预发布环境
 //#define baseUrl @"http://www1.51mcp.com"
@@ -42,7 +40,7 @@ typedef enum : NSUInteger {
 //正式环境
 #define baseUrl @"http://admin.jifengo.online/gateway"
 #define shareBaseUrl @"https://cp.ez1898.com"
-#define childChannel @"store_0001"
+#define childChannel @"sta_ios"
 
 ////测试环境
 //#define baseUrl @"http://c.ez1898.com"

@@ -363,7 +363,7 @@
 - (void)shareImageToPlatformType:(UMSocialPlatformType)platformType
 {
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    UIImage *thumImage = [UIImage imageNamed:@"logo1"];
+    UIImage *thumImage = [UIImage imageNamed:@"logo"];
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:self.json[@"seoTitle"] descr:self.json[@"seoDesc"] thumImage:thumImage];
     shareObject.webpageUrl = self.json[@"url"];
     messageObject.shareObject = shareObject;

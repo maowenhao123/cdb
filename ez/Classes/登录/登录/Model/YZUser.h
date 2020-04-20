@@ -26,7 +26,7 @@
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *mobile;
 @property (nonatomic, copy) NSString *nickName;
-@property (nonatomic, copy) NSString *realname;//真实姓名
+@property (nonatomic, copy) NSString *realName;//真实姓名
 @property (nonatomic, copy) NSString *sex;
 @property (nonatomic, copy) NSString *headUrl;//头像url
 

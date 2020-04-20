@@ -48,7 +48,7 @@
     [self checkUpgrade];
     
     //添加h5的app
-    [self addH5App];
+//    [self addH5App];
     
     //接收注册成功返回购彩大厅的通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toBuyLottey) name:@"ToBuyLottery" object:nil];

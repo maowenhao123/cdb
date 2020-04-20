@@ -21,6 +21,7 @@
 #import "YZThirdPartyStatus.h"
 #import "UPPaymentControl.h"
 #import "YZWinNumberViewController.h"
+#import "YZLoginViewController.h"
 #import "JSON.h"
 
 @interface YZAppDelegate ()<JPUSHRegisterDelegate>
@@ -113,7 +114,14 @@
     if([lastVersion isEqualToString:currentVersion])
     {   //版本相同，说明已经使用过该版本app,直接进入
         [UIApplication sharedApplication].statusBarHidden = NO;
-        application.keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
+        if (Token) {
+            application.keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
+        }else
+        {
+            YZLoginViewController *loginVC = [[YZLoginViewController alloc] init];
+            YZNavigationController *loginNVC = [[YZNavigationController alloc] initWithRootViewController:loginVC];
+            application.keyWindow.rootViewController = loginNVC;
+        }
     }else
     {   //版本不一样，说明是首次使用该版本app,展示新特性
         application.keyWindow.rootViewController = [[YZNewFeatureViewController alloc] init];

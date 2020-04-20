@@ -68,12 +68,11 @@
 - (void)getSchemeDetailData
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8024),
                            @"schemeId":self.schemeId,
                            @"pageIndex":@(self.pageIndex),
                            @"pageSize" : @(10)
                            };
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getSchemeDetail" params:dict success:^(id json) {
         YZLog(@"json = %@",json);
         if(SUCCESS)
         {

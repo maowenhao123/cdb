@@ -96,6 +96,7 @@
     [self addSubview:line];
 }
 
+#pragma mark - Setting
 - (void)setInformationModel:(YZInformationModel *)informationModel
 {
     _informationModel = informationModel;

@@ -35,14 +35,14 @@
     self.title = @"用户注册";
     
     [self setupChilds];
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldEditChanged:)
-//                                                name:@"UITextFieldTextDidChangeNotification"
-//                                              object:self.accountTextField];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldEditChanged:)
+                                                name:@"UITextFieldTextDidChangeNotification"
+                                              object:self.accountTextField];
 }
 - (void)setupChilds
 {
     //注册界面
-    UIView *registerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, screenWidth, YZCellH * 3)];
+    UIView *registerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, screenWidth, YZCellH * 2)];
     registerView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:registerView];
 
@@ -88,21 +88,21 @@
     codeBtn.layer.masksToBounds = YES;
     codeBtn.layer.cornerRadius = 2;
     
-    //分割线
-    UIView *seperator2 = [[UIView alloc] init];
-    seperator2.frame = CGRectMake(0, CGRectGetMaxY(verificationCodeTextField.frame), screenWidth, 1);
-    seperator2.backgroundColor = YZGrayLineColor;
-    [registerView addSubview:seperator2];
-    
-    //密码输入框:
-    UITextField *pwdTextField = [[UITextField alloc]initWithFrame:CGRectMake(YZMargin,CGRectGetMaxY(seperator2.frame),screenWidth - 2 * YZMargin,YZCellH)];
-    self.pwdTextField =pwdTextField;
-    pwdTextField.borderStyle = UITextBorderStyleNone;
-    pwdTextField.placeholder =@"设置密码，4-20位数字、字母组合";
-    pwdTextField.secureTextEntry = YES;//密码模式
-    pwdTextField.font = [UIFont systemFontOfSize:YZGetFontSize(28)];
-    pwdTextField.textColor = YZBlackTextColor;
-    [registerView addSubview:pwdTextField];
+//    //分割线
+//    UIView *seperator2 = [[UIView alloc] init];
+//    seperator2.frame = CGRectMake(0, CGRectGetMaxY(verificationCodeTextField.frame), screenWidth, 1);
+//    seperator2.backgroundColor = YZGrayLineColor;
+//    [registerView addSubview:seperator2];
+//
+//    //密码输入框:
+//    UITextField *pwdTextField = [[UITextField alloc]initWithFrame:CGRectMake(YZMargin,CGRectGetMaxY(seperator2.frame),screenWidth - 2 * YZMargin,YZCellH)];
+//    self.pwdTextField =pwdTextField;
+//    pwdTextField.borderStyle = UITextBorderStyleNone;
+//    pwdTextField.placeholder =@"设置密码，4-20位数字、字母组合";
+//    pwdTextField.secureTextEntry = YES;//密码模式
+//    pwdTextField.font = [UIFont systemFontOfSize:YZGetFontSize(28)];
+//    pwdTextField.textColor = YZBlackTextColor;
+//    [registerView addSubview:pwdTextField];
     
     //注册
     YZBottomButton * registerbtn = [YZBottomButton buttonWithType:UIButtonTypeCustom];
@@ -224,20 +224,20 @@
         [MBProgressHUD showError:@"请输入验证码"];
         return;
     }
-    if (YZStringIsEmpty(self.pwdTextField.text)) {
-        [MBProgressHUD showError:@"请输入密码"];
-        return;
-    }
+//    if (YZStringIsEmpty(self.pwdTextField.text)) {
+//        [MBProgressHUD showError:@"请输入密码"];
+//        return;
+//    }
     if(![YZValidateTool validateUserName:self.accountTextField.text])
     {
         [MBProgressHUD showError:@"您输入的用户名格式不对"];
         return;
     }
-    if(![YZValidateTool validatePassword:self.pwdTextField.text])
-    {
-        [MBProgressHUD showError:@"您输入的密码格式不对"];
-        return;
-    }
+//    if(![YZValidateTool validatePassword:self.pwdTextField.text])
+//    {
+//        [MBProgressHUD showError:@"您输入的密码格式不对"];
+//        return;
+//    }
     if(!self.rightbtn.selected)
     {
         [MBProgressHUD showError:@"您必须同意用户注册协议"];
@@ -246,11 +246,11 @@
     [MBProgressHUD showMessage:@"正在注册,客官请稍后" toView:self.view];
     NSDictionary *dict = @{
                            @"phone":self.accountTextField.text,
-                           @"passwd":self.pwdTextField.text,
+//                           @"passwd":self.pwdTextField.text,
                            @"verifyCode":self.verificationCodeTextField.text,
                            @"storeCode": @"1",
                            };
-    [[YZHttpTool shareInstance] postWithURL:@"/regist" params:dict success:^(id json)
+    [[YZHttpTool shareInstance] postWithURL:@"/registWithVerifyCode" params:dict success:^(id json)
      {
         YZLog(@"json = %@",json);
         [MBProgressHUD hideHUDForView:self.view];
@@ -269,7 +269,7 @@
         
         //存储账户密码
         [YZUserDefaultTool saveObject:self.accountTextField.text forKey:@"userName"];
-        [YZUserDefaultTool saveObject:self.pwdTextField.text forKey:@"userPwd"];
+//        [YZUserDefaultTool saveObject:self.pwdTextField.text forKey:@"userPwd"];
 
         //账号登录
         [YZUserDefaultTool saveObject:@"accountLogin" forKey:@"loginWay"];

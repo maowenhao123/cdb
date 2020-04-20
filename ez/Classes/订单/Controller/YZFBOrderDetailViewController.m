@@ -412,7 +412,7 @@
         descr = [[NSString stringWithFormat:@"%@", json[@"unHitDesc"]] stringByReplacingOccurrencesOfString:@"stakemoney" withString:[NSString stringWithFormat:@"%.2f",amount]];
     }
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    UIImage * image = [UIImage imageNamed:@"logo1"];
+    UIImage * image = [UIImage imageNamed:@"logo"];
     UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:title descr:descr thumImage:image];
     shareObject.webpageUrl = json[@"url"];
     messageObject.shareObject = shareObject;//调用分享接口

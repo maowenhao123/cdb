@@ -192,7 +192,7 @@
 #define WXAppSecret @"312773564007871247f8966fdb449872"
 
 //极光
-#define JPushId @"2fc0d62064c90883699c5c00"
+#define JPushId @"55a769d55ee71e9337d61449"
 //友盟
 #define UMengId @"5e941bc6978eea0718fb711f"
 //QQ

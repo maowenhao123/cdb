@@ -377,7 +377,7 @@
         self.nickNameLabel.text = thirdPartyStatus.name;
     }
     
-    if (_user.user.realname) {
+    if (_user.user.realName) {
         self.nameCertificationLabel.text = @"已认证";
     }else
     {
@@ -479,17 +479,17 @@
 - (void)walletButtonDidClick:(UIButton *)button
 {
     if (button.tag == 1) {//提款
-        if (!_user.user.realname || !_user.user.mobile) {
+        if (!_user.user.realName || !_user.user.mobile) {
             UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"完善实名信息后才能提款哦" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction * alertAction1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
             UIAlertAction * alertAction2 = [UIAlertAction actionWithTitle:@"去完善" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                if (!_user.user.realname && !_user.user.mobile) {
+                if (!_user.user.realName && !_user.user.mobile) {
                     YZNamePhoneBindingViewController * namePhoneBindingVC = [[YZNamePhoneBindingViewController alloc]init];
                     [self.navigationController pushViewController:namePhoneBindingVC animated:YES];
-                }else if (!_user.user.realname  && _user.user.mobile) {//没有实名认证
+                }else if (!_user.user.realName  && _user.user.mobile) {//没有实名认证
                     YZRealNameViewController * realNameVC = [[YZRealNameViewController alloc]init];
                     [self.navigationController pushViewController:realNameVC animated:YES];
-                }else if (!_user.user.mobile && _user.user.realname) {
+                }else if (!_user.user.mobile && _user.user.realName) {
                     YZPhoneBindingViewController * PhoneBindingVC = [[YZPhoneBindingViewController alloc]init];
                     [self.navigationController pushViewController:PhoneBindingVC animated:YES];
                 }
@@ -568,15 +568,15 @@
 #pragma mark - 修改头像
 - (void)chooseAvatarDidClick
 {
-    self.addImageManage = [[YZAddImageManage alloc] init];
-    self.addImageManage.viewController = self;
-    self.addImageManage.delegate = self;
-    [self.addImageManage addImage];
+//    self.addImageManage = [[YZAddImageManage alloc] init];
+//    self.addImageManage.viewController = self;
+//    self.addImageManage.delegate = self;
+//    [self.addImageManage addImage];
 }
 
 - (void)imageManageCropImage:(UIImage *)image
 {
-    [[YZHttpTool shareInstance] uploadWithURL:@"/uploadImage/user" image:image currentIndex:1 totalCount:1 Success:^(id json) {
+    [[YZHttpTool shareInstance] uploadWithURL:@"/uploadImage/1" image:image currentIndex:1 totalCount:1 Success:^(id json) {
         [self setUserHeadPortraitWithUserHeadPortrait:json[@"imgPath"] image:image];
     } Failure:^(NSError *error) {
         [MBProgressHUD showError:@"上传图片失败"];

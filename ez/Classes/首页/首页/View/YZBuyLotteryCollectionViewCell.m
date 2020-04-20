@@ -37,6 +37,7 @@
     }
     return self;
 }
+
 - (void)setupChilds
 {
     //logo
@@ -77,6 +78,7 @@
     line2.backgroundColor = YZWhiteLineColor;
     [self addSubview:line2];
 }
+
 - (void)setStatus:(YZBuyLotteryCellStatus *)status
 {
     _status = status;
@@ -187,7 +189,10 @@
         descriptionSize = [self.descriptionLabel.attributedText boundingRectWithSize:CGSizeMake(screenWidth, screenHeight) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
     }
     
-    CGFloat titleLabelY = (cellH - titleSize.height - descriptionSize.height - 10) / 2;
+    CGFloat titleLabelY = (90 - titleSize.height - descriptionSize.height - 10) / 2;
+    if (descriptionSize.height == 0) {
+        titleLabelY = (90 - titleSize.height) / 2;
+    }
     self.titleLabel.frame = CGRectMake(CGRectGetMaxX(self.logoImageView.frame) + 10, titleLabelY, titleSize.width, titleSize.height);
     self.descriptionLabel.frame = CGRectMake(self.titleLabel.x, CGRectGetMaxY(self.titleLabel.frame) + 10, screenWidth / 2 - self.titleLabel.x, descriptionSize.height);
     //角标
