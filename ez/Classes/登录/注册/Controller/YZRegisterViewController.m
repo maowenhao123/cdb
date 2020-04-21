@@ -266,6 +266,7 @@
     if(SUCCESS)
     {
         [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
+        [YZUserDefaultTool saveObject:json[@"user"][@"storeId"] forKey:@"storeId"];
         
         //存储账户密码
         [YZUserDefaultTool saveObject:self.accountTextField.text forKey:@"userName"];

@@ -283,6 +283,7 @@
     {
         dict =@{
                 @"token":Token,
+                @"storeId":StoreId,
                 @"gameId":self.gameId,
                 @"termId":self.currentTermId,
                 @"multiple":multiple,
@@ -383,6 +384,7 @@
     {
         dict =@{
                 @"token":Token,
+                @"storeId":StoreId,
                 @"gameId":self.gameId,
                 @"termId":self.termId,
                 @"multiple":multiple,

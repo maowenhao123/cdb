@@ -230,6 +230,7 @@
             //存储账户到数据库
             [YZUserDefaultTool saveObject:json[@"userId"] forKey:@"userId"];
             [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
+            [YZUserDefaultTool saveObject:json[@"user"][@"storeId"] forKey:@"storeId"];
             [YZUserDefaultTool saveObject:self.passWordTF.text forKey:@"userPwd"];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [YZUserDefaultTool saveObject:@"accountLogin" forKey:@"loginWay"];

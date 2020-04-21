@@ -138,7 +138,7 @@
     {
         YZCircleViewAttentionTableViewCell * cell = [YZCircleViewAttentionTableViewCell cellWithTableView:tableView];
         cell.dic = self.dataArray[indexPath.row];
-        if (self.isFans || UserId != self.userId) {
+        if (self.isFans || @"" != self.userId) {
             cell.cancelAttentionButon.hidden = YES;
         }else
         {

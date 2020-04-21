@@ -70,7 +70,7 @@
     }else if ([self.clientId isEqualToString:@"plbpay_alipay_h5"])//h5支付
     {
         NSString * payInfoJson = [@{@"clientType":@(1)} JSONRepresentation];
-        NSString * web = [NSString stringWithFormat:@"%@?userId=%@&amount=%@&payType=%@&payInfo=%@&channel=%@&childChannel=%@", self.url, UserId, amount, self.paymentId, payInfoJson, mainChannel, childChannel];
+        NSString * web = [NSString stringWithFormat:@"%@?userId=%@&amount=%@&payType=%@&payInfo=%@&channel=%@&childChannel=%@", self.url, @"", amount, self.paymentId, payInfoJson, mainChannel, childChannel];
         web = [web stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:web]];
     }else

@@ -253,7 +253,7 @@
         @"token": Token,
         @"pageIndex": pageIndex,
         @"pageSize": @(10),
-        @"storeId": @"1"
+        @"storeId":StoreId,
     };
     [[YZHttpTool shareInstance] postWithURL:url params:dict success:^(id json) {
         YZLog(@"%@",json);
@@ -267,7 +267,7 @@
                 [oldOrderList addObjectsFromArray:orderList];
             }else if (self.currentIndex == 1)
             {
-                orderList = [YZOrderStatus objectArrayWithKeyValuesArray:json[@"orderList"]];
+                orderList = [YZOrderStatus objectArrayWithKeyValuesArray:json[@"schemeList"]];
                 [oldOrderList addObjectsFromArray:orderList];
             }else if (self.currentIndex == 2)
             {

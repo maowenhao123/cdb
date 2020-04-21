@@ -782,7 +782,7 @@
 {
     if(_nextOpenRemainSeconds > 0) return;
     NSDictionary *dict = @{
-        @"storeId":@"1",
+        @"storeId":StoreId,
         @"gameId":self.gameId
     };
     [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
@@ -855,7 +855,7 @@
         @"gameId":self.gameId,
         @"issueId":termId
     };
-    [[YZHttpTool shareInstance] postWithURL:[NSString stringWithFormat:@"%@%@",baseUrl,@"/misstrend/getMissNumber"] params:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:[NSString stringWithFormat:@"%@%@",jgBaseUrl,@"/misstrend/getMissNumber"] params:dict success:^(id json) {
         if (SUCCESS) {
             [self setTrendDataByJson:json];
         }

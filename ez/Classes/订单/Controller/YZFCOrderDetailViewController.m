@@ -69,11 +69,10 @@
 - (void)getOrderDetailData
 {
     NSDictionary *dict = @{
-        @"cmd":@(8022),
+        @"token":Token,
         @"orderId":self.orderId
     };
-    
-    [[YZHttpTool shareInstance] requestTarget:self PostWithParams:dict success:^(id json) {
+    [[YZHttpTool shareInstance] postWithURL:@"/getOrderDetail" params:dict success:^(id json) {
         YZLog(@"json = %@",json);
         [MBProgressHUD hideHUDForView:self.view];
         if (SUCCESS) {
@@ -104,9 +103,9 @@
 {
     //分享
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"order_share"] style:UIBarButtonItemStylePlain target:self action:@selector(share)];
-    CGFloat tableViewH = screenHeight - statusBarH - navBarH - 40 - [YZTool getSafeAreaBottom];
-    if (self.isScheme || [self.gameId isEqualToString:@"T53"] || [self.gameId isEqualToString:@"T54"]) {
-        tableViewH = screenHeight - statusBarH - navBarH - [YZTool getSafeAreaBottom];
+    CGFloat tableViewH = screenHeight - statusBarH - navBarH - 50;
+    if (IsBangIPhone) {
+        tableViewH = screenHeight - statusBarH - navBarH - 40 - [YZTool getSafeAreaBottom];
     }
     UITableView * tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, tableViewH)];
     self.tableView = tableView;
@@ -167,7 +166,6 @@
     tableView.tableHeaderView = headerView;
     
     UIView *bottomButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - statusBarH - navBarH - 40 - [YZTool getSafeAreaBottom], screenWidth, 40 + [YZTool getSafeAreaBottom])];
-    bottomButtonView.backgroundColor = YZBaseColor;
     [self.view addSubview:bottomButtonView];
     
     NSArray * bottomButtonTitles = @[@"晒单"];
@@ -175,11 +173,11 @@
         //快速投注 胜负彩 四场进球不显示快速投注
         bottomButtonTitles = @[@"快速投注", @"晒单"];
     }
-    CGFloat bottomButtonW = screenWidth / bottomButtonTitles.count;
+    CGFloat bottomButtonW = (screenWidth - YZMargin * (bottomButtonTitles.count + 1)) / bottomButtonTitles.count;
     for (int i = 0; i < bottomButtonTitles.count; i++) {
         YZBottomButton * bottomButton = [YZBottomButton buttonWithType:UIButtonTypeCustom];
         bottomButton.tag = i;
-        bottomButton.frame = CGRectMake(i * bottomButtonW, 0, bottomButtonW, 40);
+        bottomButton.frame = CGRectMake(YZMargin + i * (YZMargin + bottomButtonW), 0, bottomButtonW, 40);
         [bottomButton setTitle:bottomButtonTitles[i] forState:UIControlStateNormal];
         bottomButton.titleLabel.font = [UIFont systemFontOfSize:YZGetFontSize(30)];
         [bottomButton addTarget:self action:@selector(bottomButtonDidClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -502,7 +500,7 @@
 {
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.view];
     NSDictionary *dict = @{
-        @"storeId":@"1",
+        @"storeId":StoreId,
         @"gameId":self.order.gameId
     };
     [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
@@ -533,6 +531,7 @@
     
     NSDictionary *dict = @{
         @"token":Token,
+        @"storeId":StoreId,
         @"gameId":self.order.gameId,
         @"termId":self.currentTermId,
         @"multiple":self.order.multiple,

@@ -458,7 +458,7 @@ static NSInteger seq = 0;
         return;
     }
     
-    [JPUSHService setAlias:UserId completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+    [JPUSHService setAlias:@"" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
         YZLog(@"setAlias：%ld", (long)iResCode);
     } seq:[self seq]];
     

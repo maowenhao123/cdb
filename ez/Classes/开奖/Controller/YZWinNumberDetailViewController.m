@@ -119,11 +119,13 @@
         [MBProgressHUD hideHUDForView:self.view];
         if (SUCCESS) {
             NSMutableDictionary *termDict = [json[@"term"] mutableCopy];
-            NSMutableDictionary *detailDict = [termDict[@"details"] JSONValue];
-            if (![detailDict isKindOfClass:[NSDictionary class]]) {
+            NSArray *details = [termDict[@"details"] JSONValue];
+            if (![details isKindOfClass:[NSArray class]]) {
                 return;
             }
-            [termDict setValue:detailDict forKey:@"details"];
+            NSMutableDictionary * gradesDic = [NSMutableDictionary dictionary];
+            [gradesDic setValue:details forKey:@"grades"];
+            [termDict setValue:gradesDic forKey:@"details"];
             YZTerm *term = [YZTerm objectWithKeyValues:termDict];
             self.term = term;
         }else

@@ -160,7 +160,7 @@
 {
     if(_nextOpenRemainSeconds > 0) return;
     NSDictionary *dict = @{
-                            @"storeId":@"1",
+                            @"storeId":StoreId,
                             @"gameId":self.gameId
                             };
      [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
@@ -582,7 +582,7 @@
 - (void)getCurrentTermDataForPay
 {
     NSDictionary *dict = @{
-                            @"storeId":@"1",
+                            @"storeId":StoreId,
                             @"gameId":self.gameId
                             };
      [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
@@ -624,6 +624,7 @@
     }
     NSDictionary *dict = @{
                            @"token":Token,
+                           @"storeId":StoreId,
                            @"gameId":self.gameId,
                            @"termId":_currentTermId,
                            @"amount":[NSNumber numberWithInt:self.amountMoney * 100],

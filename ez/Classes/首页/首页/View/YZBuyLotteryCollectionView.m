@@ -97,7 +97,7 @@
 - (void)getGameInfoDataWith:(MJRefreshGifHeader *)header
 {
     NSDictionary *dict = @{
-                           @"storeId":@"1",
+                           @"storeId":StoreId,
                            };
     [[YZHttpTool shareInstance] postWithURL:@"/getGameList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self];

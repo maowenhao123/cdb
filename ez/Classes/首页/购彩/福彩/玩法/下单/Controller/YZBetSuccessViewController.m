@@ -39,7 +39,7 @@
     self.view.backgroundColor = YZBackgroundColor;
     self.title = @"下单成功";
     self.navigationItem.leftBarButtonItem  = [UIBarButtonItem itemWithIcon:@"back_btn_flat" highIcon:@"back_btn_flat" target:self action:@selector(back)];
-    [self getActivityData];
+//    [self getActivityData];
     [self setupChilds];
 }
 

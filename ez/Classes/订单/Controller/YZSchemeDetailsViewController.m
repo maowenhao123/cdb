@@ -50,7 +50,8 @@
 
 @implementation YZSchemeDetailsViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"追期详情";
@@ -68,10 +69,11 @@
 - (void)getSchemeDetailData
 {
     NSDictionary *dict = @{
-                           @"schemeId":self.schemeId,
-                           @"pageIndex":@(self.pageIndex),
-                           @"pageSize" : @(10)
-                           };
+        @"token":Token,
+        @"schemeId":self.schemeId,
+        @"pageIndex":@(self.pageIndex),
+        @"pageSize" : @(10)
+    };
     [[YZHttpTool shareInstance] postWithURL:@"/getSchemeDetail" params:dict success:^(id json) {
         YZLog(@"json = %@",json);
         if(SUCCESS)
@@ -127,7 +129,10 @@
 #pragma mark - 布局视图
 - (void)setupChilds
 {
-    CGFloat tableViewH = screenHeight - statusBarH - navBarH - 40;
+    CGFloat tableViewH = screenHeight - statusBarH - navBarH - 50;
+    if (IsBangIPhone) {
+        tableViewH = screenHeight - statusBarH - navBarH - 40 - [YZTool getSafeAreaBottom];
+    }
     UITableView * tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, tableViewH)];
     self.tableView = tableView;
     tableView.delegate = self;
@@ -209,7 +214,7 @@
     //快速投注
     YZBottomButton * betButton = [YZBottomButton buttonWithType:UIButtonTypeCustom];
     self.betButton = betButton;
-    betButton.frame = CGRectMake(0, screenHeight - statusBarH - navBarH - 40, screenWidth, 40); 
+    betButton.y = CGRectGetMaxY(tableView.frame);
     [betButton addTarget:self action:@selector(betButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:betButton];
     
@@ -278,10 +283,10 @@
 {
     [MBProgressHUD showMessage:@"客官请稍候" toView:self.view];
     NSDictionary *dict = @{
-                           @"cmd":@(8025),
-                           @"token":Token,
-                           @"schemeId":self.schemeId,
-                           };
+        @"cmd":@(8025),
+        @"token":Token,
+        @"schemeId":self.schemeId,
+    };
     
     [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
         
@@ -321,9 +326,9 @@
 - (void)refreshUI
 {
     //玩法信息
-    self.logoImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"icon_%@",self.scheme.gameId]];
+    self.logoImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"icon_%@", self.scheme.gameId]];
     self.playTypeNameLabel.text = [YZTool gameIdNameDict][self.scheme.gameId];
-  
+    
     CGSize playTypeNameSize = [self.playTypeNameLabel.text sizeWithLabelFont:self.playTypeNameLabel.font];
     self.playTypeNameLabel.frame = CGRectMake(CGRectGetMaxX(self.logoImageView.frame) + 10, 15, playTypeNameSize.width, 30);
     float bonus = [self.scheme.bonus intValue] / 100.0;
@@ -458,8 +463,8 @@
     }
     waitingView;
     NSDictionary *dict = @{
-                           @"token" : Token
-                           };
+        @"token" : Token
+    };
     [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if (SUCCESS) {
@@ -514,10 +519,10 @@
 {
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.view];
     NSDictionary *dict = @{
-                            @"storeId":@"1",
-                            @"gameId":_scheme.gameId
-                            };
-     [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
+        @"storeId":StoreId,
+        @"gameId":_scheme.gameId
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
         {
@@ -543,17 +548,18 @@
 {
     [MBProgressHUD showMessage:text_paying toView:self.view];
     NSDictionary *dict = @{
-                           @"token":Token,
-                           @"gameId":_scheme.gameId,
-                           @"termId":self.currentTermId,
-                           @"multiple":@(_multiple),
-                           @"ticketList":self.ticketList,
-                           @"amount":@([self getAmount] * 100),
-                           @"payType":@"ACCOUNT",
-                           @"termCount":@(_termCount),
-                           @"startTermId":self.currentTermId,
-                           @"winStop":[NSNumber numberWithBool:_winStop]
-                           };
+        @"token":Token,
+        @"storeId":StoreId,
+        @"gameId":_scheme.gameId,
+        @"termId":self.currentTermId,
+        @"multiple":@(_multiple),
+        @"ticketList":self.ticketList,
+        @"amount":@([self getAmount] * 100),
+        @"payType":@"ACCOUNT",
+        @"termCount":@(_termCount),
+        @"startTermId":self.currentTermId,
+        @"winStop":[NSNumber numberWithBool:_winStop]
+    };
     [[YZHttpTool shareInstance] postWithURL:@"/chaseStake" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)

@@ -57,7 +57,7 @@
 - (void)getData
 {
     NSDictionary *dict = @{
-                           @"currentUserId": UserId,
+                           @"currentUserId": @"",
                            @"targetUserId": self.userId,
                            };
     [[YZHttpTool shareInstance] postWithURL:BaseUrlInformation(@"/getUserInfo") params:dict success:^(id json) {

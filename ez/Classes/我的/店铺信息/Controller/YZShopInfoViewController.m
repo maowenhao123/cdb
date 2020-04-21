@@ -67,7 +67,7 @@
 {
     waitingView_loadingData;
     NSDictionary *dict = @{
-        @"storeId":@"1",
+        @"storeId":StoreId,
         @"token":Token
     };
     [[YZHttpTool shareInstance] postWithURL:@"/getStoreInfo" params:dict success:^(id json) {

@@ -114,7 +114,7 @@
 - (void)getCurrentTermData
 {
     NSDictionary *dict = @{
-                            @"storeId":@"1",
+                            @"storeId":StoreId,
                             @"gameId":_param.gameId
                             };
      [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {

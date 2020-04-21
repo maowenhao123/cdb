@@ -150,7 +150,7 @@
 #import "HelpDeskUI.h"
 #endif
 
-#define UserId [YZUserDefaultTool getObjectForKey:@"userId"]
+#define StoreId [YZUserDefaultTool getObjectForKey:@"storeId"]
 #define Token [YZUserDefaultTool getObjectForKey:@"token"]
 
 //动画时间

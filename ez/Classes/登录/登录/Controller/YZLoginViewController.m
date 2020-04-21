@@ -63,12 +63,12 @@
     UIImageView * logoImageView = [[UIImageView alloc] init];
     CGFloat logoImageViewW = 197;
     CGFloat logoImageViewH = 107;
-    logoImageView.frame = CGRectMake((screenWidth - logoImageViewW) / 2, 50, logoImageViewW, logoImageViewH);
+    logoImageView.frame = CGRectMake((screenWidth - logoImageViewW) / 2, 40, logoImageViewW, logoImageViewH);
     logoImageView.image = [UIImage imageNamed:@"login_ad_zc"];
     [self.view addSubview:logoImageView];
     
     //登录界面
-    UIView *loginview = [[UIView alloc] initWithFrame:CGRectMake(screenWidth * 0.1, CGRectGetMaxY(logoImageView.frame) + 40, screenWidth * 0.8, 55 * 2)];
+    UIView *loginview = [[UIView alloc] initWithFrame:CGRectMake(screenWidth * 0.1, CGRectGetMaxY(logoImageView.frame) + 30, screenWidth * 0.8, 55 * 2)];
     loginview.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:loginview];
     
@@ -157,7 +157,7 @@
     //登录按钮
     YZBottomButton *loginbutton = [YZBottomButton buttonWithType:UIButtonTypeCustom];
     self.loginbutton = loginbutton;
-    loginbutton.frame = CGRectMake(loginview.x, CGRectGetMaxY(forgetButton.frame) + 50, loginview.width, loginbutton.height);
+    loginbutton.frame = CGRectMake(loginview.x, CGRectGetMaxY(forgetButton.frame) + 30, loginview.width, loginbutton.height);
     [loginbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [loginbutton setTitle:@"登录" forState:UIControlStateNormal];
     [loginbutton addTarget:self action:@selector(loginBtnPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -357,6 +357,7 @@
             [YZUserDefaultTool saveUser:user];
             [YZUserDefaultTool saveObject:@"accountLogin" forKey:@"loginWay"];
             [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
+            [YZUserDefaultTool saveObject:json[@"user"][@"storeId"] forKey:@"storeId"];
             //发送登录成功通知
             [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNote object:nil];
             [self loadUserInfo];
@@ -424,6 +425,7 @@
         [YZUserDefaultTool saveUser:user];
         [YZUserDefaultTool saveObject:@"accountLogin" forKey:@"loginWay"];
         [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
+        [YZUserDefaultTool saveObject:json[@"user"][@"storeId"] forKey:@"storeId"];
         //根据保存密码按钮状态，保存密码
         [YZUserDefaultTool saveObject:self.accountTextField.text forKey:@"userName"];//userAccount
         //更新自动登录状态
@@ -543,6 +545,7 @@
         }else
         {
             [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
+            [YZUserDefaultTool saveObject:json[@"user"][@"storeId"] forKey:@"storeId"];
             [YZUserDefaultTool saveObject:@"thirdPartyLogin" forKey:@"loginWay"];
             [YZUserDefaultTool saveThirdPartyStatus:thirdPartyStatus];
             //更新自动登录状态

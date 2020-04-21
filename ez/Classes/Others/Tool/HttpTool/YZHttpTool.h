@@ -38,6 +38,7 @@ typedef enum : NSUInteger {
 //#define childChannel @"zc_taylor"
 
 //正式环境
+#define jgBaseUrl @"http://www1.51mcp.com"
 #define baseUrl @"http://admin.jifengo.online/gateway"
 #define shareBaseUrl @"https://cp.ez1898.com"
 #define childChannel @"sta_ios"
@@ -51,31 +52,31 @@ typedef enum : NSUInteger {
 //URL
 #define baseH5Url @"http://s.51mcp.com"
 
-#define BaseUrl(param) [NSString stringWithFormat:@"%@/%@", baseUrl, param]
+#define BaseUrl(param) [NSString stringWithFormat:@"%@/%@", jgBaseUrl, param]
 //极光推送url
-#define BaseUrlJiguang(param) [NSString stringWithFormat:@"%@/jiguang%@",baseUrl,param]
+#define BaseUrlJiguang(param) [NSString stringWithFormat:@"%@/jiguang%@",jgBaseUrl,param]
 //代金券url
-#define BaseUrlCoupon(param) [NSString stringWithFormat:@"%@/coupon%@",baseUrl,param]
+#define BaseUrlCoupon(param) [NSString stringWithFormat:@"%@/coupon%@",jgBaseUrl,param]
 //轮播图
-#define BaseUrlAdvert(param) [NSString stringWithFormat:@"%@/advert%@",baseUrl,param]
+#define BaseUrlAdvert(param) [NSString stringWithFormat:@"%@/advert%@",jgBaseUrl,param]
 //竞彩开奖
-#define BaseUrlJingcai(param) [NSString stringWithFormat:@"%@/jingcai%@",baseUrl,param]
+#define BaseUrlJingcai(param) [NSString stringWithFormat:@"%@/jingcai%@",jgBaseUrl,param]
 //充值方式
-#define BaseUrlSalesManager(param) [NSString stringWithFormat:@"%@/sales-manager%@",baseUrl,param]
+#define BaseUrlSalesManager(param) [NSString stringWithFormat:@"%@/sales-manager%@",jgBaseUrl,param]
 //中奖轮播
-#define BaseUrlNotice(param) [NSString stringWithFormat:@"%@/notice%@",baseUrl,param]
+#define BaseUrlNotice(param) [NSString stringWithFormat:@"%@/notice%@",jgBaseUrl,param]
 //竞彩比赛详情
-#define BaseUrlFootball(param) [NSString stringWithFormat:@"%@/football%@",baseUrl,param]
+#define BaseUrlFootball(param) [NSString stringWithFormat:@"%@/football%@",jgBaseUrl,param]
 //环信
-#define BaseUrlEasemob(param) [NSString stringWithFormat:@"%@/easemob%@",baseUrl,param]
+#define BaseUrlEasemob(param) [NSString stringWithFormat:@"%@/easemob%@",jgBaseUrl,param]
 //分享
-#define BaseUrlShare(param) [NSString stringWithFormat:@"%@/promotion%@", baseUrl, param]
+#define BaseUrlShare(param) [NSString stringWithFormat:@"%@/promotion%@", jgBaseUrl, param]
 //预测
-#define BaseUrlInformation(param) [NSString stringWithFormat:@"%@/information%@", baseUrl, param]
+#define BaseUrlInformation(param) [NSString stringWithFormat:@"%@/information%@", jgBaseUrl, param]
 //积分
-#define BaseUrlPoint(param) [NSString stringWithFormat:@"%@/point%@", baseUrl, param]
+#define BaseUrlPoint(param) [NSString stringWithFormat:@"%@/point%@", jgBaseUrl, param]
 //彩友圈
-#define BaseUrlCircle(param) [NSString stringWithFormat:@"%@/information-platform%@", baseUrl, param]
+#define BaseUrlCircle(param) [NSString stringWithFormat:@"%@/information-platform%@", jgBaseUrl, param]
 
 #import <Foundation/Foundation.h>
 #import "MJExtension.h"

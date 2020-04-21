@@ -477,7 +477,7 @@
 - (void)getCurrentTermData
 {
     NSDictionary *dict = @{
-        @"storeId":@"1",
+        @"storeId":StoreId,
         @"gameId":self.gameModel.id
     };
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.viewController.tabBarController.view];
@@ -511,6 +511,7 @@
     NSMutableArray *ticketList = [self getTicketList];
     NSDictionary * dict = @{
         @"token":Token,
+        @"storeId":StoreId,
         @"gameId":self.gameModel.id,
         @"termId":self.currentTermId,
         @"multiple":multiple,

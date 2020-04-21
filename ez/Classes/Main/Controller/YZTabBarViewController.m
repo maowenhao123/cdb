@@ -250,7 +250,7 @@
 {
     NSString * imei = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     NSDictionary *dict = @{
-        @"storeId":@"1",
+        @"storeId":StoreId,
         @"imei":imei,
         @"version":[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]
     };

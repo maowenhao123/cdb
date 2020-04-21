@@ -203,6 +203,7 @@
         //存储userId和userName
         [YZUserDefaultTool saveObject:json[@"userId"] forKey:@"userId"];
         [YZUserDefaultTool saveObject:json[@"token"] forKey:@"token"];
+        [YZUserDefaultTool saveObject:json[@"user"][@"storeId"] forKey:@"storeId"];
         [YZUserDefaultTool saveObject:self.phoneTextField.text forKey:@"userName"];//userAccount
         //发送登录成功通知
         [[NSNotificationCenter defaultCenter] postNotificationName:loginSuccessNote object:nil];

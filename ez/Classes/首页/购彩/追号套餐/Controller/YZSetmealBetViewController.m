@@ -67,7 +67,7 @@
 {
     [MBProgressHUD showMessage:text_gettingCurrentTerm toView:self.view];
     NSDictionary *dict = @{
-                            @"storeId":@"1",
+                            @"storeId":StoreId,
                             @"gameId":self.gameId
                             };
      [[YZHttpTool shareInstance] postWithURL:@"/getGameCurrentTerm" params:dict success:^(id json) {

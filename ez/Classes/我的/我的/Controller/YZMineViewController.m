@@ -57,7 +57,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = YZBackgroundColor;
     [self setupChilds];
-    [self addGuideView];
+//    [self addGuideView];
     waitingView_loadingData;
 }
 
@@ -391,12 +391,12 @@
     }
     
     //赋值彩金、奖金、积分
-    NSString *balance = [NSString stringWithFormat:@"%.2f元",[_user.account.balance intValue] / 100.0];
-    if ([_user.account.balance intValue] == 0)
+    NSString *balance = [NSString stringWithFormat:@"%.2f元", ([_user.account.deposit intValue] + [_user.account.balance intValue]) / 100.0];
+    if (([_user.account.deposit intValue] + [_user.account.balance intValue]) == 0)
     {
         balance = @"0元";
     }
-    NSString *bonus = [NSString stringWithFormat:@"%.2f元",[_user.account.bonus intValue] / 100.0];
+    NSString *bonus = [NSString stringWithFormat:@"%.2f元", [_user.account.bonus intValue] / 100.0];
     if ([_user.account.bonus intValue] == 0)
     {
         bonus = @"0元";
@@ -509,6 +509,9 @@
         [self.navigationController pushViewController:rechargeVc animated:YES];
     }else
     {
+        [MBProgressHUD showError:@"本功能暂未上线" toView:self.view];
+        return;
+        
         YZVoucherViewController * voucherVC = [[YZVoucherViewController alloc]init];
         [self.navigationController pushViewController:voucherVC animated:YES];
     }

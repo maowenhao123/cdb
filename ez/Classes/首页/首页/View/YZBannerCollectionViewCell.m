@@ -83,7 +83,7 @@
 {
     //获得当前版本号
     NSDictionary *dict = @{
-        @"storeId": @"1"
+        @"storeId":StoreId,
     };
     [[YZHttpTool shareInstance] postWithURL:@"/getadvert" params:dict success:^(id json) {
         [header endRefreshing];

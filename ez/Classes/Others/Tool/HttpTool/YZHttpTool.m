@@ -20,6 +20,7 @@
 #import "YZHttpTool.h"
 #import "AFHTTPSessionManager.h"
 #import "UIViewController+YZNoNetController.h"
+#import "YZLoginViewController.h"
 #import "YZDateTool.h"
 
 @implementation YZHttpTool
@@ -180,7 +181,19 @@
                 NSMutableDictionary *mDict = [NSMutableDictionary dictionary];
                 NSError * jsonError;
                 mDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-                success(mDict);
+                if ([mDict[@"retCode"] intValue] == 1004) {
+                    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:mDict[@"retDesc"] preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction * alertAction2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        YZLoginViewController *loginVC = [[YZLoginViewController alloc] init];
+                        YZNavigationController *loginNVC = [[YZNavigationController alloc] initWithRootViewController:loginVC];
+                        [UIApplication sharedApplication].keyWindow.rootViewController = loginNVC;
+                    }];
+                    [alertController addAction:alertAction2];
+                    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+                }else
+                {
+                    success(mDict);
+                }
             }else
             {
                 failure(error);

@@ -62,6 +62,9 @@
 - (void)didTap:(UITapGestureRecognizer *)tap
 {
     if ([self.functionModel.name isEqualToString:@"积分兑换"]) {//积分兑换
+        [MBProgressHUD showError:@"本功能暂未上线" toView:KEY_WINDOW];
+        return;
+        
         if (!Token) {
             YZLoginViewController *login = [[YZLoginViewController alloc] init];
             YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
@@ -84,6 +87,10 @@
     {
         YZInformationListViewController * informationListVC = [[YZInformationListViewController alloc] init];
         [self.viewController.navigationController pushViewController:informationListVC animated:YES];
+    }else
+    {
+        [MBProgressHUD showError:@"本功能暂未上线" toView:KEY_WINDOW];
+        return;
     }
 }
 
