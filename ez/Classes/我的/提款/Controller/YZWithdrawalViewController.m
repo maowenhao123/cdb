@@ -46,7 +46,7 @@
             //存储用户信息
             YZUser *user = [YZUser objectWithKeyValues:json];
             [YZUserDefaultTool saveUser:user];
-            self.balanceLabel.text = [NSString stringWithFormat:@"%.2f元",[user.account.bonus floatValue] / 100.0];
+            self.balanceLabel.text = [NSString stringWithFormat:@"%.2f元", ([user.account.balance floatValue] + [user.account.bonus floatValue]) / 100.0];
         }else
         {
             ShowErrorView;
@@ -252,11 +252,7 @@
 }
 - (void)kefuClick
 {
-    UIWebView *callWebview =[[UIWebView alloc] init];
-    NSString *telUrl = @"tel://4007001898";
-    NSURL *telURL =[NSURL URLWithString:telUrl];
-    [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
-    [self.view addSubview:callWebview];
+    [YZTool callWithPhoneNumber:@"4007001898"];
 }
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

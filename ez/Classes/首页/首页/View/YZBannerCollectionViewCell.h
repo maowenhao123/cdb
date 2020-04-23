@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YZRespPromotionStatus.h"
+#import "YZAdvertModel.h"
 
 @interface YZBannerCollectionViewCell : UICollectionViewCell
 

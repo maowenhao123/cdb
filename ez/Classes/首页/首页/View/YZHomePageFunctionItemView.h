@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YZHomePageFunctionModel.h"
+#import "YZAdvertModel.h"
 
 @interface YZHomePageFunctionItemView : UIView
 
-@property (nonatomic,strong) YZHomePageFunctionModel *functionModel;
+@property (nonatomic,strong) YZAdvertModel *functionModel;
 
 @end

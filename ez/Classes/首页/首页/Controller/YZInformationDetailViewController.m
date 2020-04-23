@@ -7,6 +7,7 @@
 //
 
 #import "YZInformationDetailViewController.h"
+#import "YZGameIdViewController.h"
 #import "YZInformationModel.h"
 #import "YZShareView.h"
 #import "YZWebView.h"
@@ -24,6 +25,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self setupChilds];
     [self getData];
 }
@@ -41,7 +43,6 @@
         [MBProgressHUD hideHUDForView:self.view];
         if (SUCCESS) {
             self.informationModel = [YZInformationModel objectWithKeyValues:json[@"recommend"]];
-        
         }else
         {
             ShowErrorView;
@@ -68,9 +69,29 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"order_share"] style:UIBarButtonItemStylePlain target:self action:@selector(share)];
     
     //webView
-    YZWebView * webView =  [[YZWebView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - statusBarH - navBarH)];
+    CGFloat betButtonH = 40;
+    CGFloat webViewH = screenHeight - statusBarH - navBarH - 10 * 2 - betButtonH - [YZTool getSafeAreaBottom];
+    if (IsBangIPhone) {
+        webViewH = screenHeight - statusBarH - navBarH - 10 - betButtonH - [YZTool getSafeAreaBottom];
+    }
+    YZWebView * webView =  [[YZWebView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, webViewH)];
     self.webView = webView;
     [self.view addSubview:webView];
+    
+    
+    //立即投注
+    YZBottomButton * betButton = [YZBottomButton buttonWithType:UIButtonTypeCustom];
+    betButton.y = CGRectGetMaxY(webView.frame) + 10;
+    [betButton setTitle:@"立即投注" forState:UIControlStateNormal];
+    [betButton addTarget:self action:@selector(betButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:betButton];
+}
+
+#pragma mark - 立即投注
+- (void)betButtonClick
+{
+    YZGameIdViewController *destVc = (YZGameIdViewController *)[[[YZTool gameDestClassDict][self.informationModel.gameId] alloc] initWithGameId:self.informationModel.gameId];
+    [self.navigationController pushViewController:destVc animated:YES];
 }
 
 #pragma mark - 分享

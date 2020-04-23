@@ -1,5 +1,5 @@
 //
-//  YZHomePageFunctionModel.h
+//  YZAdvertModel.h
 //  ez
 //
 //  Created by 毛文豪 on 2018/1/30.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface YZHomePageFunctionModel : NSObject
+@interface YZAdvertModel : NSObject
 
 @property (nonatomic,copy) NSString *name;
 /*
@@ -19,8 +19,8 @@ HIT  代表  中奖专区
 GIFT  代表  彩票红包
 OTHERS  代表  其他类型
 */
-@property (nonatomic,copy) NSString *type;
-@property (nonatomic,copy) NSString *iconUrl;
+@property (nonatomic, copy) NSString *redirectType;
+@property (nonatomic,copy) NSString *extendParam;
 @property (nonatomic,copy) NSString *iconName;
 @property (nonatomic,copy) NSString *url;
 

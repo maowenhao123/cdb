@@ -64,7 +64,7 @@
 }
 - (void)backToRegist
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [UIApplication sharedApplication].keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
 }
 //返回购彩
 - (void)registerBtndone:(UIButton *)btn

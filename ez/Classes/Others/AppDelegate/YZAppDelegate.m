@@ -106,13 +106,12 @@
     //获取分享活动数据
     [self getShareData];
     
-    //取出上次使用的的版本号
-    NSString *lastVersion = [[NSUserDefaults standardUserDefaults] stringForKey:@"CFBundleShortVersionString"];
-    //获得当前版本号
-    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-    
-    if([lastVersion isEqualToString:currentVersion])
-    {   //版本相同，说明已经使用过该版本app,直接进入
+//    //取出上次使用的的版本号
+//    NSString *lastVersion = [[NSUserDefaults standardUserDefaults] stringForKey:@"CFBundleShortVersionString"];
+//    //获得当前版本号
+//    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+//    if([lastVersion isEqualToString:currentVersion])
+//    {   //版本相同，说明已经使用过该版本app,直接进入
         [UIApplication sharedApplication].statusBarHidden = NO;
         if (Token) {
             application.keyWindow.rootViewController = [[YZTabBarViewController alloc] init];
@@ -122,13 +121,13 @@
             YZNavigationController *loginNVC = [[YZNavigationController alloc] initWithRootViewController:loginVC];
             application.keyWindow.rootViewController = loginNVC;
         }
-    }else
-    {   //版本不一样，说明是首次使用该版本app,展示新特性
-        application.keyWindow.rootViewController = [[YZNewFeatureViewController alloc] init];
-        //存储新版本
-        [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:@"CFBundleShortVersionString"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+//    }else
+//    {   //版本不一样，说明是首次使用该版本app,展示新特性
+//        application.keyWindow.rootViewController = [[YZNewFeatureViewController alloc] init];
+//        //存储新版本
+//        [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:@"CFBundleShortVersionString"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//    }
     return YES;
 }
 #pragma mark - 获取分享活动数据

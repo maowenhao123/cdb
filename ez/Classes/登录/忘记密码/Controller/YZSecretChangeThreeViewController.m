@@ -112,7 +112,7 @@
             [progressBackView addSubview:arrowImageView];
         }
     }
-
+    
     //底界面
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(progressBackView.frame) + 15, screenWidth, 2 * YZCellH)];
     backView.backgroundColor = [UIColor whiteColor];
@@ -175,11 +175,7 @@
 }
 - (void)kefuClick
 {
-    UIWebView *callWebview =[[UIWebView alloc] init];
-    NSString *telUrl = @"tel://4007001898";
-    NSURL *telURL =[NSURL URLWithString:telUrl];
-    [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
-    [self.view addSubview:callWebview];
+    [YZTool callWithPhoneNumber:@"4007001898"];
 }
 - (void)confirmButtonPressed
 {
@@ -195,10 +191,11 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"phone":self.phoneStr,
-                           @"verifyCode":self.verifyCode,
-                           @"passwd":self.passWordTF.text
-                           };
+        @"token":@"",
+        @"phone":self.phoneStr,
+        @"verifyCode":self.verifyCode,
+        @"passwd":self.passWordTF.text
+    };
     [MBProgressHUD showMessage:@"修改密码中..." toView:self.view];
     [[YZHttpTool shareInstance] postWithURL:@"/resetPasswd" params:dict success:^(id json) {
         if(SUCCESS)
@@ -206,6 +203,7 @@
             [self accountLogin];
         }else
         {
+            [MBProgressHUD hideHUDForView:self.view];
             ShowErrorView
         }
     } failure:^(NSError *error) {
@@ -216,12 +214,11 @@
 - (void)accountLogin
 {
     NSDictionary *dict = @{
-                           @"cmd":@(8004),
-                           @"userName":self.phoneStr,
-                           @"password":self.passWordTF.text,
-                           @"loginType":@(1)
-                           };
-    [[YZHttpTool shareInstance] postWithParams:dict success:^(id json) {
+        @"phone":self.phoneStr,
+        @"password":self.passWordTF.text
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/login" params:dict success:^(id json)
+     {
         //检查账号密码返回数据
         [MBProgressHUD hideHUDForView:self.view];
         if(SUCCESS)
@@ -256,8 +253,8 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"token" : Token
-                           };
+        @"token" : Token
+    };
     [[YZHttpTool shareInstance] postWithURL:@"/getUserInfo" params:dict success:^(id json) {
         YZLog(@"%@",json);
         if (SUCCESS) {

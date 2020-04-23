@@ -184,24 +184,10 @@
 - (void)navButtonDidClick:(UIButton *)button
 {
     if (button.tag == 0) {
-        if (!Token) {
-            YZLoginViewController *login = [[YZLoginViewController alloc] init];
-            YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
-            [self presentViewController:nav animated:YES completion:nil];
-            return;
-        }
-        YZMessageViewController * messageVC = [[YZMessageViewController alloc] init];
-        [self.navigationController pushViewController:messageVC animated:YES];
+        [self goShopInfo];
     }else if (button.tag == 1)
     {
-        if (!Token) {
-            YZLoginViewController *login = [[YZLoginViewController alloc] init];
-            YZNavigationController *nav = [[YZNavigationController alloc] initWithRootViewController:login];
-            [self presentViewController:nav animated:YES completion:nil];
-            return;
-        }
-        YZServiceListViewController * contactServiceVC = [[YZServiceListViewController alloc]init];
-        [self.navigationController pushViewController:contactServiceVC animated:YES];
+        [YZTool callWithPhoneNumber:self.shopModel.phone];
     }else if (button.tag == 2)
     {
         [self goShopInfo];

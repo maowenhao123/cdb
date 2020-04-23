@@ -631,6 +631,9 @@
             shareView.block = ^(UMSocialPlatformType platformType){//选择平台
                 [self shareToPlatformType:platformType json:json];
             };
+        }else
+        {
+            ShowErrorView
         }
     } failure:^(NSError *error)
      {

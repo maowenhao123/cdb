@@ -204,11 +204,7 @@
 }
 - (void)kefuClick
 {
-    UIWebView *callWebview =[[UIWebView alloc] init];
-    NSString *telUrl = @"tel://4007001898";
-    NSURL *telURL =[NSURL URLWithString:telUrl];
-    [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
-    [self.view addSubview:callWebview];
+    [YZTool callWithPhoneNumber:@"4007001898"];
 }
 #pragma  mark - 获取验证码按钮点击
 - (void)getCodeBtnPressed

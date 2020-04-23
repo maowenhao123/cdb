@@ -308,7 +308,7 @@
         {
             YZUser *user = [YZUserDefaultTool user];
             YZUserInfo *userInfo = [YZUserInfo objectWithKeyValues:json[@"userInfo"]];
-            user.user.cardno = userInfo.cardno;
+            user.user.cardNo = userInfo.cardNo;
             user.user.realName = userInfo.realName;
             [YZUserDefaultTool saveUser:user];
             [MBProgressHUD showSuccess:@"实名绑定成功"];

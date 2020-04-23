@@ -9,7 +9,6 @@
 #import "YZWeChatPublicViewController.h"
 #import "YZWeChatPublicHelpViewController.h"
 #import "YZLoadHtmlFileController.h"
-#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "YZQrCodeModel.h"
 #import "YZDateTool.h"
 

@@ -38,7 +38,7 @@
 
 - (void)setup {
     self.adjustTextFeildH = YES;
-    self.keyboardType = UIKeyboardTypeNumberPad;
+    self.keyboardType = UIKeyboardTypeDefault;
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];

@@ -100,7 +100,7 @@
     //判断是否已实名认证
     //如果没有实名认证才添加确认按钮
     YZUser *user = [YZUserDefaultTool user];
-    if(!user.user.realName || !user.user.cardno)
+    if(YZStringIsEmpty(user.user.realName) || YZStringIsEmpty(user.user.cardNo))
     {
         YZBottomButton * confirmBtn = [YZBottomButton buttonWithType:UIButtonTypeCustom];
         self.confirmBtn = confirmBtn;
@@ -119,7 +119,7 @@
             [replaceString appendString:@"*"];
         }
         self.nameTF.text = [user.user.realName stringByReplacingCharactersInRange:NSMakeRange(1, user.user.realName.length-1) withString:replaceString];
-        NSString * cardNo = user.user.cardno;
+        NSString * cardNo = user.user.cardNo;
         if (cardNo.length == 18) {//是身份证号
             cardNo = [cardNo stringByReplacingCharactersInRange:NSMakeRange(3, 12) withString:@"************"];
         }
@@ -184,7 +184,7 @@
         {
             YZUser *user = [YZUserDefaultTool user];
             YZUserInfo *userInfo = [YZUserInfo objectWithKeyValues:json[@"userInfo"]];
-            user.user.cardno = userInfo.cardno;
+            user.user.cardNo = userInfo.cardNo;
             user.user.realName = userInfo.realName;
             [YZUserDefaultTool saveUser:user];
             [MBProgressHUD showSuccess:@"实名绑定成功"];

@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) long long publishTime;
 @property (nonatomic, copy) NSString *source;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *gameId;
 
 @end
 

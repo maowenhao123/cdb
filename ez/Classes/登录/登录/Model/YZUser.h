@@ -22,7 +22,7 @@
 @interface YZUserInfo : NSObject
 
 @property (nonatomic, copy) NSString *age;
-@property (nonatomic, copy) NSString *cardno;//身份证号码
+@property (nonatomic, copy) NSString *cardNo;//身份证号码
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *mobile;
 @property (nonatomic, copy) NSString *nickName;

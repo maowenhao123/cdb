@@ -122,7 +122,7 @@
     UITextField *accountTextField = [[UITextField alloc]initWithFrame:CGRectMake(YZMargin,0,screenWidth - 2 * YZMargin, YZCellH)];
     self.accountTextField = accountTextField;
     accountTextField.textColor = YZBlackTextColor;
-    accountTextField.placeholder = @"请输入注册用户名或手机号码";
+    accountTextField.placeholder = @"请输入注册手机号码";
     accountTextField.borderStyle = UITextBorderStyleNone;
     accountTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     accountTextField.font = [UIFont systemFontOfSize:YZGetFontSize(28)];
@@ -163,11 +163,7 @@
 }
 - (void)kefuClick
 {
-    UIWebView *callWebview =[[UIWebView alloc] init];
-    NSString *telUrl = @"tel://4007001898";
-    NSURL *telURL =[NSURL URLWithString:telUrl];
-    [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
-    [self.view addSubview:callWebview];
+    [YZTool callWithPhoneNumber:@"4007001898"];
 }
 - (void)nextBtnPressed
 {
@@ -177,7 +173,7 @@
         return;
     }
     NSDictionary *dict = @{
-                           @"userName":self.accountTextField.text
+                           @"phone":self.accountTextField.text
                            };
     [[YZHttpTool shareInstance] postWithURL:@"/getPhone" params:dict success:^(id json) {
         YZLog(@"json = %@",json);

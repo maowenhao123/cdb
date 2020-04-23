@@ -170,7 +170,17 @@
  */
 + (UIImage *)imageCompressionWithImage:(UIImage *)myimage;
 #pragma mark -- json转字典
-+ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
-
+/**
+* json转字典
+*
+* @param jsonString json字符串
+*/+ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
+#pragma mark -- 打电话
+/**
+* 打电话
+*
+* @param phoneNumber 电话号码
+*/
++ (void)callWithPhoneNumber:(NSString *)phoneNumber;
 
 @end

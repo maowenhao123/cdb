@@ -65,31 +65,30 @@
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
     NSMutableArray * imagesURLStrings = [NSMutableArray array];
-    for (YZRespPromotionStatus *status in self.respPromotionList) {
-        [imagesURLStrings addObject:status.picAddr];
+    for (YZAdvertModel *status in self.respPromotionList) {
+        [imagesURLStrings addObject:status.url];
     }
     if (imagesURLStrings.count > 0) {//有数据时才可以选择
-        YZRespPromotionStatus *status = self.respPromotionList[index];
-        NSString * showAddr = status.showAddr;
-        //        showAddr = @"http://i.ez1898.com/zc_down/guidepage.html";
+        YZAdvertModel *status = self.respPromotionList[index];
+        NSString * showAddr = status.url;
         if (YZStringIsEmpty(showAddr)) return;//没有链接时，不跳转
         YZLoadHtmlFileController * webVC = [[YZLoadHtmlFileController alloc]initWithWeb:showAddr];
-        webVC.title = status.title;
+        webVC.title = status.name;
         [self.viewController.navigationController pushViewController:webVC animated:YES];
     }
 }
 #pragma mark - 获取数据
 - (void)getDataWith:(MJRefreshGifHeader *)header
 {
-    //获得当前版本号
     NSDictionary *dict = @{
+        @"code":@"1",
         @"storeId":StoreId,
     };
     [[YZHttpTool shareInstance] postWithURL:@"/getadvert" params:dict success:^(id json) {
         [header endRefreshing];
-        YZLog(@"getPromotionList:%@",json);
+        YZLog(@"getadvert1:%@",json);
         if (SUCCESS){
-            self.respPromotionList = [YZRespPromotionStatus objectArrayWithKeyValuesArray:json[@"adverts"]];
+            self.respPromotionList = [YZAdvertModel objectArrayWithKeyValuesArray:json[@"adverts"]];
             [self setData];
         }else
         {
@@ -118,8 +117,8 @@
     UIImage * defaultImage = [UIImage imageNamed:imageName];
     
     NSMutableArray * imagesURLStrings = [NSMutableArray array];//图片
-    for (YZRespPromotionStatus *status in self.respPromotionList) {
-        [imagesURLStrings addObject:status.picAddr];
+    for (YZAdvertModel *status in self.respPromotionList) {
+        [imagesURLStrings addObject:status.url];
     }
     if (YZArrayIsEmpty(imagesURLStrings)) {
         self.cycleScrollView.localizationImageNamesGroup = @[defaultImage];

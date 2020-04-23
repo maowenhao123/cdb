@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YZHomePageFunctionModel.h"
+#import "YZAdvertModel.h"
 
 @interface YZHomePageFunctionCollectionViewCell : UICollectionViewCell
 

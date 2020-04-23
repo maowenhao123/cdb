@@ -8,7 +8,6 @@
 #import "YZWeixinRechargeViewController.h"
 #import "ZWXWechatPayOrder.h"
 #import "YZLoadHtmlFileController.h"
-#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 
 @implementation YZWeixinRechargeViewController
 

@@ -66,30 +66,22 @@
 
 - (void)getFunctionData
 {
-    NSMutableArray * functions_mu = [NSMutableArray array];
-    for (int i = 0; i < 4; i++) {
-        YZHomePageFunctionModel *functionModel = [[YZHomePageFunctionModel alloc] init];
-        if (i == 0) {
-            functionModel.iconName = @"home_recharge";
-            functionModel.name = @"点我充值";
-        }else if (i == 1)
-        {
-            functionModel.iconName = @"home_integral_conversion";
-            functionModel.name = @"积分兑换";
-        }else if (i == 2)
-        {
-            functionModel.iconName = @"home_forecast";
-            functionModel.name = @"预测推荐";
-        }else if (i == 3)
-        {
-            functionModel.iconName = @"home_live";
-            functionModel.name = @"视频直播";
+    NSDictionary *dict = @{
+        @"code":@"2",
+        @"storeId":StoreId,
+    };
+    [[YZHttpTool shareInstance] postWithURL:@"/getadvert" params:dict success:^(id json) {
+        YZLog(@"getadvert2:%@",json);
+        if (SUCCESS) {
+            NSArray *functions = [YZAdvertModel objectArrayWithKeyValuesArray:json[@"adverts"]];
+            self.functions = [NSArray arrayWithArray:functions];
+            [UIView performWithoutAnimation:^{
+                [self reloadSections:[NSIndexSet indexSetWithIndex:1]];
+            }];
         }
-        [functions_mu addObject:functionModel];
-    }
-    self.functions = [NSArray arrayWithArray:functions_mu];
-    [UIView performWithoutAnimation:^{
-        [self reloadSections:[NSIndexSet indexSetWithIndex:1]];
+    } failure:^(NSError *error)
+    {
+        YZLog(@"error = %@",error);
     }];
 }
 

@@ -68,7 +68,7 @@
     [self.view addSubview:logoImageView];
     
     //登录界面
-    UIView *loginview = [[UIView alloc] initWithFrame:CGRectMake(screenWidth * 0.1, CGRectGetMaxY(logoImageView.frame) + 30, screenWidth * 0.8, 55 * 2)];
+    UIView *loginview = [[UIView alloc] initWithFrame:CGRectMake(screenWidth * 0.08, CGRectGetMaxY(logoImageView.frame) + 30, screenWidth * 0.84, 55 * 2)];
     loginview.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:loginview];
     

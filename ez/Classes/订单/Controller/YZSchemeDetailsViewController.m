@@ -83,6 +83,9 @@
                 oldOrderList = [NSMutableArray array];
             }
             self.scheme = [YZScheme objectWithKeyValues:json[@"scheme"]];
+            if (YZStringIsEmpty(self.scheme.gameId)) {
+                self.scheme.gameId = self.gameId;
+            }
             NSArray * newOrderList = self.scheme.orderList;
             [oldOrderList addObjectsFromArray:newOrderList];//在之前的基础上添加新的orderList
             YZLog(@"orderListCount:%ld",oldOrderList.count);
@@ -330,7 +333,7 @@
     self.playTypeNameLabel.text = [YZTool gameIdNameDict][self.scheme.gameId];
     
     CGSize playTypeNameSize = [self.playTypeNameLabel.text sizeWithLabelFont:self.playTypeNameLabel.font];
-    self.playTypeNameLabel.frame = CGRectMake(CGRectGetMaxX(self.logoImageView.frame) + 10, 15, playTypeNameSize.width, 30);
+    self.playTypeNameLabel.frame = CGRectMake(CGRectGetMaxX(self.logoImageView.frame) + 10, 10, playTypeNameSize.width, 30);
     float bonus = [self.scheme.bonus intValue] / 100.0;
     if(bonus > 0)
     {

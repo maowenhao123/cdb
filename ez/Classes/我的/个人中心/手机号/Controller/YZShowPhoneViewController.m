@@ -83,10 +83,7 @@
 
 - (void)call
 {
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%@",@"400-700-1898"];
-    UIWebView * callWebview = [[UIWebView alloc] init];
-    [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
-    [self.view addSubview:callWebview];
+    [YZTool callWithPhoneNumber:@"400-700-1898"];
 }
 
 @end

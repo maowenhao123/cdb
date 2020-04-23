@@ -36,6 +36,7 @@
     };
     [[YZHttpTool shareInstance] postWithURL:@"/getStoreRecommendList" params:dict success:^(id json) {
         [MBProgressHUD hideHUDForView:self.view];
+        YZLog(@"%@", json);
         if (SUCCESS) {
             self.dataArray = [YZInformationModel objectArrayWithKeyValuesArray:json[@"recommends"]];
         }else

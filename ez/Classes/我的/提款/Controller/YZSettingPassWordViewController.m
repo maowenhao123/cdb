@@ -132,8 +132,8 @@
     [self.view endEditing:YES];
     YZUser *user = [YZUserDefaultTool user];
     NSDictionary *dict = @{
-                           @"phone":user.user.mobile
-                           };
+        @"phone":user.user.mobile
+    };
     self.codeBtn.enabled = NO;
     [[YZHttpTool shareInstance] postWithURL:@"/sendSmsVerifyCodeWithFindPwd" params:dict success:^(id json) {
         if(SUCCESS)
@@ -189,10 +189,11 @@
     }
     YZUser *user = [YZUserDefaultTool user];
     NSDictionary *dict = @{
-                           @"phone":user.user.mobile,
-                           @"verifyCode":self.codeTF.text,
-                           @"passwd":self.passWordTF.text
-                           };
+        @"token":Token,
+        @"phone":user.user.mobile,
+        @"verifyCode":self.codeTF.text,
+        @"passwd":self.passWordTF.text
+    };
     [[YZHttpTool shareInstance] postWithURL:@"/resetPasswd" params:dict success:^(id json) {
         if(SUCCESS)
         {
@@ -205,6 +206,6 @@
     } failure:^(NSError *error) {
         YZLog(@"设置密码请求error");
     }];
-
+    
 }
 @end

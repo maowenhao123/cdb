@@ -202,11 +202,29 @@
     }
 }
 
+#pragma mark - 按钮点击
 - (void)buttonDidClick:(UIButton *)button
 {
-    
+    if (button.tag == 0) {
+        
+    }else if (button.tag == 1)
+    {
+        UIImageWriteToSavedPhotosAlbum(self.erCodeImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    }
 }
 
+#pragma mark - 保存到相册
+-(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    if (error){
+        [MBProgressHUD showError:[NSString stringWithFormat:@"保存失败%@", error]];
+    }else
+    {
+        [MBProgressHUD showSuccess:@"保存成功"];
+    }
+}
+
+#pragma mark - 生成二维码
 - (UIImage *)generateQRCodeWithString:(NSString *)string
 {
     CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];

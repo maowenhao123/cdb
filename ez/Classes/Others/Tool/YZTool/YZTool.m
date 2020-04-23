@@ -458,7 +458,7 @@ static NSInteger seq = 0;
         return;
     }
     
-    [JPUSHService setAlias:@"" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+    [JPUSHService setAlias:@"test" completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
         YZLog(@"setAlias：%ld", (long)iResCode);
     } seq:[self seq]];
     
@@ -673,6 +673,7 @@ static NSInteger seq = 0;
     return [UIImage imageWithData:data];
 }
 
+#pragma mark -- json转字典
 + (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
     if (jsonString == nil) return nil;
     
@@ -686,6 +687,13 @@ static NSInteger seq = 0;
         return nil;
     }
     return dic;
+}
+
+#pragma mark -- 打电话
++ (void)callWithPhoneNumber:(NSString *)phoneNumber
+{
+    NSMutableString *str = [[NSMutableString alloc] initWithFormat:@"tel:%@", phoneNumber];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 
 @end

@@ -280,7 +280,12 @@
             targetViewController = viewController;
         }
     }
-    [self.navigationController popToViewController:targetViewController animated:YES];
+    if (YZObjectIsEmpty(targetViewController)) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else
+    {
+        [self.navigationController popToViewController:targetViewController animated:YES];
+    }
 }
 
 - (void)longPress

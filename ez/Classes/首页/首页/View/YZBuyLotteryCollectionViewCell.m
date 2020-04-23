@@ -194,6 +194,8 @@
         titleLabelY = (90 - titleSize.height) / 2;
     }
     self.titleLabel.frame = CGRectMake(CGRectGetMaxX(self.logoImageView.frame) + 10, titleLabelY, titleSize.width, titleSize.height);
+    self.titleLabel.centerY = self.logoImageView.centerY;
+    
     self.descriptionLabel.frame = CGRectMake(self.titleLabel.x, CGRectGetMaxY(self.titleLabel.frame) + 10, screenWidth / 2 - self.titleLabel.x, descriptionSize.height);
     //角标
     self.supView.frame = CGRectZero;

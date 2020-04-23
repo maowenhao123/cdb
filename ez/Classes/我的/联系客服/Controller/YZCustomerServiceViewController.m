@@ -225,10 +225,7 @@
         [self.view addSubview:webView];
     }else if ([subTitie isEqualToString:@"点击拨打电话"])//打电话
     {
-        NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%@", self.phoneNumber];
-        UIWebView * callWebview = [[UIWebView alloc] init];
-        [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
-        [self.view addSubview:callWebview];
+        [YZTool callWithPhoneNumber:self.phoneNumber];
     }else if ([subTitie isEqualToString:@"点击复制微信号"])//跳转微信
     {
         //复制账号
